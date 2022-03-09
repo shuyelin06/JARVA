@@ -39,7 +39,9 @@ public class Loading extends BasicGameState {
 		intersects = o1.intersects(o2);
 		
 		if(!intersects) {
+			o1.getHitbox().rotate(0.01f);
 			o1.setX(0.15f + o1.getX());
+			o2.getHitbox().rotate(-0.01f);
 			o2.setY(0.5f + o2.getY());
 		}
 		

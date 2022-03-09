@@ -1,5 +1,7 @@
 package objects.geometry;
 
+import engine.Utility;
+
 public class Vector {
 	public float x;
 	public float y;
@@ -13,6 +15,17 @@ public class Vector {
 		this.y = y;
 	}
 	
+	// Mutator Methods
+	public void rotate(float angle) {
+		 float rotatedX = x * Utility.cos(angle) - y * Utility.sin(angle);
+		 float rotatedY = x * Utility.sin(angle) + y * Utility.cos(angle);
+		 
+		 x = rotatedX;
+		 y = rotatedY;
+	}
+	
+	// Helper Methods
+	public Vector offset(Vector v) { return new Vector(x + v.x, y + v.y); }
 	public Vector offset(float x2, float y2) { return new Vector(x + x2, y + y2); }
 	public Vector flip() { return new Vector(-x, -y); }
 }
