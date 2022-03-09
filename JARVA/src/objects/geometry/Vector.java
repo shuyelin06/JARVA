@@ -12,4 +12,7 @@ public class Vector {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Vector offset(float x2, float y2) { return new Vector(x + x2, y + y2); }
+	public Vector flip() { return new Vector(-x, -y); }
 }

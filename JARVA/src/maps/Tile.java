@@ -1,4 +1,4 @@
-package objects.tiles;
+package maps;
 
 public class Tile {
 	
