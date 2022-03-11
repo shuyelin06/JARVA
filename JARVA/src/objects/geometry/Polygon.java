@@ -2,11 +2,14 @@ package objects.geometry;
 
 import engine.Utility;
 import objects.GameObject;
+import objects.collisions.BoundMonitor;
 
 public class Polygon {
 	/* --- Instance Variables --- */
 	private GameObject object;
+	
 	private Vector[] vertices;
+	private BoundMonitor bounds; // Used for optimized collision detection
 	
 	// Polygons will be used for hitbox detection
 	public Polygon(Vector[] vertices) {
@@ -16,9 +19,17 @@ public class Polygon {
 	
 	/* --- Mutator Methods --- */
 	// Set the polgyon's corresponding object
-	public void setObject(GameObject o) { this.object = o; }
+	public void setObject(GameObject o) { 
+		this.object = o;
+		this.bounds = new BoundMonitor(this);
+	}
 
 	/* --- Accessor Methods --- */
+	// Returns the polygon's object
+	public GameObject getObject() { return object; }
+	// Returns if the object was removal marked
+	public boolean removalMarked() { return object.removalMarked(); }
+	
 	// Returns the vertices of the polygon
 	public Vector[] getVertices() { return vertices; }
 	
@@ -26,7 +37,15 @@ public class Polygon {
 	public float getCenterX() { return object.getX(); }
 	public float getCenterY() { return object.getY(); }
 	
-	/* --- Object Helper Methods --- */
+	/* --- Object Helper Methods --- */	
+	// Check for collision with another polygon, and if so, call the object's collision method
+	public void checkForCollision(Polygon polygon) {
+		if(this.intersects(polygon)) {
+			object.collision(polygon.object);
+			polygon.object.collision(this.object);
+		}
+	}
+	
 	// Rotate every vertex by some radians counterclockwise
 	public void rotate(float angle) { 
 		for(Vector v: vertices) { v.rotate(angle); }
@@ -95,7 +114,7 @@ public class Polygon {
 		return new Vector(vertex2.y - vertex1.y, vertex1.x - vertex2.x); 
 	}
 	// Returns the minimum/maximum projection of a polygon to a given edge
-	private static Projection minMaxProjection(Vector normal, Vector relative, Polygon shape) {
+	public static Projection minMaxProjection(Vector normal, Vector relative, Polygon shape) {
 		float firstProj = Utility.dot(normal, shape.vertices[0].offset(relative));
 		Projection projection = new Projection(firstProj, firstProj);
 		

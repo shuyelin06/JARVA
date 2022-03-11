@@ -13,4 +13,7 @@ public class Projection {
 		if(max < p.min || p.max < min) return false;
 		else return true;
 	}
+	
+	public float getMin() { return min; }
+	public float getMax() { return max; }
 }
