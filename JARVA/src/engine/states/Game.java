@@ -28,13 +28,6 @@ public class Game extends BasicGameState {
 	// Managers
 	public static CollisionManager CollisionManager;
 	
-	// Temp
-	GameObject o1;
-	GameObject o2;
-	GameObject o3;
-
-
-	
 	// Constructor
 	public Game(int id) { 
 		this.id = id;
@@ -51,9 +44,16 @@ public class Game extends BasicGameState {
 		CollisionManager = new CollisionManager(this);
 		
 		// Temp
-		o1 = new GameObject(50f, 200f, Polygon.shape());
-		o2 = new GameObject(150f, 150f, Polygon.shape());
-		o3 = new GameObject(300f, 150f, Polygon.shape());
+		GameObject o1 = new GameObject(50f, 200f, Polygon.shape());
+		o1.setXVelocity(0.15f * 60);
+		GameObject o2 = new GameObject(150f, 150f, Polygon.shape());
+		o2.setYVelocity(0.15f * 60);
+		GameObject o3 = new GameObject(300f, 150f, Polygon.shape());
+		o3.setXVelocity(-0.3f * 60);
+		GameObject o4 = new GameObject(300f, 500f, Polygon.shape());
+		o4.setYVelocity(-0.5f * 60);
+		GameObject o5 = new GameObject(200f, 0f, Polygon.shape());
+		o5.setYVelocity(0.25f * 60);
 	}
 
 	@Override
@@ -65,11 +65,9 @@ public class Game extends BasicGameState {
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		o1.setX(o1.getX() + 0.15f);
-		o2.setY(o2.getY() + 0.15f);
-		o3.setX(o3.getX() - 0.3f);
-		
-		o3.remove();
+		for(GameObject object: GameObjects) {
+			object.update();
+		}
 		CollisionManager.update();
 	}
 }

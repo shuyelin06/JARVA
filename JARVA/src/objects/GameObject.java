@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import engine.Settings;
 import engine.states.Game;
 import engine.states.Loading;
 import objects.geometry.Polygon;
@@ -11,6 +12,9 @@ import objects.geometry.Projection;
 import objects.geometry.Vector;
 
 public class GameObject {
+	public enum ObjectType { Projectile, Entity, Tile, None }
+	public enum ObjectTeam { Ally, Enemy, Neutral, None }
+	
 	/* --- Instance Variables --- */
 	// Removal Mark
 	protected boolean remove;
@@ -18,7 +22,6 @@ public class GameObject {
 	// Physics Variables
 	protected float x, y, angle;
 	protected float xVelocity, yVelocity, omega;
-	protected float xAcceleration, yAcceleration, alpha;
 	
 	// Hitbox
 	protected Polygon hitbox;
@@ -27,11 +30,20 @@ public class GameObject {
 	protected Image sprite;
 	protected float width, height;
 	
+	// Object Type and Team
+	protected ObjectType type;
+	protected ObjectTeam team;
 	
 	// Temp
 	protected boolean collision;
 	
 	public GameObject(float x, float y, Polygon polygon) {
+		// Default Variables
+		this.angle = this.omega = this.xVelocity = this.yVelocity = 0f;
+		
+		this.type = ObjectType.None;
+		this.team = ObjectTeam.None;
+		
 		this.remove = false;
 		
 		// Setting Position
@@ -39,8 +51,8 @@ public class GameObject {
 		this.y = y; 
 		
 		// Setting Hitbox
-		polygon.setObject(this);
 		this.hitbox = polygon;
+		polygon.setObject(this);
 		
 		// Add to GameObject list
 		Game.GameObjects.add(this);
@@ -49,7 +61,6 @@ public class GameObject {
 	/* --- Ineherited Methods --- */
 	public void objectUpdate() {}
 	public void collision(GameObject o) { 
-		System.out.println("Collide");
 		this.collision = true;
 	}
 	
@@ -57,13 +68,15 @@ public class GameObject {
 	// Update 
 	public void update() {
 		objectUpdate();
-		
 		updatePhysics();
 	}
 	
 	private void updatePhysics() {
-		
+		x += xVelocity / Settings.Frames_Per_Second;
+		y += yVelocity / Settings.Frames_Per_Second;
+		angle += omega / Settings.Frames_Per_Second;
 	}
+	
 	// Rendering
 	public void draw(Graphics g) {
 		drawHitbox(g);
@@ -99,6 +112,10 @@ public class GameObject {
 	public void setAngle(float newAngle) { angle = newAngle; }
 	public void setX(float newX) { x = newX; }
 	public void setY(float newY) { y = newY; }
+	
+	public void setOmega(float newOmega) { omega = newOmega; }
+	public void setXVelocity(float newXVelocity) { xVelocity = newXVelocity; }
+	public void setYVelocity(float newYVelocity) { yVelocity = newYVelocity; }
 	
 	/* --- Accessor Methods --- */
 	public boolean removalMarked() { return remove; }
