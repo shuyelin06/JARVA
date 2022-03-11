@@ -46,6 +46,9 @@ public class CollisionManager {
 	
 	// Runs a sort and sweep algorithm to optimize collision checking
 	public void update() {
+		// Remove inactive bounds
+		this.removeInactiveBounds();
+		
 		// Update bounds
 		for(BoundMonitor monitor: monitors) { monitor.updateBounds(); }
 		
@@ -54,8 +57,6 @@ public class CollisionManager {
 		
 		// Perform collision checks
 		checkCollisions();
-		
-//		this.removeInactiveBounds();
 	}
 	
 	
@@ -72,11 +73,8 @@ public class CollisionManager {
 				if(index == 0) break;
 				
 				Bound left = bounds.get(index);
-				if(left.getPolygon().removalMarked() || left.getValue() > cur.getValue()) {
-					index--;	
-				} else {
-					less = false;
-				}
+				if(left.getPolygon().removalMarked() || left.getValue() > cur.getValue()) index--;	
+				else less = false;
 			}
 			
 			// Move all bounds between designated indices right, and insert cur into the leftmost index
