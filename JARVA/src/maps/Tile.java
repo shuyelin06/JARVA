@@ -6,25 +6,19 @@ import org.newdawn.slick.Image;
 import engine.Settings;
 import objects.GameObject;
 
-public class Tile {
+public abstract class Tile {
+	// Sprite Image
 	protected Image sprite;
 	
-	// Tile's x and y tile coordinate
-	protected int x;
-	protected int y;
-
 	// Tile's coefficient of friction
 	protected float friction;
 	
-	public Tile(int x, int y, float friction) {
-		this.x = x;
-		this.y = y;
-		
+	public Tile(float friction) {
 		this.friction = friction;
 	}
 	
-	public void draw(Graphics g) { sprite.drawCentered(x * Settings.Tile_Size, y * Settings.Tile_Size); }
-	public float getFriction() { return friction; }
+	abstract public void applyEffect(GameObject o);
 	
-	public void applyEffect(GameObject o) {}
+	public Image getSprite() { return sprite; }
+	public float getFriction() { return friction; }
 }
