@@ -1,6 +1,6 @@
 package engine;
 
-public class Settings {
+public class Settings {	
 	// Rendering Settings
 	final public static int Resolution_X = 1920;
 	final public static int Resolution_Y = 1080;

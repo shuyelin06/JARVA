@@ -103,6 +103,21 @@ public class GameObject {
 
 	/* --- Helper Methods --- */
 	public void remove() { this.remove = true; }
+	private void friction() {
+		final float Friction = 0f;
+		this.omega -= omega * Friction;
+		this.xVelocity -= xVelocity * Friction;
+		this.yVelocity -= yVelocity * Friction;
+	}
+	private void move(float xVelocity, float yVelocity) {
+		this.x += this.xVelocity;
+		this.y += this.yVelocity;
+	}
+	private void rotate(float omega) {
+		this.angle += omega;
+//		this.sprite.rotate(omega);
+		this.hitbox.rotate(omega);
+	}
 	
 	/* --- Mutator Methods --- */
 	public void setImage(Image newImage) { sprite = newImage; }

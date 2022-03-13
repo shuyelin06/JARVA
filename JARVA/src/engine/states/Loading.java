@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Loading extends BasicGameState {
 	private int id;
+	private String message;
 	
 	// Constructor
 	public Loading(int id) { 
@@ -24,8 +25,8 @@ public class Loading extends BasicGameState {
 
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		this.message = "Loading";
 	}
 
 
