@@ -8,8 +8,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
+import ui.display.DisplayManager;
+import ui.input.InputManager;
 import objects.geometry.Polygon;
 
 public class Game extends BasicGameState {
@@ -26,7 +29,13 @@ public class Game extends BasicGameState {
 	 */
 	
 	// Managers
+	public static DisplayManager DisplayManager;
+	public static InputManager InputManager;
+	
+	public static ArenaManager ArenaManager;
 	public static CollisionManager CollisionManager;
+	
+//	public static Arena Arena;
 	
 	// Constructor
 	public Game(int id) { 
@@ -37,14 +46,17 @@ public class Game extends BasicGameState {
 	public int getID() { return id; }
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		GameObjects = new ArrayList<>();
 		
 		// Instantiate managers
 		CollisionManager = new CollisionManager(this);
+		InputManager = new InputManager(this, gc.getInput());
 		
 		// Temp
-		GameObject o1 = new GameObject(50f, 200f, Polygon.shape());
+		Polygon rect = Polygon.rectangle(50f, 100f);
+		rect.rotate(1.5f);
+		GameObject o1 = new GameObject(50f, 200f, rect);
 		o1.setXVelocity(0.15f * 60);
 		GameObject o2 = new GameObject(150f, 150f, Polygon.shape());
 		o2.setYVelocity(0.15f * 60);
@@ -56,18 +68,24 @@ public class Game extends BasicGameState {
 		o5.setYVelocity(0.25f * 60);
 	}
 
+	@Override // Input Determining
+	public void keyPressed(int key, char c) { InputManager.keyPressed(key); }
+	
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		for(GameObject object: GameObjects) { 
-			object.draw(arg2); 
+			object.draw(g); 
 		}
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		for(GameObject object: GameObjects) {
-			object.update();
-		}
+	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+		InputManager.update();
+		
+		for(GameObject object: GameObjects) { object.update(); }
+		
 		CollisionManager.update();
 	}
+	
+	
 }

@@ -13,6 +13,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Loading extends BasicGameState {
 	private int id;
 	
+	private String message;
+	
 	// Constructor
 	public Loading(int id) { 
 		this.id = id;
@@ -24,19 +26,21 @@ public class Loading extends BasicGameState {
 
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		gc.setMouseGrabbed(true);
 		
+		this.message = "Loading";
 	}
 
 
 	
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		g.drawString(message, 5f, 5f);
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
 		
 	}
 }
