@@ -12,8 +12,8 @@ import objects.geometry.Projection;
 import objects.geometry.Vector;
 
 public class GameObject {
-	public enum ObjectType { Projectile, Entity, Tile, None }
-	public enum ObjectTeam { Ally, Enemy, Neutral, None }
+	public enum ObjectType { Projectile, Entity, None }
+	public enum ObjectTeam { Ally, Enemy, Neutral }
 	
 	/* --- Instance Variables --- */
 	// Removal Mark
@@ -42,7 +42,7 @@ public class GameObject {
 		this.omega = this.xVelocity = this.yVelocity = 0f;
 		
 		this.type = ObjectType.None;
-		this.team = ObjectTeam.None;
+		this.team = ObjectTeam.Neutral;
 		
 		this.remove = false;
 		
@@ -99,7 +99,6 @@ public class GameObject {
 				
 			g.drawLine(x + vertex1.x, y + vertex1.y, x + vertex2.x, y + vertex2.y);
 		}
-		this.collision = false;
 	}
 
 	/* --- Helper Methods --- */
@@ -116,7 +115,7 @@ public class GameObject {
 	}
 	private void rotate(float omega) {
 		this.angle += omega;
-		this.sprite.rotate(omega);
+//		this.sprite.rotate(omega);
 		this.hitbox.rotate(omega);
 	}
 	
@@ -127,6 +126,10 @@ public class GameObject {
 	
 	public void setX(float newX) { x = newX; }
 	public void setY(float newY) { y = newY; }
+	
+	public void addOmega(float newOmega) { omega += newOmega; }
+	public void addXVelocity(float newXVelocity) { xVelocity += newXVelocity; }
+	public void addYVelocity(float newYVelocity) { yVelocity += newYVelocity; }
 	
 	public void setOmega(float newOmega) { omega = newOmega; }
 	public void setXVelocity(float newXVelocity) { xVelocity = newXVelocity; }
