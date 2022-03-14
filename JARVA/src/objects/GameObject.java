@@ -99,6 +99,8 @@ public class GameObject {
 				
 			g.drawLine(x + vertex1.x, y + vertex1.y, x + vertex2.x, y + vertex2.y);
 		}
+		
+		collision = false;
 	}
 
 	/* --- Helper Methods --- */

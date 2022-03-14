@@ -60,28 +60,27 @@ public class CollisionManager {
 	}
 	
 	
-	private void insertionSort() {
+	private void insertionSort() {		
 		for(int i = 1; i < bounds.size(); i++) {
 			// Get current bound 
 			Bound cur = bounds.get(i);
 			if(cur.getPolygon().removalMarked()) continue;
 			
-			// Find index where the left bound is 
-			boolean less = true;
-			int index = i - 1;
-			while(less) {
+			// Find index where the left bound is
+			int index = i;
+			while(true) {
 				if(index == 0) break;
 				
-				Bound left = bounds.get(index);
+				Bound left = bounds.get(index - 1);
 				if(left.getPolygon().removalMarked() || left.getValue() > cur.getValue()) index--;	
-				else less = false;
+				else break;
 			}
 			
 			// Move all bounds between designated indices right, and insert cur into the leftmost index
 			for(int j = i; j > index; j --) {
 				bounds.set(j, bounds.get(j - 1));
 			}
-			bounds.set(index, cur);
+			bounds.set(index, cur);		
 		}
 	}
 	
