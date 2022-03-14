@@ -11,13 +11,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
 import objects.geometry.Polygon;
+import ui.input.InputManager;
 
 public class Game extends BasicGameState {
 	private int id; // GameState ID
 	
 	
 	public static ArrayList<GameObject> GameObjects; // All Game Objects
-	
+	public static GameObject Player;
 	/*
 	 * TerritoryManager
 	 * EntityManager
@@ -27,6 +28,7 @@ public class Game extends BasicGameState {
 	
 	// Managers
 	public static CollisionManager CollisionManager;
+	public static InputManager InputManager;
 	
 	// Constructor
 	public Game(int id) { 
@@ -37,13 +39,19 @@ public class Game extends BasicGameState {
 	public int getID() { return id; }
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		// Initialize GameObjects List
 		GameObjects = new ArrayList<>();
 		
 		// Instantiate managers
+		InputManager = new InputManager(this, gc.getInput());
 		CollisionManager = new CollisionManager(this);
 		
 		// Temp
+		// Initialize Player
+		Player = new GameObject(300f, 400f, Polygon.shape());
+		
+		// Other Objects
 		Polygon rect = Polygon.rectangle(50f, 100f);
 		rect.rotate(1.5f);
 		GameObject o1 = new GameObject(50f, 200f, rect);
@@ -70,6 +78,7 @@ public class Game extends BasicGameState {
 		for(GameObject object: GameObjects) {
 			object.update();
 		}
+		InputManager.update();
 		CollisionManager.update();
 	}
 }

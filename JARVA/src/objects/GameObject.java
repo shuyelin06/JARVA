@@ -12,8 +12,8 @@ import objects.geometry.Projection;
 import objects.geometry.Vector;
 
 public class GameObject {
-	public enum ObjectType { Projectile, Entity, Tile, None }
-	public enum ObjectTeam { Ally, Enemy, Neutral, None }
+	public enum ObjectType { Projectile, Entity, None }
+	public enum ObjectTeam { Ally, Enemy, Neutral }
 	
 	/* --- Instance Variables --- */
 	// Removal Mark
@@ -42,7 +42,7 @@ public class GameObject {
 		this.angle = this.omega = this.xVelocity = this.yVelocity = 0f;
 		
 		this.type = ObjectType.None;
-		this.team = ObjectTeam.None;
+		this.team = ObjectTeam.Neutral;
 		
 		this.remove = false;
 		
@@ -75,6 +75,8 @@ public class GameObject {
 		x += xVelocity / Settings.Frames_Per_Second;
 		y += yVelocity / Settings.Frames_Per_Second;
 		angle += omega / Settings.Frames_Per_Second;
+		
+		friction();
 	}
 	
 	// Rendering
@@ -98,13 +100,12 @@ public class GameObject {
 				
 			g.drawLine(x + vertex1.x, y + vertex1.y, x + vertex2.x, y + vertex2.y);
 		}
-		this.collision = false;
 	}
 
 	/* --- Helper Methods --- */
 	public void remove() { this.remove = true; }
 	private void friction() {
-		final float Friction = 0f;
+		final float Friction = 0.1f;
 		this.omega -= omega * Friction;
 		this.xVelocity -= xVelocity * Friction;
 		this.yVelocity -= yVelocity * Friction;
@@ -127,6 +128,10 @@ public class GameObject {
 	public void setAngle(float newAngle) { angle = newAngle; }
 	public void setX(float newX) { x = newX; }
 	public void setY(float newY) { y = newY; }
+	
+	public void addOmega(float newOmega) { omega += newOmega; }
+	public void addXVelocity(float newXVelocity) { xVelocity += newXVelocity; }
+	public void addYVelocity(float newYVelocity) { yVelocity += newYVelocity; }
 	
 	public void setOmega(float newOmega) { omega = newOmega; }
 	public void setXVelocity(float newXVelocity) { xVelocity = newXVelocity; }
