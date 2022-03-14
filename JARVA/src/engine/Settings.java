@@ -9,4 +9,7 @@ public class Settings {
 	
 	// Sound Settings
 	final public static float Volume = 0.5f;
+
+	// Arena Settings
+	final public static float Tile_Size = 10f;
 }

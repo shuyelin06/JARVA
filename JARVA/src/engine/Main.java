@@ -46,11 +46,8 @@ public class Main extends StateBasedGame
 	{
 		addState(loading);
 		
-		addState(game);
-		
-		
 		addState(title);
-		
+		addState(game);		
 		addState(end);
 	}
 

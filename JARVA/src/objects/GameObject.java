@@ -39,7 +39,7 @@ public class GameObject {
 	
 	public GameObject(float x, float y, Polygon polygon) {
 		// Default Variables
-		this.angle = this.omega = this.xVelocity = this.yVelocity = 0f;
+		this.omega = this.xVelocity = this.yVelocity = 0f;
 		
 		this.type = ObjectType.None;
 		this.team = ObjectTeam.Neutral;
@@ -72,11 +72,12 @@ public class GameObject {
 	}
 	
 	private void updatePhysics() {
-		x += xVelocity / Settings.Frames_Per_Second;
-		y += yVelocity / Settings.Frames_Per_Second;
-		angle += omega / Settings.Frames_Per_Second;
-		
-		friction();
+		// Update Positions
+		this.move(xVelocity / Settings.Frames_Per_Second, yVelocity / Settings.Frames_Per_Second);
+		this.rotate(omega / Settings.Frames_Per_Second);
+
+		// Friction
+		this.friction();
 	}
 	
 	// Rendering
@@ -84,9 +85,7 @@ public class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) {
-		
-	}
+	private void drawSprite(Graphics g) { sprite.drawCentered(x, y); }
 	protected void drawHitbox(Graphics g) {
 		Vector[] vertices = hitbox.getVertices();
 		
@@ -105,7 +104,7 @@ public class GameObject {
 	/* --- Helper Methods --- */
 	public void remove() { this.remove = true; }
 	private void friction() {
-		final float Friction = 0.1f;
+		final float Friction = 0.5f;
 		this.omega -= omega * Friction;
 		this.xVelocity -= xVelocity * Friction;
 		this.yVelocity -= yVelocity * Friction;
@@ -125,7 +124,6 @@ public class GameObject {
 	public void setWidth(float newWidth) { width = newWidth; }
 	public void setHeight(float newHeight) { height = newHeight; }
 	
-	public void setAngle(float newAngle) { angle = newAngle; }
 	public void setX(float newX) { x = newX; }
 	public void setY(float newY) { y = newY; }
 	
@@ -136,6 +134,10 @@ public class GameObject {
 	public void setOmega(float newOmega) { omega = newOmega; }
 	public void setXVelocity(float newXVelocity) { xVelocity = newXVelocity; }
 	public void setYVelocity(float newYVelocity) { yVelocity = newYVelocity; }
+	public void setVelocities(float newXVelocity, float newYVelocity) {
+		xVelocity = newXVelocity;
+		yVelocity = newYVelocity;
+	}
 	
 	/* --- Accessor Methods --- */
 	public boolean removalMarked() { return remove; }

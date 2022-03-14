@@ -32,4 +32,11 @@ public class InputManager {
 		}
 	}
 	
+	// Key Pressed
+	public void keyPressed(int key) {
+		switch(key) {
+			default: 
+				break;
+		}
+	}
 }
