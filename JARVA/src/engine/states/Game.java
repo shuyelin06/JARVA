@@ -20,15 +20,9 @@ import ui.input.InputManager;
 public class Game extends BasicGameState {
 	private int id; // GameState ID
 	
-	
-	public static ArrayList<GameObject> GameObjects; // All Game Objects
+	// Game Objects
+	public static ArrayList<GameObject> GameObjects; 
 	public static GameObject Player;
-	/*
-	 * TerritoryManager
-	 * EntityManager
-	 * SoundManager
-	 * 
-	 */
 	
 	// Managers
 	public static DisplayManager DisplayManager;
@@ -36,8 +30,6 @@ public class Game extends BasicGameState {
 	
 	public static ArenaManager ArenaManager;
 	public static CollisionManager CollisionManager;
-	
-//	public static Arena Arena;
 	
 	// Constructor
 	public Game(int id) { 
