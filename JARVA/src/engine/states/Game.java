@@ -11,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
+import objects.entities.Entity;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
 import objects.geometry.Polygon;
@@ -21,6 +22,7 @@ public class Game extends BasicGameState {
 	
 	
 	public static ArrayList<GameObject> GameObjects; // All Game Objects
+	
 	public static GameObject Player;
 	/*
 	 * TerritoryManager
@@ -32,11 +34,15 @@ public class Game extends BasicGameState {
 	// Managers
 	public static DisplayManager DisplayManager;
 	public static InputManager InputManager;
-	
 	public static ArenaManager ArenaManager;
 	public static CollisionManager CollisionManager;
 	
-//	public static Arena Arena;
+	// Accessor Methods
+	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
+	public ArenaManager getArenaManager() { return ArenaManager; }
+	public DisplayManager getDisplayManager() { return DisplayManager; }
+	public InputManager getInputManager() { return InputManager; }
+	public CollisionManager getCollisionManager() { return CollisionManager; }
 	
 	// Constructor
 	public Game(int id) { 
