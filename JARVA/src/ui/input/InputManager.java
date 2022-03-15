@@ -16,8 +16,8 @@ public class InputManager {
 	
 	// Check for Keys Down
 	public void update() {
-		final float Velocity = 3.5f;
-		if(input.isKeyDown(Input.KEY_W)) {
+		final float Velocity = 100f;
+		if(input.isKeyDown(Input.KEY_W)) { 
 			Game.Player.addYVelocity(-Velocity);
 		}
 		if(input.isKeyDown(Input.KEY_S)) {

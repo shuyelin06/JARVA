@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import engine.Settings;
 import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
@@ -55,25 +56,41 @@ public class Game extends BasicGameState {
 		InputManager = new InputManager(this, gc.getInput());
 		CollisionManager = new CollisionManager(this);
 		InputManager = new InputManager(this, gc.getInput());
-		
-		// Temp
+	}
+	
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Player
-		Player = new GameObject(300f, 400f, Polygon.shape());
+		Player = new GameObject(Polygon.shape())
+				.setX(300f)
+				.setY(400f);
 		
 		// Other Objects
-		Polygon rect = Polygon.rectangle(50f, 100f);
-		rect.rotate(1.5f);
-		GameObject o1 = new GameObject(50f, 200f, rect);
-		o1.setXVelocity(0.15f);
+		new GameObject( Polygon.rectangle(50f, 100f).rotate(1.5f) )
+				.setOmega(0.1f)
+				.setX(50f)
+				.setY(200f)
+				.setXVelocity(0.15f);
 		
-		GameObject o2 = new GameObject(150f, 150f, Polygon.shape());
-		o2.setYVelocity(0.15f);
-		GameObject o3 = new GameObject(300f, 150f, Polygon.shape());
-		o3.setXVelocity(-0.3f);
-		GameObject o4 = new GameObject(300f, 500f, Polygon.shape());
-		o4.setYVelocity(-0.5f);
-		GameObject o5 = new GameObject(200f, 0f, Polygon.shape());
-		o5.setYVelocity(0.25f);
+		new GameObject( Polygon.shape() )
+				.setX(150f)
+				.setY(150f)
+				.setYVelocity(0.15f);
+		
+		new GameObject( Polygon.shape() )
+				.setX(300f)
+				.setY(150f)
+				.setXVelocity(-0.3f);
+		
+		new GameObject( Polygon.shape() )
+				.setX(300f)
+				.setY(500f)
+				.setYVelocity(-0.5f);
+		
+		new GameObject( Polygon.shape() )
+				.setX(200f)
+				.setY(0f)
+				.setYVelocity(0.25f);
 	}
 
 	@Override // Input Determining

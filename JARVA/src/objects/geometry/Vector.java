@@ -15,7 +15,24 @@ public class Vector {
 		this.y = y;
 	}
 	
+	// Object Helper Methods
+	public float magnitude() { return (float) Math.sqrt(x * x + y * y); }
+	
 	// Mutator Methods
+	public void setX(float x2) { x = x2; }
+	public void setY(float y2) { y = y2; }
+	
+	public void addX(float x2) { x += x2; }
+	public void addY(float y2) { y += y2; }
+	
+	public void reduce(float reduction) {
+		x -= x * reduction;
+		y -= y * reduction;
+	}
+	public void scalarMultiply(float scalar) {
+		x *= scalar;
+		y *= scalar;
+	}
 	public void rotate(float angle) {
 		 float rotatedX = x * Utility.cos(angle) - y * Utility.sin(angle);
 		 float rotatedY = x * Utility.sin(angle) + y * Utility.cos(angle);
