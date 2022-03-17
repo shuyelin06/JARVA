@@ -20,6 +20,9 @@ import ui.input.InputManager;
 public class Game extends BasicGameState {
 	private int id; // GameState ID
 	
+	// Game Timer
+	public static float Ticks;
+	
 	// Game Objects
 	public static ArrayList<GameObject> GameObjects; 
 	public static GameObject Player;
@@ -32,15 +35,18 @@ public class Game extends BasicGameState {
 	public static CollisionManager CollisionManager;
 	
 	// Constructor
-	public Game(int id) { 
-		this.id = id;
-	}
+	public Game(int id) { this.id = id; }
 	
 	@Override
 	public int getID() { return id; }
 	
+	public static int getTicks() { return (int) Ticks; }
+	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		// Initialize Timers
+		Ticks = 0f;
+		
 		// Initialize GameObjects List
 		GameObjects = new ArrayList<>();
 		
@@ -97,10 +103,16 @@ public class Game extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+		// Update Timers
+		Ticks += Settings.Tick_Speed / Settings.Frames_Per_Second;
+		
+		// Input Manager
 		InputManager.update();
 		
+		// Update GameObjects
 		for(GameObject object: GameObjects) { object.update(); }
 		
+		// Determine Collisions
 		CollisionManager.update();
 	}
 	

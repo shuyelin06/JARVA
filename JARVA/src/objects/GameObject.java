@@ -1,5 +1,6 @@
 package objects;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -31,7 +32,8 @@ public class GameObject {
 	protected Polygon hitbox;
 	
 	// Rendering
-	protected Image sprite;
+	protected Animation animation;
+	protected Image sprite; // Temp
 	
 	// Object Type and Team
 	protected ObjectType type;

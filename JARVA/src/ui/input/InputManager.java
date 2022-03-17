@@ -31,7 +31,14 @@ public class InputManager {
 			Game.Player.addXVelocity(Velocity);
 		}
 	}
-	
+
+	// Mouse Pressed
+	public void mousePressed(int key) {
+		switch(key) {
+			default:
+				break;
+		}
+	}
 	// Key Pressed
 	public void keyPressed(int key) {
 		switch(key) {
