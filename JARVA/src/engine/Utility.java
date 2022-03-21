@@ -9,6 +9,10 @@ public class Utility {
 	
 	public static float atan(float y, float x) { return (float) Math.atan2(y, x); }
 	
+	// Conversions
+	public static float ConvertToDegrees(float radians) { return (float) (radians * 180 / Math.PI); }
+	public static float ConvertToRadians(float degrees) { return (float) (degrees * Math.PI / 180); }
+	
 	// Linear Algebra Methods
 	public static float crossK(Vector v1, Vector v2) { return v1.x * v2.y - v1.y * v2.x; }
 	

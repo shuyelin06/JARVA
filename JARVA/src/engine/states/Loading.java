@@ -1,74 +1,117 @@
 package engine.states;
 
-import ui.display.images.ImageLoader;
-import ui.sound.SoundLoader;
+import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.loading.DeferredResource;
+import org.newdawn.slick.loading.LoadingList;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import engine.Main;
-import engine.Settings;
+import engine.loading.Resource;
 
 public class Loading extends BasicGameState {
-	private StateBasedGame sbg;
-	private int id;
-	
-	private String message;
-	private int state;
-	
-	// Constructor
-	public Loading(int id) { 
-		this.id = id;
-		
-	}
-	
-	@Override
-	public int getID() { return id; }
+    final public static String Res_Folder = System.getProperty("user.dir") + "/res";
 
-	
-	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		this.sbg = sbg;
-		
-		this.message = "Loading";
-		this.state = 0;
-		
-		System.out.println("Done");
-	}
+    private LoadingList loadingList;
+    private String lastResource;
 
+    private int id;
 
-	
-	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawString(message, Settings.Resolution_X / 2, Settings.Resolution_Y / 2);
-	}
+    private int totalTasks;
+    private int tasksDone;
 
-	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
-		switch(state) {
-			case 0:
-				ImageLoader.loadImages(new File("res/images/"));
-				state = 1;
-				message = "Loading Images";
-				break;
-			
-			case 1:
-				SoundLoader.loadSounds(new File("res/sounds/"));
-				state = 2;
-				message = "Loading Sounds";
-				break;
-			
-			default:
-				message = "Done";
-				leave();
-				break;
-		}
-	}
-	
-	private void leave() { sbg.enterState(Main.GAME_ID); }
+    public Loading(int id) {
+        this.id = id;
+    }
+    
+    public int getID() { return id; }
+
+    // Initialize LoadingList
+    private void initializeLoadingList(File dir, LoadingList loadingList) {
+        for(final File file: dir.listFiles()) {
+            if(file.isDirectory()) {
+                initializeLoadingList(file, loadingList);
+            } else {
+                loadingList.add(new Resource(file));
+            }
+        }
+    }
+
+    // Initializer, first time
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
+    {
+        gc.setShowFPS(false);
+        this.loadingList = LoadingList.get();
+    }
+
+    @Override // Begin file loading upon entering the gamestate
+    public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        // Set Loading List to Deferred
+        LoadingList.setDeferredLoading(true);
+
+        // Initialize Loading List
+        initializeLoadingList(new File(Res_Folder), loadingList);
+        
+        // Determine Tasks
+        this.totalTasks = loadingList.getTotalResources();
+        this.tasksDone = 0;
+    }
+
+    @Override // Update, runs consistently
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
+    {
+        // Load New resource
+        if(loadingList.getRemainingResources() > 0) {
+            try {
+                DeferredResource resource = loadingList.getNext();
+                resource.load();
+                lastResource = resource.getDescription();
+            } catch(IOException e) {
+                System.out.println("Failed to load a resource");
+            }
+        }
+        // Loading Complete: Move to Start Menu
+        else {
+            sbg.enterState(Main.GAME_ID);
+        }
+    }
+
+    @Override // Render, all visuals
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
+    {
+        // Calculate the number of tasks done
+        this.tasksDone = loadingList.getTotalResources() - loadingList.getRemainingResources();
+
+        // Draw a Loading Bar
+        final float BAR_WIDTH = gc.getWidth() - 0.25f * gc.getWidth();
+        final float BAR_HEIGHT = 0.0926f * gc.getHeight();
+
+        final float BAR_X = gc.getWidth() / 2 - BAR_WIDTH / 2;
+        final float BAR_Y = gc.getHeight() / 2 - BAR_HEIGHT / 2;
+
+        final float PERCENT_LOADED = (float) tasksDone / (float) totalTasks;
+
+        // max loading bar
+        g.setColor(new Color(0, 100, 0, 150));
+        g.fillRect(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT);
+
+        // current loaded
+        g.setColor(new Color(0, 255, 0, 150));
+        g.fillRect(BAR_X, BAR_Y, BAR_WIDTH * PERCENT_LOADED, BAR_HEIGHT);
+
+        // white outline
+        g.setColor(new Color(255, 255, 255));
+        g.drawRect(BAR_X, BAR_Y, BAR_WIDTH, BAR_HEIGHT);
+
+        g.drawString("Loaded " + lastResource, BAR_X + BAR_WIDTH / 2 - 35f, BAR_Y + BAR_HEIGHT + 25f);
+    }
 }

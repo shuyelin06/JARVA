@@ -13,6 +13,6 @@ public class PitTile extends Tile {
 	}
 	
 	public void applyEffect(GameObject o) {
-		o.setVelocities(0f, 0f);
+		o.setXVelocity(0f).setYVelocity(0f);
 	}
 }

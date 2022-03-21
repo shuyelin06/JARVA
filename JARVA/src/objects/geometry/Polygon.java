@@ -47,8 +47,9 @@ public class Polygon {
 	}
 	
 	// Rotate every vertex by some radians counterclockwise
-	public void rotate(float angle) { 
+	public Polygon rotate(float angle) { 
 		for(Vector v: vertices) { v.rotate(angle); }
+		return this;
 	}
 	
 	/* --- Static Shape Methods --- */

@@ -8,10 +8,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import engine.Settings;
 import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
-import objects.entities.Entity;
+import objects.entities.Unit;
+import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
 import objects.geometry.Polygon;
@@ -20,11 +22,13 @@ import ui.input.InputManager;
 public class Game extends BasicGameState {
 	private int id; // GameState ID
 	
+	// Game Timer
+	public static float Ticks;
 	
-	public static ArrayList<GameObject> GameObjects; // All Game Objects
-	
+	// Game Objects
+	public static ArrayList<GameObject> GameObjects; 
 	public static GameObject Player;
-	
+
 	public static boolean debug;
 	
 	/*
@@ -49,16 +53,19 @@ public class Game extends BasicGameState {
 	public boolean getDebug() { return debug; }
 	
 	// Constructor
-	public Game(int id) { 
-		this.id = id;
-	}
+	public Game(int id) { this.id = id; }
 	
 	@Override
 	public int getID() { return id; }
 	
+	public static int getTicks() { return (int) Ticks; }
+	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		// Debug Mode
+		// Initialize Timers
+		Ticks = 0f;
+		
+    // Debug Mode
 		debug = false;
 		
 		// Initialize GameObjects List
@@ -67,28 +74,48 @@ public class Game extends BasicGameState {
 		// Instantiate managers
 		InputManager = new InputManager(this, gc.getInput());
 		CollisionManager = new CollisionManager(this);
-		InputManager = new InputManager(this, gc.getInput());
-		DisplayManager = new DisplayManager(this);
-		
-		// Temp
+    DisplayManager = new DisplayManager(this);
+	}
+	
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Player
-		Player = new GameObject(300f, 400f, Polygon.shape());
+		Player = new objects.entities.Player()
+				.setX(300f)
+				.setY(400f)
+				.build();
 		
 		// Other Objects
-		Polygon rect = Polygon.rectangle(50f, 100f);
-		rect.rotate(1.5f);
-		GameObject o1 = new GameObject(50f, 200f, rect);
-		o1.setXVelocity(0.15f);
+		new Tumbleweed()
+				.setOmega(0.1f)
+				.setX(50f)
+				.setY(200f)
+				.setXVelocity(0.15f)
+				.build();
 		
-		GameObject o2 = new GameObject(150f, 150f, Polygon.shape());
-		o2.setYVelocity(0.15f);
-		GameObject o3 = new GameObject(300f, 150f, Polygon.shape());
-		o3.setXVelocity(-0.3f);
-		GameObject o4 = new GameObject(300f, 500f, Polygon.shape());
-		o4.setYVelocity(-0.5f);
+		new Tumbleweed()
+				.setX(150f)
+				.setY(150f)
+				.setYVelocity(0.15f)
+				.build();
 		
-		GameObject o5 = new GameObject(200f, 0f, Polygon.shape());
-		o5.setYVelocity(0.25f);
+		new Tumbleweed()
+				.setX(300f)
+				.setY(150f)
+				.setXVelocity(-0.3f)
+				.build();
+		
+		new Tumbleweed()
+				.setX(300f)
+				.setY(500f)
+				.setYVelocity(-0.5f)
+				.build();
+		
+		new Tumbleweed()
+				.setX(200f)
+				.setY(0f)
+				.setYVelocity(0.25f)
+				.build();
 	}
 
 	@Override // Input Determining
@@ -98,12 +125,48 @@ public class Game extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException { DisplayManager.render(g); }
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
+		// Update Timers
+		Ticks += Settings.Tick_Speed / Settings.Frames_Per_Second;
+		
+		// Input Manager
 		InputManager.update();
 		
-		for(GameObject object: GameObjects) { object.update(); }
+		// Update GameObjects
+		updateObjects();
 		
+		// Determine Collisions
 		CollisionManager.update();
+	}
+	
+	private void updateObjects() {
+		// Update Objects
+		int pointer = GameObjects.size() - 1;
+		for(int i = 0; i < GameObjects.size(); i++) {
+			GameObject current = GameObjects.get(i);
+			if(current.removalMarked()) {
+				// Move marked objects to the end of the list
+				if(pointer == i) break;
+				
+				GameObject last = GameObjects.get(pointer);
+				
+				GameObjects.set(i, last);
+				GameObjects.set(pointer, current);
+				
+				pointer--;
+			} else {
+				// Else, Update Object
+				current.update(); 
+			}
+		}
+		// Remove Marked Object
+		for(int i = GameObjects.size() - 1; i >= 0; i--) {
+			GameObject current = GameObjects.get(i);
+		
+			if(current.removalMarked()) {
+				GameObjects.remove(i);
+			} else break;
+		}
 	}
 	
 	
