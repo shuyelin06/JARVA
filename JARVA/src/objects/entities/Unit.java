@@ -7,7 +7,7 @@ import objects.GameObject;
 import objects.geometry.Polygon;
 
 public abstract class Unit extends GameObject {
-	private final float ContactKnockback = 25f;
+	private final float ContactKnockback = 35f;
 	
 	// Switches
 	protected boolean immovable; // Knockback Switch 
@@ -47,7 +47,7 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Inherited Methods --- */
-	public abstract void entityUpdate();
+	protected abstract void unitUpdate();
 	
 	/* --- Implemented Methods --- */
 	@Override
@@ -62,11 +62,13 @@ public abstract class Unit extends GameObject {
 		if(lastDamageTaken < invulnerability) { invulnerable = false; }
 		
 		// Entity AI
-		entityUpdate();
+		unitUpdate();
 	}
 	
 	@Override
 	public void collision(GameObject o) {
+		super.collision(o);
+		
 		if( o.getType() == ObjectType.Unit && o.getTeam() != this.getTeam() ) {
 			Unit unit = (Unit) o;
 			
@@ -87,7 +89,7 @@ public abstract class Unit extends GameObject {
 		}
 	}
 	public void takeDamage(float damage) { // Overwritable
-		if(!invulnerable) {
+		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
 		}
 	}

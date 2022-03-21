@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import objects.GameObject;
 import objects.geometry.Polygon;
 
-public class Projectile extends GameObject {
+public abstract class Projectile extends GameObject {
 	public enum ProjectileType {}
 	
 	// Piercing Variables
@@ -30,9 +30,7 @@ public class Projectile extends GameObject {
 	}
 	
 	/* --- Inherited Methods --- */
-	public void projectileUpdate() {
-		
-	}
+	public abstract void projectileUpdate();
 	
 	/* --- Implemented Methods --- */
 	@Override

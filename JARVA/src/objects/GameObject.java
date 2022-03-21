@@ -71,6 +71,7 @@ public abstract class GameObject {
 	// Update 
 	public void update() {
 		if( remove ) return;
+
 		objectUpdate();
 		updatePhysics();
 	}

@@ -22,7 +22,11 @@ public class ImageManager {
 	public static Image getImageCopy(String s) { return Images.get(s).copy(); }
 	public static Image getImageCopy(String s, int width, int height) { 
 		Image im = Images.get(s);
-		return im.getScaledCopy(width, height);
+		if( im != null ) {
+			return im.getScaledCopy(width, height);
+		} else {
+			return getPlaceholder().getScaledCopy(width, height);
+		}
 	}
 	
 }

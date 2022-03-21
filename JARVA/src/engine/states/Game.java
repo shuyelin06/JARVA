@@ -13,6 +13,7 @@ import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
 import objects.entities.Unit;
+import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
 import objects.geometry.Polygon;
@@ -60,38 +61,38 @@ public class Game extends BasicGameState {
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Player
-		Player = new Unit( Polygon.shape() )
+		Player = new objects.entities.Player()
 				.setX(300f)
 				.setY(400f)
 				.build();
 		
 		// Other Objects
-		new Unit( Polygon.rectangle(50f, 100f).rotate(1.5f) )
+		new Tumbleweed()
 				.setOmega(0.1f)
 				.setX(50f)
 				.setY(200f)
 				.setXVelocity(0.15f)
 				.build();
 		
-		new Unit( Polygon.shape() )
+		new Tumbleweed()
 				.setX(150f)
 				.setY(150f)
 				.setYVelocity(0.15f)
 				.build();
 		
-		new Unit( Polygon.shape() )
+		new Tumbleweed()
 				.setX(300f)
 				.setY(150f)
 				.setXVelocity(-0.3f)
 				.build();
 		
-		new Unit( Polygon.shape() )
+		new Tumbleweed()
 				.setX(300f)
 				.setY(500f)
 				.setYVelocity(-0.5f)
 				.build();
 		
-		new Unit( Polygon.shape() )
+		new Tumbleweed()
 				.setX(200f)
 				.setY(0f)
 				.setYVelocity(0.25f)
@@ -110,7 +111,7 @@ public class Game extends BasicGameState {
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
 		// Update Timers
 		Ticks += Settings.Tick_Speed / Settings.Frames_Per_Second;
 		
@@ -118,10 +119,40 @@ public class Game extends BasicGameState {
 		InputManager.update();
 		
 		// Update GameObjects
-		for(GameObject object: GameObjects) { object.update(); }
+		updateObjects();
 		
 		// Determine Collisions
 		CollisionManager.update();
+	}
+	
+	private void updateObjects() {
+		// Update Objects
+		int pointer = GameObjects.size() - 1;
+		for(int i = 0; i < GameObjects.size(); i++) {
+			GameObject current = GameObjects.get(i);
+			if(current.removalMarked()) {
+				// Move marked objects to the end of the list
+				if(pointer == i) break;
+				
+				GameObject last = GameObjects.get(pointer);
+				
+				GameObjects.set(i, last);
+				GameObjects.set(pointer, current);
+				
+				pointer--;
+			} else {
+				// Else, Update Object
+				current.update(); 
+			}
+		}
+		// Remove Marked Object
+		for(int i = GameObjects.size() - 1; i >= 0; i--) {
+			GameObject current = GameObjects.get(i);
+		
+			if(current.removalMarked()) {
+				GameObjects.remove(i);
+			} else break;
+		}
 	}
 	
 	
