@@ -53,7 +53,7 @@ public abstract class Unit extends GameObject {
 	@Override
 	public void objectUpdate() {
 		// Entity Dying
-		if(health < 0f) {
+		if(health <= 0f) {
 			remove();
 			return;
 		}
@@ -69,15 +69,24 @@ public abstract class Unit extends GameObject {
 	public void collision(GameObject o) {
 		super.collision(o);
 		
-		if( o.getType() == ObjectType.Unit && o.getTeam() != this.getTeam() ) {
+		if( o.getType() == ObjectType.Unit ) {
 			Unit unit = (Unit) o;
-			
 			unit.takeKnockback(this, ContactKnockback);
-			unit.takeDamage(baseDamage);
+			
+			if( o.getTeam() != this.getTeam() ) {
+				unit.takeDamage(baseDamage);
+			}
 		}
 	}
 	
 	/* --- Helper Methods --- */
+	public void takeHealing(float heal) {
+		health += heal;
+		
+		if(health > maxHealth) { 
+			health = maxHealth; 
+		}
+	}
 	public void takeKnockback(GameObject o, float knockback) {
 		if(!immovable) {
 			float angle = Utility.atan( o.getY() - getY(), o.getX() - getX() );

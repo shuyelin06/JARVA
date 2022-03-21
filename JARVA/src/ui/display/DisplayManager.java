@@ -7,6 +7,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
 import engine.Main;
+import engine.Settings;
 import engine.states.Game;
 import maps.Arena;
 import maps.Tile;
@@ -17,8 +18,6 @@ public class DisplayManager {
 	private Arena arena;
 	
 	private SpriteSheet tileset;
-	
-	private final float scale = 3;
 	
 	public DisplayManager(Game game) {
 		this.game = game;
@@ -35,15 +34,9 @@ public class DisplayManager {
 		
 		renderHUD(g);
 		
-		g.scale(scale, scale);
+		g.scale(Settings.Scale, Settings.Scale);
 		renderObjects(g);
 		renderArena(g);
-//		if (game.getDebug()) {
-//			for (int i = 0; i < 100; i++) {
-//				g.drawLine(0, i, (Main.getScreenWidth() / scale) - 30, i);
-//				g.drawLine(i, 0, i, (Main.getScreenHeight() / scale) - 30);
-//			}
-//		}
 		
 	}
 	

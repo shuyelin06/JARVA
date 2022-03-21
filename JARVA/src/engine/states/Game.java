@@ -144,20 +144,46 @@ public class Game extends BasicGameState {
 		int pointer = GameObjects.size() - 1;
 		for(int i = 0; i < GameObjects.size(); i++) {
 			GameObject current = GameObjects.get(i);
-			if(current.removalMarked()) {
-				// Move marked objects to the end of the list
-				if(pointer == i) break;
-				
+			
+			if( current.removalMarked() ) {
 				GameObject last = GameObjects.get(pointer);
+				while( last.removalMarked() ) {
+					pointer--;
+					
+					last = GameObjects.get(pointer);
+					if( current.equals(last) ) break;
+				}
 				
-				GameObjects.set(i, last);
-				GameObjects.set(pointer, current);
+				if( current.equals(last) ) break;
+				else {
+					GameObjects.set(i, last);
+					GameObjects.set(pointer, current);
+					
+					current = last;
+				}
 				
-				pointer--;
-			} else {
-				// Else, Update Object
-				current.update(); 
 			}
+			
+			current.update();
+//			if( current.removalMarked() ) break; 
+//			else current.update();
+////			if( current.removalMarked() ) {
+////				// Move marked objects to the end of the list
+////				if(pointer == i) break;
+////				
+////				
+////				
+////				
+////				
+////				pointer--;
+////			} else {
+////				// Else, Update Object
+////				current.update(); 
+////			}
+		}
+		System.out.println("----");
+		for(GameObject o: GameObjects) {
+			System.out.println(o.removalMarked());
 		}
 		// Remove Marked Object
 		for(int i = GameObjects.size() - 1; i >= 0; i--) {
