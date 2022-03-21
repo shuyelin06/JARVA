@@ -26,7 +26,7 @@ public abstract class GameObject {
 	protected float x, y;
 	
 	protected Vector velocity;
-	float angle, omega, maxVelocity;
+	protected float angle, omega, maxVelocity;
 	
 	// Hitbox
 	protected Polygon hitbox;
@@ -63,6 +63,7 @@ public abstract class GameObject {
 	
 	/* --- Ineherited Methods --- */
 	public abstract void objectUpdate();
+	public abstract void objectDraw(Graphics g);
 	public void collision(GameObject o) { 
 		this.collision = true;
 	}
@@ -93,6 +94,7 @@ public abstract class GameObject {
 	// Rendering
 	public void draw(Graphics g) {
 		drawSprite(g);
+		objectDraw(g);
 		drawHitbox(g);
 	}
 	// Rendering Methods

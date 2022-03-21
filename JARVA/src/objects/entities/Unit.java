@@ -1,6 +1,9 @@
 package objects.entities;
 
 import org.lwjgl.Sys;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
 
 import engine.Utility;
 import objects.GameObject;
@@ -50,6 +53,12 @@ public abstract class Unit extends GameObject {
 	protected abstract void unitUpdate();
 	
 	/* --- Implemented Methods --- */
+	public void objectDraw(Graphics g) {
+		if(invulnerable) {
+			g.setColor(Color.blue);
+			g.draw(new Circle(x, y, 25f));
+		}
+	}
 	@Override
 	public void objectUpdate() {
 		// Entity Dying
@@ -59,7 +68,7 @@ public abstract class Unit extends GameObject {
 		}
 		
 		// Invulnerability Timer
-		if(lastDamageTaken < invulnerability) { invulnerable = false; }
+		if(Sys.getTime() - lastDamageTaken < invulnerability) { invulnerable = false; }
 		
 		// Entity AI
 		unitUpdate();
@@ -100,6 +109,9 @@ public abstract class Unit extends GameObject {
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
+			
+			invulnerable = true;
+			lastDamageTaken = Sys.getTime();
 		}
 	}
 	

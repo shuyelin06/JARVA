@@ -14,6 +14,8 @@ import maps.Tile;
 import objects.GameObject;
 
 public class DisplayManager {
+	public static boolean Debug = false;
+	
 	private Game game;
 	private Arena arena;
 	

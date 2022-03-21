@@ -8,7 +8,10 @@ public class Player extends Unit {
 	public Player() {
 		super(Polygon.rectangle(150f, 50f));
 		
+		this.team = ObjectTeam.Ally;
 		this.sprite = ImageManager.getImageCopy("Placeholder", 150, 50);
+		
+		this.contactDamage = 500f;
 	}
 	
 	public void unitUpdate() {};
