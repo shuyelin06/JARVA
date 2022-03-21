@@ -151,4 +151,6 @@ public class GameObject {
 	public float getHeight() { return height; }
 	
 	public Polygon getHitbox() { return hitbox; }
+	
+	public Image getScaledCopy(float scale) { return sprite.getScaledCopy(scale); }
 }

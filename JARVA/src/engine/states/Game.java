@@ -24,6 +24,9 @@ public class Game extends BasicGameState {
 	public static ArrayList<GameObject> GameObjects; // All Game Objects
 	
 	public static GameObject Player;
+	
+	public static boolean debug;
+	
 	/*
 	 * TerritoryManager
 	 * EntityManager
@@ -43,6 +46,7 @@ public class Game extends BasicGameState {
 	public DisplayManager getDisplayManager() { return DisplayManager; }
 	public InputManager getInputManager() { return InputManager; }
 	public CollisionManager getCollisionManager() { return CollisionManager; }
+	public boolean getDebug() { return debug; }
 	
 	// Constructor
 	public Game(int id) { 
@@ -54,6 +58,9 @@ public class Game extends BasicGameState {
 	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		// Debug Mode
+		debug = false;
+		
 		// Initialize GameObjects List
 		GameObjects = new ArrayList<>();
 		
@@ -61,6 +68,7 @@ public class Game extends BasicGameState {
 		InputManager = new InputManager(this, gc.getInput());
 		CollisionManager = new CollisionManager(this);
 		InputManager = new InputManager(this, gc.getInput());
+		DisplayManager = new DisplayManager(this);
 		
 		// Temp
 		// Initialize Player
@@ -78,6 +86,7 @@ public class Game extends BasicGameState {
 		o3.setXVelocity(-0.3f);
 		GameObject o4 = new GameObject(300f, 500f, Polygon.shape());
 		o4.setYVelocity(-0.5f);
+		
 		GameObject o5 = new GameObject(200f, 0f, Polygon.shape());
 		o5.setYVelocity(0.25f);
 	}
@@ -86,11 +95,7 @@ public class Game extends BasicGameState {
 	public void keyPressed(int key, char c) { InputManager.keyPressed(key); }
 	
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		for(GameObject object: GameObjects) { 
-			object.draw(g); 
-		}
-	}
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException { DisplayManager.render(g); }
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
