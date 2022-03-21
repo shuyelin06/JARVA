@@ -28,13 +28,29 @@ public class Game extends BasicGameState {
 	// Game Objects
 	public static ArrayList<GameObject> GameObjects; 
 	public static GameObject Player;
+
+	public static boolean debug;
+	
+	/*
+	 * TerritoryManager
+	 * EntityManager
+	 * SoundManager
+	 * 
+	 */
 	
 	// Managers
 	public static DisplayManager DisplayManager;
 	public static InputManager InputManager;
-	
 	public static ArenaManager ArenaManager;
 	public static CollisionManager CollisionManager;
+	
+	// Accessor Methods
+	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
+	public ArenaManager getArenaManager() { return ArenaManager; }
+	public DisplayManager getDisplayManager() { return DisplayManager; }
+	public InputManager getInputManager() { return InputManager; }
+	public CollisionManager getCollisionManager() { return CollisionManager; }
+	public boolean getDebug() { return debug; }
 	
 	// Constructor
 	public Game(int id) { this.id = id; }
@@ -49,13 +65,16 @@ public class Game extends BasicGameState {
 		// Initialize Timers
 		Ticks = 0f;
 		
+    // Debug Mode
+		debug = false;
+		
 		// Initialize GameObjects List
 		GameObjects = new ArrayList<>();
 		
 		// Instantiate managers
 		InputManager = new InputManager(this, gc.getInput());
 		CollisionManager = new CollisionManager(this);
-		InputManager = new InputManager(this, gc.getInput());
+    DisplayManager = new DisplayManager(this);
 	}
 	
 	@Override
@@ -103,12 +122,7 @@ public class Game extends BasicGameState {
 	public void keyPressed(int key, char c) { InputManager.keyPressed(key); }
 	
 	@Override
-	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		for(GameObject object: GameObjects) { 
-			object.draw(g); 
-		}
-		
-	}
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException { DisplayManager.render(g); }
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
