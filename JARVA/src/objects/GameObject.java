@@ -14,8 +14,8 @@ import objects.geometry.Projection;
 import objects.geometry.Vector;
 import ui.display.images.ImageManager;
 
-public class GameObject {
-	public enum ObjectType { Projectile, Entity, None }
+public abstract class GameObject {
+	public enum ObjectType { Projectile, Unit, None }
 	public enum ObjectTeam { Ally, Enemy, Neutral }
 	
 	/* --- Instance Variables --- */
@@ -59,13 +59,10 @@ public class GameObject {
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
 		this.collision = false; // Collision
 		this.remove = false; // Remove
-		
-		// Add to GameObject list
-		Game.GameObjects.add(this);
 	}
 	
 	/* --- Ineherited Methods --- */
-	public void objectUpdate() {}
+	public abstract void objectUpdate();
 	public void collision(GameObject o) { 
 		this.collision = true;
 	}
@@ -73,6 +70,7 @@ public class GameObject {
 	/* --- Main Methods --- */
 	// Update 
 	public void update() {
+		if( remove ) return;
 		objectUpdate();
 		updatePhysics();
 	}
@@ -127,9 +125,21 @@ public class GameObject {
 		this.hitbox.rotate(omega);
 	}
 	
-	/* --- Mutator / Construtor Methods --- */
-	public GameObject setSprite(Image newImage) { sprite = newImage; return this; }
+	/* --- Accessor Methods --- */
+	public boolean removalMarked() { return remove; }
 	
+	public ObjectTeam getTeam() { return team; }
+	public ObjectType getType() { return type; }
+	
+	public float getX() { return x; }
+	public float getY() { return y; }
+	
+	public Polygon getHitbox() { return hitbox; }
+	
+	/* --- Mutator / Construtor Methods --- */
+	public GameObject build() { Game.GameObjects.add(this); return this; }
+	
+	public GameObject setSprite(Image newImage) { sprite = newImage; return this; }
 	public GameObject setTeam(ObjectTeam newTeam) { team = newTeam; return this; }
 	
 	public GameObject setX(float newX) { x = newX; return this; }
@@ -144,12 +154,4 @@ public class GameObject {
 	public GameObject setOmega(float newOmega) { omega = newOmega; return this; }
 	public GameObject setXVelocity(float newXVelocity) { velocity.setX(newXVelocity); return this; }
 	public GameObject setYVelocity(float newYVelocity) { velocity.setY(newYVelocity); return this; }
-	
-	/* --- Accessor Methods --- */
-	public boolean removalMarked() { return remove; }
-	
-	public float getX() { return x; }
-	public float getY() { return y; }
-	
-	public Polygon getHitbox() { return hitbox; }
 }

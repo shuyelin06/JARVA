@@ -12,6 +12,7 @@ import engine.Settings;
 import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
+import objects.entities.Unit;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
 import objects.geometry.Polygon;
@@ -59,36 +60,42 @@ public class Game extends BasicGameState {
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Player
-		Player = new GameObject(Polygon.shape())
+		Player = new Unit( Polygon.shape() )
 				.setX(300f)
-				.setY(400f);
+				.setY(400f)
+				.build();
 		
 		// Other Objects
-		new GameObject( Polygon.rectangle(50f, 100f).rotate(1.5f) )
+		new Unit( Polygon.rectangle(50f, 100f).rotate(1.5f) )
 				.setOmega(0.1f)
 				.setX(50f)
 				.setY(200f)
-				.setXVelocity(0.15f);
+				.setXVelocity(0.15f)
+				.build();
 		
-		new GameObject( Polygon.shape() )
+		new Unit( Polygon.shape() )
 				.setX(150f)
 				.setY(150f)
-				.setYVelocity(0.15f);
+				.setYVelocity(0.15f)
+				.build();
 		
-		new GameObject( Polygon.shape() )
+		new Unit( Polygon.shape() )
 				.setX(300f)
 				.setY(150f)
-				.setXVelocity(-0.3f);
+				.setXVelocity(-0.3f)
+				.build();
 		
-		new GameObject( Polygon.shape() )
+		new Unit( Polygon.shape() )
 				.setX(300f)
 				.setY(500f)
-				.setYVelocity(-0.5f);
+				.setYVelocity(-0.5f)
+				.build();
 		
-		new GameObject( Polygon.shape() )
+		new Unit( Polygon.shape() )
 				.setX(200f)
 				.setY(0f)
-				.setYVelocity(0.25f);
+				.setYVelocity(0.25f)
+				.build();
 	}
 
 	@Override // Input Determining
@@ -99,6 +106,7 @@ public class Game extends BasicGameState {
 		for(GameObject object: GameObjects) { 
 			object.draw(g); 
 		}
+		
 	}
 
 	@Override
