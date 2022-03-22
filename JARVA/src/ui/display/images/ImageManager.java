@@ -15,7 +15,7 @@ public class ImageManager {
 	public static void addImage(String s, Image im) { Images.put(s, im); }
 	
 	// Get an Image
-	public static Image getPlaceholder() { return Images.get("Placeholder");  }
+	public static Image getPlaceholder() { return Images.get("placeholder");  }
 	
 	public static Image getImage(String s) { return Images.get(s); }
 	

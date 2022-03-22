@@ -1,8 +1,12 @@
 package objects.entities;
 
 import org.lwjgl.Sys;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
 
 import engine.Utility;
+import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
 
@@ -34,7 +38,7 @@ public abstract class Unit extends GameObject {
 		this.team = ObjectTeam.Neutral;
 		
 		// Default Values
-		this.invulnerability = 0.5f; // Seconds Invulnerable
+		this.invulnerability = 0.25f; // Seconds Invulnerable
 		
 		this.damageBlock = 0f;
 		this.knockbackBlock = 0f;
@@ -50,16 +54,22 @@ public abstract class Unit extends GameObject {
 	protected abstract void unitUpdate();
 	
 	/* --- Implemented Methods --- */
+	public void objectDraw(Graphics g) {
+		if(invulnerable) {
+			g.setColor(Color.blue);
+			g.draw(new Circle(x, y, 25f));
+		}
+	}
 	@Override
 	public void objectUpdate() {
 		// Entity Dying
-		if(health < 0f) {
+		if(health <= 0f) {
 			remove();
 			return;
 		}
 		
 		// Invulnerability Timer
-		if(lastDamageTaken < invulnerability) { invulnerable = false; }
+		if(Game.getTicks() - lastDamageTaken > invulnerability) { invulnerable = false; }
 		
 		// Entity AI
 		unitUpdate();
@@ -69,15 +79,24 @@ public abstract class Unit extends GameObject {
 	public void collision(GameObject o) {
 		super.collision(o);
 		
-		if( o.getType() == ObjectType.Unit && o.getTeam() != this.getTeam() ) {
+		if( o.getType() == ObjectType.Unit ) {
 			Unit unit = (Unit) o;
-			
 			unit.takeKnockback(this, ContactKnockback);
-			unit.takeDamage(baseDamage);
+			
+			if( o.getTeam() != this.getTeam() ) {
+				unit.takeDamage(baseDamage);
+			}
 		}
 	}
 	
 	/* --- Helper Methods --- */
+	public void takeHealing(float heal) {
+		health += heal;
+		
+		if(health > maxHealth) { 
+			health = maxHealth; 
+		}
+	}
 	public void takeKnockback(GameObject o, float knockback) {
 		if(!immovable) {
 			float angle = Utility.atan( o.getY() - getY(), o.getX() - getX() );
@@ -91,6 +110,9 @@ public abstract class Unit extends GameObject {
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
+			
+			invulnerable = true;
+			lastDamageTaken = Game.getTicks();
 		}
 	}
 	

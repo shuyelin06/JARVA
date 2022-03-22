@@ -17,7 +17,7 @@ public class Animation {
 	
 	// Called by the GameObject for Drawing
 	public Image getFrame() {
-		return spritesheet.getSubImage(Game.getTicks(), 0);
+		return spritesheet.getSubImage((int) Game.getTicks(), 0);
 	}
 	
 }

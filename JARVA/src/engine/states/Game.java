@@ -13,6 +13,7 @@ import maps.ArenaManager;
 import objects.GameObject;
 import objects.collisions.CollisionManager;
 import objects.entities.Unit;
+import objects.entities.Player;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
@@ -29,8 +30,6 @@ public class Game extends BasicGameState {
 	public static ArrayList<GameObject> GameObjects; 
 	public static GameObject Player;
 
-	public static boolean debug;
-	
 	/*
 	 * TerritoryManager
 	 * EntityManager
@@ -38,35 +37,32 @@ public class Game extends BasicGameState {
 	 * 
 	 */
 	
-	// Managers
+	/* --- Managers --- */
 	public static DisplayManager DisplayManager;
 	public static InputManager InputManager;
 	public static ArenaManager ArenaManager;
 	public static CollisionManager CollisionManager;
 	
-	// Accessor Methods
+	// Constructor
+	public Game(int id) { this.id = id; }
+		
+	/* --- Accessor Methods --- */
+	@Override
+	public int getID() { return id; }
+	public static float getTicks() { return Ticks; }
+	
 	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
+	
 	public ArenaManager getArenaManager() { return ArenaManager; }
 	public DisplayManager getDisplayManager() { return DisplayManager; }
 	public InputManager getInputManager() { return InputManager; }
 	public CollisionManager getCollisionManager() { return CollisionManager; }
-	public boolean getDebug() { return debug; }
 	
-	// Constructor
-	public Game(int id) { this.id = id; }
-	
-	@Override
-	public int getID() { return id; }
-	
-	public static int getTicks() { return (int) Ticks; }
-	
+	/* --- Inherited Methods --- */
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Timers
 		Ticks = 0f;
-		
-    // Debug Mode
-		debug = false;
 		
 		// Initialize GameObjects List
 		GameObjects = new ArrayList<>();
@@ -74,13 +70,14 @@ public class Game extends BasicGameState {
 		// Instantiate managers
 		InputManager = new InputManager(this, gc.getInput());
 		CollisionManager = new CollisionManager(this);
-    DisplayManager = new DisplayManager(this);
+		ArenaManager = new ArenaManager(this);
+		DisplayManager = new DisplayManager(this);
 	}
 	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Player
-		Player = new objects.entities.Player()
+		Player = new Player()
 				.setX(300f)
 				.setY(400f)
 				.build();
@@ -139,33 +136,43 @@ public class Game extends BasicGameState {
 		CollisionManager.update();
 	}
 	
+	/* --- Helper Methods --- */
 	private void updateObjects() {
 		// Update Objects
 		int pointer = GameObjects.size() - 1;
 		for(int i = 0; i < GameObjects.size(); i++) {
 			GameObject current = GameObjects.get(i);
-			if(current.removalMarked()) {
-				// Move marked objects to the end of the list
-				if(pointer == i) break;
-				
+			
+			if( current.removalMarked() ) {
 				GameObject last = GameObjects.get(pointer);
+				while( last.removalMarked() ) {
+					if( current.equals(last) ) break;
+					else {
+						pointer--;
+						last = GameObjects.get(pointer);
+					}
+				}
 				
-				GameObjects.set(i, last);
-				GameObjects.set(pointer, current);
-				
-				pointer--;
-			} else {
-				// Else, Update Object
-				current.update(); 
+				if( current.equals(last) ) break;
+				else {
+					GameObjects.set(i, last);
+					GameObjects.set(pointer, current);
+					
+					current = last;
+				}
 			}
+			
+			current.update();
 		}
 		// Remove Marked Object
 		for(int i = GameObjects.size() - 1; i >= 0; i--) {
 			GameObject current = GameObjects.get(i);
 		
-			if(current.removalMarked()) {
+			if( current.removalMarked() ) {
 				GameObjects.remove(i);
-			} else break;
+			} else {
+				break;
+			}
 		}
 	}
 	
