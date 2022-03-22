@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
 import engine.Utility;
+import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
 
@@ -37,7 +38,7 @@ public abstract class Unit extends GameObject {
 		this.team = ObjectTeam.Neutral;
 		
 		// Default Values
-		this.invulnerability = 0.5f; // Seconds Invulnerable
+		this.invulnerability = 0.25f; // Seconds Invulnerable
 		
 		this.damageBlock = 0f;
 		this.knockbackBlock = 0f;
@@ -68,7 +69,7 @@ public abstract class Unit extends GameObject {
 		}
 		
 		// Invulnerability Timer
-		if(Sys.getTime() - lastDamageTaken < invulnerability) { invulnerable = false; }
+		if(Game.getTicks() - lastDamageTaken > invulnerability) { invulnerable = false; }
 		
 		// Entity AI
 		unitUpdate();
@@ -111,7 +112,7 @@ public abstract class Unit extends GameObject {
 			health -= damage - damage * damageBlock;
 			
 			invulnerable = true;
-			lastDamageTaken = Sys.getTime();
+			lastDamageTaken = Game.getTicks();
 		}
 	}
 	

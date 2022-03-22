@@ -49,7 +49,7 @@ public class Game extends BasicGameState {
 	/* --- Accessor Methods --- */
 	@Override
 	public int getID() { return id; }
-	public static int getTicks() { return (int) Ticks; }
+	public static float getTicks() { return Ticks; }
 	
 	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
 	
