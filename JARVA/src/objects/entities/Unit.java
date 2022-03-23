@@ -18,6 +18,7 @@ public abstract class Unit extends GameObject {
 	protected boolean invulnerable; // Invulnerable Switch 
 		
 	// Invulnerability
+	protected static float Default_Invulnerability = 0.25f; // Default Invulnerability Timer
 	protected float invulnerability; // Invulnerability Timer
 	protected float lastDamageTaken; // Damage Last Taken
 	
@@ -38,7 +39,7 @@ public abstract class Unit extends GameObject {
 		this.team = ObjectTeam.Neutral;
 		
 		// Default Values
-		this.invulnerability = 0.25f; // Seconds Invulnerable
+		this.invulnerability = Default_Invulnerability; // Seconds Invulnerable
 		
 		this.damageBlock = 0f;
 		this.knockbackBlock = 0f;
@@ -90,6 +91,12 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Helper Methods --- */
+	protected void invulnerable() { invulnerable(Default_Invulnerability); }
+	protected void invulnerable(float time) {
+		invulnerable = true;
+		invulnerability = time;
+		lastDamageTaken = Game.getTicks();
+	}
 	public void takeHealing(float heal) {
 		health += heal;
 		
@@ -110,9 +117,7 @@ public abstract class Unit extends GameObject {
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
-			
-			invulnerable = true;
-			lastDamageTaken = Game.getTicks();
+			invulnerable();
 		}
 	}
 	

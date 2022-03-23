@@ -19,8 +19,9 @@ public abstract class GameObject {
 	public enum ObjectTeam { Ally, Enemy, Neutral }
 	
 	/* --- Instance Variables --- */
-	// Removal Mark
-	protected boolean remove;
+	// Switches
+	protected boolean remove; // Removal Switch
+	protected boolean friction; // Friction Switch
 	
 	// Physics Variables
 	protected float x, y;
@@ -32,7 +33,7 @@ public abstract class GameObject {
 	protected Polygon hitbox;
 	
 	// Rendering
-	protected Animation animation;
+	protected Animation animation; // Animation
 	protected Image sprite; // Temp
 	
 	// Object Type and Team
@@ -57,6 +58,7 @@ public abstract class GameObject {
 		this.team = ObjectTeam.Neutral; // Team
 		
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
+		this.friction = true; // Friction
 		this.collision = false; // Collision
 		this.remove = false; // Remove
 	}
@@ -72,7 +74,7 @@ public abstract class GameObject {
 	// Update 
 	public void update() {
 		if( remove ) return;
-
+		
 		objectUpdate();
 		updatePhysics();
 	}
@@ -87,8 +89,8 @@ public abstract class GameObject {
 		this.rotate(omega / Settings.Frames_Per_Second);
 
 		// Friction
-		final float Friction = 0.15f;
-		velocity.reduce(Friction);
+		final float Friction = 0.35f;
+		if( friction ) velocity.reduce(Friction);
 	}
 	
 	// Rendering
@@ -133,6 +135,8 @@ public abstract class GameObject {
 	
 	public ObjectTeam getTeam() { return team; }
 	public ObjectType getType() { return type; }
+	
+	public float getMaxVelocity() { return maxVelocity; }
 	
 	public float getX() { return x; }
 	public float getY() { return y; }

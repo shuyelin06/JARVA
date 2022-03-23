@@ -28,7 +28,7 @@ public class Game extends BasicGameState {
 	
 	// Game Objects
 	public static ArrayList<GameObject> GameObjects; 
-	public static GameObject Player;
+	public static Player Player;
 
 	/*
 	 * TerritoryManager
@@ -60,7 +60,10 @@ public class Game extends BasicGameState {
 	
 	/* --- Inherited Methods --- */
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+	
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Timers
 		Ticks = 0f;
 		
@@ -72,27 +75,21 @@ public class Game extends BasicGameState {
 		CollisionManager = new CollisionManager(this);
 		ArenaManager = new ArenaManager(this);
 		DisplayManager = new DisplayManager(this);
-	}
-	
-	@Override
-	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		// Initialize Player
-		Player = new Player()
-				.setX(300f)
-				.setY(400f)
-				.build();
 		
+		// Initialize Player
+		Player = new Player();
+				
 		// Other Objects
 		new Tumbleweed()
 				.setOmega(0.1f)
-				.setX(50f)
-				.setY(200f)
+				.setX(2f)
+				.setY(5f)
 				.setXVelocity(0.15f)
 				.build();
 		
 		new Tumbleweed()
-				.setX(150f)
-				.setY(150f)
+				.setX(2f)
+				.setY(1f)
 				.setYVelocity(0.15f)
 				.build();
 		
@@ -117,6 +114,9 @@ public class Game extends BasicGameState {
 
 	@Override // Input Determining
 	public void keyPressed(int key, char c) { InputManager.keyPressed(key); }
+	
+	@Override
+	public void mousePressed(int key, int x, int y) { InputManager.mousePressed(key, x, y); }
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException { DisplayManager.render(g); }

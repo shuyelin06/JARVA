@@ -25,7 +25,8 @@ public abstract class Projectile extends GameObject {
 		this.type = ObjectType.Projectile;
 		
 		// Default Variables
-		this.pierce = 1; // Number of Units Projectile can Pierce
+		this.friction = false; // No Friction
+		this.pierce = 1; // # Units Projectile can Pierce
 		this.damageMultiplier = 1f; // Base Damage
 	}
 	
