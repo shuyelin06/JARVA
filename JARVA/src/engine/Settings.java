@@ -1,5 +1,6 @@
 package engine;
 
+
 public class Settings {	
 	// Time Variables
 	final public static int Frames_Per_Second = 60; // 60 FPS
@@ -17,4 +18,7 @@ public class Settings {
 	// Scale Settings
 	final public static float Pixels_Per_Unit = 20f;
 	final public static float Tile_Size = 10f;
+	
+	// GameState Markers
+	public static int LastState = 0;
 }
