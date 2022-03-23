@@ -28,7 +28,7 @@ public class Game extends BasicGameState {
 	
 	// Game Objects
 	public static ArrayList<GameObject> GameObjects; 
-	public static GameObject Player;
+	public static Player Player;
 
 	/*
 	 * TerritoryManager
@@ -77,7 +77,7 @@ public class Game extends BasicGameState {
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// Initialize Player
-		Player = new Player()
+		Player = (Player) new Player()
 				.setX(300f)
 				.setY(400f)
 				.build();

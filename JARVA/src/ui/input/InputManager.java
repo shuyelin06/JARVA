@@ -18,7 +18,7 @@ public class InputManager {
 	
 	// Check for Keys Down
 	public void update() {
-		final float Velocity = 100f;
+		float movementVelocity = 70f;
 		//so it doesn't go faster on the diagonal
 		boolean flip = false; //lol i give up
 		float sumVelocityAngle = 0;
@@ -40,8 +40,17 @@ public class InputManager {
 			else		{	velocityAngle.add(0f);	}
 		}
 		
-		//averages the angles of the
+		if(input.isKeyDown(Input.KEY_LSHIFT) && Game.Player.hasSprintStamina()) 
+		{ 
+			Game.Player.isSprinting();
+			movementVelocity *= 1.8f;
+		}
+		else
+		{
+			Game.Player.isNotSprinting();
+		}
 		
+		//averages the angles
 		if(velocityAngle.size() != 0)
 		{
 			for(Float f : velocityAngle)
@@ -50,10 +59,9 @@ public class InputManager {
 			}
 			
 			sumVelocityAngle /= velocityAngle.size();
-			System.out.println(sumVelocityAngle);
 			
-			Game.Player.addYVelocity(Velocity * (float) -Math.sin(Math.toRadians(sumVelocityAngle)));
-			Game.Player.addXVelocity(Velocity * (float) Math.cos(Math.toRadians(sumVelocityAngle)));
+			Game.Player.addYVelocity(movementVelocity * (float) -Math.sin(Math.toRadians(sumVelocityAngle)));
+			Game.Player.addXVelocity(movementVelocity * (float) Math.cos(Math.toRadians(sumVelocityAngle)));
 		}
 		
 		sumVelocityAngle = 0;

@@ -9,6 +9,7 @@ import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import engine.states.Loading;
+import objects.entities.Player;
 import objects.geometry.Polygon;
 import objects.geometry.Projection;
 import objects.geometry.Vector;
