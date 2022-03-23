@@ -11,7 +11,7 @@ import objects.GameObject;
 import objects.geometry.Polygon;
 
 public abstract class Unit extends GameObject {
-	private final float ContactKnockback = 35f;
+	private final float ContactKnockback = 25f;
 	
 	// Switches
 	protected boolean immovable; // Knockback Switch 
@@ -85,7 +85,7 @@ public abstract class Unit extends GameObject {
 			unit.takeKnockback(this, ContactKnockback);
 			
 			if( o.getTeam() != this.getTeam() ) {
-				unit.takeDamage(baseDamage);
+				unit.takeDamage(contactDamage);
 			}
 		}
 	}

@@ -20,14 +20,14 @@ public class Player extends Unit {
 	
 	
 	public Player() {
-		super(Polygon.rectangle(5f, 8f));
+		super(Polygon.rectangle(5f, 10f));
 		
 		this.maxVelocity = Player_Max_Velocity;
 		
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 8);
+		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 10);
 		
-		this.contactDamage = 500f;
+		this.contactDamage = 25f;
 		
 		this.build();
 	}
