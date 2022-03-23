@@ -10,7 +10,6 @@ import engine.Main;
 import engine.Settings;
 import engine.states.Game;
 import maps.Arena;
-import maps.Tile;
 import objects.GameObject;
 
 public class DisplayManager {
@@ -55,8 +54,6 @@ public class DisplayManager {
 	
 	public void renderArena(Graphics g) {
 		//render arena
-//		for (Tile[] tileList: arena.getTiles()) {
-//			//render all tiles with g.scale?
-//		}
+
 	}
 }

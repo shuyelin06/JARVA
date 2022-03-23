@@ -137,6 +137,12 @@ public abstract class GameObject {
 	public float getX() { return x; }
 	public float getY() { return y; }
 	
+	public float getDistance(float x, float y) { return Utility.distance(this, x, y); }
+	public float getDistance(GameObject o) { return Utility.distance(this, o); }
+	
+	public float getAngleTo(float x, float y) { return Utility.angleBetween(this, x, y); }
+	public float getAngleTo(GameObject o) { return Utility.angleBetween(this, o); }
+	
 	public Polygon getHitbox() { return hitbox; }
 	
 	/* --- Mutator / Construtor Methods --- */
