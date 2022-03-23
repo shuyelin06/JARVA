@@ -14,6 +14,7 @@ public class Player extends Unit {
 	
 	private int maxSprintStamina;
 	private int sprintStamina;
+	private int sprintCooldown;
 	private boolean isSprinting;
 	
 	public Player() {
@@ -28,6 +29,7 @@ public class Player extends Unit {
 		
 		maxSprintStamina = 150;
 		sprintStamina = maxSprintStamina;
+		sprintCooldown = 0;
 		isSprinting = false;
 		
 	}
@@ -37,10 +39,15 @@ public class Player extends Unit {
 		if(isSprinting)
 		{
 			sprintStamina--;
+			sprintCooldown = 60;
 		}
 		else if(sprintStamina < maxSprintStamina)
 		{
-			sprintStamina++;
+			sprintCooldown--;
+			if(sprintCooldown < 0)
+			{
+				sprintStamina++;
+			}
 		}
 	}
 	
@@ -48,13 +55,14 @@ public class Player extends Unit {
 	{
 		super.draw(g);
 		
+		 //temp sprint bar
 		g.drawRect(this.x - rectW * 0.5f - 1, this.y + (rectH * 0.5f) + 9, 
 				rectW + 1f, 11);
 		g.setColor(new Color( 1f - (sprintStamina * 2f / maxSprintStamina),
 				0.1f,
 				sprintStamina * 2f / maxSprintStamina));
 		g.fillRect(this.x - rectW * 0.5f, this.y + (rectH * 0.5f) + 10, 
-				rectW * sprintStamina / maxSprintStamina, 10); //temp sprint bar
+				rectW * sprintStamina / maxSprintStamina, 10);
 		
 	}
 	
