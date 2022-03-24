@@ -11,13 +11,28 @@ public class InputManager {
 	private Game game;	
 	private Input input;
 	
+	private float mouseX;
+	private float mouseY;
+	
 	public InputManager(Game game, Input input) {
 		this.game = game;
 		this.input = input;
+		
+		mouseX = 0;
+		mouseY = 0;
 	}
 	
 	// Check for Keys Down
-	public void update() {
+	public void update() 
+	{
+		movement();
+		
+		mouseX = input.getMouseX();
+		mouseX = input.getMouseY();
+	}
+	
+	public void movement()
+	{
 		float movementVelocity = 70f;
 		//so it doesn't go faster on the diagonal
 		boolean flip = false; //lol i give up
@@ -67,7 +82,7 @@ public class InputManager {
 		sumVelocityAngle = 0;
 		velocityAngle.clear();
 	}
-
+	
 	// Mouse Pressed
 	public void mousePressed(int key) {
 		switch(key) {

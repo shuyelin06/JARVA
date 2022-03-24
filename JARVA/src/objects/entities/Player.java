@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import engine.states.Game;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
+import weapons.Revolver;
 
 public class Player extends Unit {
 	private float rectW;
@@ -16,6 +17,8 @@ public class Player extends Unit {
 	private int sprintStamina;
 	private int sprintCooldown;
 	private boolean isSprinting;
+	
+	private Revolver testWeapon;
 	
 	public Player() {
 		super(Polygon.rectangle(150f, 50f));
@@ -32,6 +35,7 @@ public class Player extends Unit {
 		sprintCooldown = 0;
 		isSprinting = false;
 		
+		testWeapon = new Revolver(this);
 	}
 	
 	public void unitUpdate() 
@@ -49,6 +53,8 @@ public class Player extends Unit {
 				sprintStamina++;
 			}
 		}
+		
+		testWeapon.update(); //ill move this somewhere else, just testing
 	}
 	
 	public void draw(Graphics g)
@@ -63,6 +69,8 @@ public class Player extends Unit {
 				sprintStamina * 2f / maxSprintStamina));
 		g.fillRect(this.x - rectW * 0.5f, this.y + (rectH * 0.5f) + 10, 
 				rectW * sprintStamina / maxSprintStamina, 10);
+		
+		testWeapon.draw(g); //ill move this to the managers
 		
 	}
 	
