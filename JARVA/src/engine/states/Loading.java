@@ -42,7 +42,7 @@ public class Loading extends BasicGameState {
             if(file.isDirectory()) {
                 initializeLoadingList(file, loadingList);
             } else {
-                loadingList.add(new Resource(file));
+                this.loadingList.add(new Resource(file));
             }
         }
     }

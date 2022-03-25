@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import engine.Settings;
 import engine.Main;
+import ui.display.images.ImageManager;
 import ui.input.Button;
 
 public class Title extends BasicGameState {
@@ -36,6 +37,7 @@ public class Title extends BasicGameState {
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
 				.setImage("Placeholder")
+				.enableOutline()
 				;
 	}
 
