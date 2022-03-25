@@ -11,7 +11,7 @@ public class ImageManager {
 	public static boolean Complete = false;
 	final private static HashMap<String, Image> Images = new HashMap<String, Image>();
 
-	// Add Imatge
+	// Add Image
 	public static void addImage(String s, Image im) { Images.put(s, im); }
 	
 	// Get an Image

@@ -16,6 +16,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import engine.Main;
+import engine.Settings;
 import engine.loading.Resource;
 
 public class Loading extends BasicGameState {
@@ -41,7 +42,7 @@ public class Loading extends BasicGameState {
             if(file.isDirectory()) {
                 initializeLoadingList(file, loadingList);
             } else {
-                loadingList.add(new Resource(file));
+                this.loadingList.add(new Resource(file));
             }
         }
     }
@@ -81,7 +82,8 @@ public class Loading extends BasicGameState {
         }
         // Loading Complete: Move to Start Menu
         else {
-            sbg.enterState(Main.GAME_ID);
+        	Settings.LastState = Main.LOADING_ID;
+        	sbg.enterState(Main.TITLE_ID);
         }
     }
 
