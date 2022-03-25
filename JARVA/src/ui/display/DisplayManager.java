@@ -54,6 +54,7 @@ public class DisplayManager {
 	
 	public void renderArena(Graphics g) {
 		//render arena
+		//arena.draw(g);
 
 	}
 }

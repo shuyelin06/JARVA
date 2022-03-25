@@ -9,12 +9,13 @@ public class ArenaManager {
 	
 	public ArenaManager(Game game) {
 		this.game = game;
+		initialize();
 	}
 	
 	public Arena getArena() { return arena; }
 	
 	// Initialize a random arena for the game
 	private void initialize() {
-		
+		arena = new Arena();
 	}
 }
