@@ -7,7 +7,8 @@ import org.newdawn.slick.Input;
 import engine.states.Game;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
-import weapons.guns.Revolver;
+import ui.input.InputManager;
+import components.weapons.guns.Revolver;
 
 public class Player extends Unit {
 	private float rectW;
@@ -59,6 +60,15 @@ public class Player extends Unit {
 	
 	public void draw(Graphics g)
 	{
+		if(InputManager.getScaledMouseX() < getX())
+		{
+			mirroredSprite = true;
+		}
+		else
+		{
+			mirroredSprite = false;
+		}
+		
 		super.draw(g);
 		
 		 //temp sprint bar
@@ -71,7 +81,6 @@ public class Player extends Unit {
 				rectW * sprintStamina / maxSprintStamina, 10);
 		
 		testWeapon.draw(g); //ill move this to the managers
-		
 	}
 	
 	public boolean hasSprintStamina() { return sprintStamina > 0; }

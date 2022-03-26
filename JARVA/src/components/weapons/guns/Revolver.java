@@ -1,8 +1,8 @@
-package weapons.guns;
+package components.weapons.guns;
 
 import objects.GameObject;
 import ui.display.images.ImageManager;
-import weapons.Weapon;
+import components.weapons.Weapon;
 
 public class Revolver extends Weapon
 {

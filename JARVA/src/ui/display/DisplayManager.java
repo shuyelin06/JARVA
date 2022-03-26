@@ -12,6 +12,8 @@ import engine.Settings;
 import engine.states.Game;
 import maps.Arena;
 import objects.GameObject;
+import objects.entities.Player;
+import ui.input.InputManager;
 
 public class DisplayManager {
 	public static boolean Debug = false;
@@ -54,7 +56,8 @@ public class DisplayManager {
 	}
 	
 	public void renderObjects(Graphics g) {
-		for (GameObject object: game.getGameObjects()) {
+		for (GameObject object: game.getGameObjects()) 
+		{
 			object.draw(g);
 		}
 	}

@@ -1,7 +1,7 @@
-package weapons.guns;
+package components.weapons.guns;
 
 import objects.GameObject;
-import weapons.Weapon;
+import components.weapons.Weapon;
 
 public class Gun extends Weapon
 {	

@@ -35,6 +35,7 @@ public abstract class GameObject {
 	// Rendering
 	protected Animation animation;
 	protected Image sprite; // Temp
+	protected boolean mirroredSprite;
 	
 	// Object Type and Team
 	protected ObjectType type;
@@ -58,6 +59,7 @@ public abstract class GameObject {
 		this.team = ObjectTeam.Neutral; // Team
 		
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
+		this.mirroredSprite = false;
 		this.collision = false; // Collision
 		this.remove = false; // Remove
 	}
@@ -90,6 +92,16 @@ public abstract class GameObject {
 		// Friction
 		final float Friction = 0.15f;
 		velocity.reduce(Friction);
+		
+		//hi
+		if(velocity.x < 0) 
+		{
+			mirroredSprite = true;
+		}
+		else
+		{
+			mirroredSprite = false;
+		}
 	}
 	
 	// Rendering
@@ -99,7 +111,18 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) { sprite.drawCentered(x, y); }
+	private void drawSprite(Graphics g) 
+	{
+		if(mirroredSprite)
+		{
+			sprite.getFlippedCopy(true, false).drawCentered(x, y);
+		}
+		else
+		{
+			sprite.drawCentered(x, y); 
+		}
+	}
+	
 	protected void drawHitbox(Graphics g) {
 		Vector[] vertices = hitbox.getVertices();
 		
@@ -131,6 +154,7 @@ public abstract class GameObject {
 	
 	/* --- Accessor Methods --- */
 	public boolean removalMarked() { return remove; }
+	public boolean isMirrored() { return mirroredSprite; }
 	
 	public ObjectTeam getTeam() { return team; }
 	public ObjectType getType() { return type; }
