@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Input;
 
+import engine.Settings;
 import engine.states.Game;
 import objects.GameObject;
 
@@ -11,8 +12,8 @@ public class InputManager {
 	private Game game;	
 	private Input input;
 	
-	private float mouseX;
-	private float mouseY;
+	private static float mouseX;
+	private static float mouseY;
 	
 	public InputManager(Game game, Input input) {
 		this.game = game;
@@ -22,13 +23,18 @@ public class InputManager {
 		mouseY = 0;
 	}
 	
+	public static float getActualMouseX()	{		return mouseX;					}
+	public static float getActualMouseY()	{		return mouseY;					}
+	public static float getScaledMouseX()	{		return mouseX / Settings.Scale;	}
+	public static float getScaledMouseY()	{		return mouseY / Settings.Scale;	} //doin a little static trollin
+	
 	// Check for Keys Down
 	public void update() 
 	{
 		movement();
 		
 		mouseX = input.getMouseX();
-		mouseX = input.getMouseY();
+		mouseY = input.getMouseY();
 	}
 	
 	public void movement()

@@ -7,7 +7,7 @@ import org.newdawn.slick.Input;
 import engine.states.Game;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
-import weapons.Revolver;
+import weapons.guns.Revolver;
 
 public class Player extends Unit {
 	private float rectW;

@@ -9,7 +9,7 @@ public class Tumbleweed extends Unit {
 	public Tumbleweed() {
 		super(Polygon.rectangle(50f, 50f));
 		
-		this.sprite = ImageManager.getImageCopy("Placeholder", 50, 50);
+		this.sprite = ImageManager.getImageCopy("tumbleweed", 50, 50);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
 		this.team = ObjectTeam.Enemy;

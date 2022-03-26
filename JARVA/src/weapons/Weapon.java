@@ -4,12 +4,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
+import engine.Settings;
 import objects.GameObject;
+import ui.input.InputManager;
 
 public class Weapon 
 {
-	private Input tempInput; //too tired to manage the abstraction
-	
 	protected Image sprite; //might wanna change this to something from imageManager later
 	protected GameObject owner;
 	protected boolean isEquipped;
@@ -37,8 +37,6 @@ public class Weapon
 		this.theta = 0;
 		
 		this.isEquipped = true;
-		
-		tempInput = new Input(0);
 	}
 	
 	public void update()
@@ -46,17 +44,11 @@ public class Weapon
 		x = owner.getX();
 		y = owner.getY();
 		
-		pivotX = x + (w * 0.5f);
+		pivotX = x + (w * 0.2f);
 		pivotY = y + (h * 0.5f);
 		
-		float mouseX = tempInput.getMouseX();
-		float mouseY = 1080 + tempInput.getMouseY();
-		
-		System.out.println("x: " + (mouseX - pivotX));
-		System.out.println(mouseX);
-		System.out.println("y: " + (mouseY - pivotY));
-		System.out.println(mouseY);
-		System.out.println("------------");
+		float mouseX = InputManager.getScaledMouseX();
+		float mouseY = InputManager.getScaledMouseY();
 		
 		theta = (float) Math.toDegrees(Math.atan2(mouseY - pivotY, mouseX - pivotX));
 	}
@@ -64,7 +56,8 @@ public class Weapon
 	public void draw(Graphics g)
 	{
 		g.rotate(pivotX, pivotY, theta);
-		g.fillRect(x, y, w, h);
+		sprite.draw(x, y, w, h);
+		//g.fillRect(x, y, w, h);
 		g.rotate(pivotX, pivotY, -theta);
 	}
 }
