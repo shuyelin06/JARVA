@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Input;
 
+import engine.Settings;
 import engine.states.Game;
 import objects.GameObject;
 
@@ -11,13 +12,33 @@ public class InputManager {
 	private Game game;	
 	private Input input;
 	
+	private static float mouseX;
+	private static float mouseY;
+	
 	public InputManager(Game game, Input input) {
 		this.game = game;
 		this.input = input;
+		
+		mouseX = 0;
+		mouseY = 0;
 	}
 	
+	public static float getActualMouseX()	{		return mouseX;					}
+	public static float getActualMouseY()	{		return mouseY;					}
+	public static float getScaledMouseX()	{		return mouseX / Settings.Scale;	}
+	public static float getScaledMouseY()	{		return mouseY / Settings.Scale;	} //doin a little static trollin
+	
 	// Check for Keys Down
-	public void update() {
+	public void update() 
+	{
+		movement();
+		
+		mouseX = input.getMouseX();
+		mouseY = input.getMouseY();
+	}
+	
+	public void movement()
+	{
 		float movementVelocity = 70f;
 		//so it doesn't go faster on the diagonal
 		boolean flip = false; //lol i give up
@@ -67,7 +88,7 @@ public class InputManager {
 		sumVelocityAngle = 0;
 		velocityAngle.clear();
 	}
-
+	
 	// Mouse Pressed
 	public void mousePressed(int key) {
 		switch(key) {
