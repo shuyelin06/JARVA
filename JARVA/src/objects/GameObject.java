@@ -9,6 +9,7 @@ import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import engine.states.Loading;
+import objects.entities.Player;
 import objects.geometry.Polygon;
 import objects.geometry.Projection;
 import objects.geometry.Vector;
@@ -35,6 +36,7 @@ public abstract class GameObject {
 	// Rendering
 	protected Animation animation; // Animation
 	protected Image sprite; // Temp
+	protected boolean mirroredSprite;
 	
 	// Object Type and Team
 	protected ObjectType type;
@@ -58,7 +60,8 @@ public abstract class GameObject {
 		this.team = ObjectTeam.Neutral; // Team
 		
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
-		this.friction = true; // Friction
+    this.friction = true; // Friction
+    this.mirroredSprite = false;
 		this.collision = false; // Collision
 		this.remove = false; // Remove
 	}
@@ -89,8 +92,18 @@ public abstract class GameObject {
 		this.rotate(omega / Settings.Frames_Per_Second);
 
 		// Friction
-		final float Friction = 0.35f;
+    final float Friction = 0.35f;
 		if( friction ) velocity.reduce(Friction);
+		
+		// Hi
+		if(velocity.x < 0) 
+		{
+			mirroredSprite = true;
+		}
+		else
+		{
+			mirroredSprite = false;
+		}
 	}
 	
 	// Rendering
@@ -100,7 +113,18 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) { sprite.drawCentered(x, y); }
+	private void drawSprite(Graphics g) 
+	{
+		if(mirroredSprite)
+		{
+			sprite.getFlippedCopy(true, false).drawCentered(x, y);
+		}
+		else
+		{
+			sprite.drawCentered(x, y); 
+		}
+	}
+	
 	protected void drawHitbox(Graphics g) {
 		Vector[] vertices = hitbox.getVertices();
 		
@@ -132,6 +156,7 @@ public abstract class GameObject {
 	
 	/* --- Accessor Methods --- */
 	public boolean removalMarked() { return remove; }
+	public boolean isMirrored() { return mirroredSprite; }
 	
 	public ObjectTeam getTeam() { return team; }
 	public ObjectType getType() { return type; }
@@ -140,6 +165,12 @@ public abstract class GameObject {
 	
 	public float getX() { return x; }
 	public float getY() { return y; }
+	
+	public float getDistance(float x, float y) { return Utility.distance(this, x, y); }
+	public float getDistance(GameObject o) { return Utility.distance(this, o); }
+	
+	public float getAngleTo(float x, float y) { return Utility.angleBetween(this, x, y); }
+	public float getAngleTo(GameObject o) { return Utility.angleBetween(this, o); }
 	
 	public Polygon getHitbox() { return hitbox; }
 	

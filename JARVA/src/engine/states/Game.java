@@ -134,6 +134,9 @@ public class Game extends BasicGameState {
 		
 		// Determine Collisions
 		CollisionManager.update();
+		
+		// Update displays
+		DisplayManager.update();
 	}
 	
 	/* --- Helper Methods --- */
