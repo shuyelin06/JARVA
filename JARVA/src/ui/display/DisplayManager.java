@@ -35,12 +35,12 @@ public class DisplayManager {
 		this.game = game;
 		
 		this.arena = game.getArenaManager().getArena();
+		this.crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
 	}
 	
 	private void cameraPosition() {
 		cameraX = Game.Player.getX();
 		cameraY = Game.Player.getY();
-		crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
 	}
 	
 	public void update() {

@@ -13,7 +13,7 @@ import components.weapons.guns.Revolver;
 public class Player extends Unit {
 	private static float Player_Max_Velocity = 75f;
 	
-	// Dash Timer
+	// Dashing
 	private static float Dash_Timer = 0.35f;
 	private static float Dash_Boost = 2f;
 	private static float Dash_Threshold = 0.5f;
@@ -21,11 +21,27 @@ public class Player extends Unit {
 	private float lastDashed;
 	private boolean dashing;
 	
-	// Gun Inventory
+	// Sprinting
+	private static int Max_Sprint_Stamina = 150;
 	
+	private int maxSprintStamina;
+	private int sprintStamina;
+	private int sprintCooldown;
+	private boolean isSprinting;
+	
+	private float rectW;
+	private float rectH;
+	
+
+	
+	// Gun Inventory
+	private Revolver testWeapon;
 	
 	public Player() {
 		super(Polygon.rectangle(5f, 10f));
+		
+		this.rectW = 150f;
+		this.rectH = 50f;
 		
 		this.maxVelocity = Player_Max_Velocity;
 		
@@ -33,6 +49,15 @@ public class Player extends Unit {
 		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 10);
 		
 		this.contactDamage = 25f;
+		
+		// Sprinting
+		maxSprintStamina = Max_Sprint_Stamina;
+		this.sprintStamina = Max_Sprint_Stamina;
+		this.sprintCooldown = 0;
+		this.isSprinting = false;
+		
+		// Test Weapon
+		this.testWeapon = new Revolver(this);
 		
 		this.build();
 	}
@@ -47,6 +72,19 @@ public class Player extends Unit {
 			}
 		}
 		
+		if( isSprinting ) {
+			sprintStamina--;
+			sprintCooldown = 60;
+		}
+		else if( sprintStamina < maxSprintStamina ) {
+			sprintCooldown--;
+			if(sprintCooldown < 0)
+			{
+				sprintStamina++;
+			}
+		}
+		
+		testWeapon.update(); //ill move this somewhere else, just testing
 	}
 	
 	public void dash() {
@@ -76,54 +114,6 @@ public class Player extends Unit {
 		
 		friction = true;
 		maxVelocity = Player_Max_Velocity;
-	}
-
-  
-	private float rectW;
-	private float rectH;
-	
-	private int maxSprintStamina;
-	private int sprintStamina;
-	private int sprintCooldown;
-	private boolean isSprinting;
-	
-	private Revolver testWeapon;
-	
-	public Player() {
-		super(Polygon.rectangle(150f, 50f));
-		rectW = 150f;
-		rectH = 50f;
-		
-		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("Placeholder", 150, 50);
-	
-		this.contactDamage = 500f;
-		
-		maxSprintStamina = 150;
-		sprintStamina = maxSprintStamina;
-		sprintCooldown = 0;
-		isSprinting = false;
-		
-		testWeapon = new Revolver(this);
-	}
-	
-	public void unitUpdate() 
-	{
-		if(isSprinting)
-		{
-			sprintStamina--;
-			sprintCooldown = 60;
-		}
-		else if(sprintStamina < maxSprintStamina)
-		{
-			sprintCooldown--;
-			if(sprintCooldown < 0)
-			{
-				sprintStamina++;
-			}
-		}
-		
-		testWeapon.update(); //ill move this somewhere else, just testing
 	}
 	
 	public void draw(Graphics g)
