@@ -24,10 +24,11 @@ public class InputManager {
 		mouseY = 0;
 	}
 	
-	public static float getActualMouseX()	{		return mouseX;					}
-	public static float getActualMouseY()	{		return mouseY;					}
-	public static float getScaledMouseX()	{		return mouseX / Settings.Scale;	}
-	public static float getScaledMouseY()	{		return mouseY / Settings.Scale;	} //doin a little static trollin
+	//doin a little static trollin
+	public static float getScreenMouseX()	{		return mouseX;					} //on the screen
+	public static float getScreenMouseY()	{		return mouseY;					}
+	public static float getMapMouseX()		{		return (mouseX - (Settings.Resolution_X * 0.5f)) / Settings.Scale + Game.Player.getX();	} //relative to coordinate system (assumes player is always centered)
+	public static float getMapMouseY()		{		return (mouseY - (Settings.Resolution_Y * 0.5f)) / Settings.Scale + Game.Player.getY();	}
 	
 	// Check for Keys Down
 	public void update() {

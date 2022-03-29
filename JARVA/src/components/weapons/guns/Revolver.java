@@ -10,8 +10,8 @@ public class Revolver extends Weapon
 	{
 		super(owner);
 		
-		this.w = 80;
-		this.h = 50;
+		this.w = 8;
+		this.h = 5;
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
 	}

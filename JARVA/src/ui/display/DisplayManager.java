@@ -13,6 +13,7 @@ import engine.states.Game;
 import maps.Arena;
 import objects.GameObject;
 import objects.entities.Player;
+import ui.display.hud.Sprintbar;
 import ui.input.InputManager;
 
 public class DisplayManager {
@@ -30,12 +31,14 @@ public class DisplayManager {
 	private float cameraX;
 	private float cameraY;
 	private Crosshair crosshair;
+	private Sprintbar sprintbar;
 	
 	public DisplayManager(Game game) {
 		this.game = game;
 		
 		this.arena = game.getArenaManager().getArena();
 		this.crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
+		this.sprintbar = new Sprintbar(Game.Player);
 	}
 	
 	private void cameraPosition() {
@@ -49,14 +52,13 @@ public class DisplayManager {
 		arena = game.getArenaManager().getArena();
 		
 		crosshair.update();
+		
+		sprintbar.update();
 	}
 	
 	public void render(Graphics g) {
 		// Determine Camera Position
 		cameraPosition();
-		
-		// Draw HUD
-		renderHUD(g);
 		
 		// Render Game Elements
 		g.scale(Settings.Scale, Settings.Scale); // Scaling
@@ -64,12 +66,19 @@ public class DisplayManager {
 		
 		renderArena(g); // Render Arena
 		renderObjects(g); // Render All Objects
-		crosshair.draw(g);
+		
+		g.resetTransform();
+	
+		// Draw HUD (on top of everything else)
+		renderHUD(g);
 	}
 	
 	public void renderHUD(Graphics g) {
 		//render the HUD
 		//health bar, item list, tutorial, etc.
+		
+		crosshair.draw(g);
+		sprintbar.render(g);
 	}
 	
 

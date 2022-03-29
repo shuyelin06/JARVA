@@ -1,5 +1,6 @@
 package objects.entities;
 
+import engine.Settings;
 import engine.Utility;
 
 import java.util.ArrayList;
@@ -45,14 +46,14 @@ public class Player extends Unit {
 	
 	public Player() {
 		super(Polygon.rectangle(5f, 10f));
-		
+	  
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
 		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 10);
 		
 		// Width and Height
-		this.rectW = 150f;
-		this.rectH = 50f;
+		this.rectW = 5f;
+		this.rectH = 10f;
 		
 		// Contact Damage
 		this.contactDamage = 25f;
@@ -84,6 +85,9 @@ public class Player extends Unit {
 		return output;
 	}
 	public boolean canMove() { return !dashing; }
+	public int getSprintStamina() { return sprintStamina; }
+	public int getMaxSprintStamina() { return maxSprintStamina; }
+	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	/* --- Inherited Methods --- */
 	public void draw(Graphics g)
@@ -126,11 +130,17 @@ public class Player extends Unit {
 		// Sprint Determining
 		if( isSprinting ) {
 			sprintStamina--;
-			sprintCooldown = 60;
-		} else if( sprintStamina < maxSprintStamina ) {
+			sprintCooldown = 120;
+		}
+		else if( sprintStamina < maxSprintStamina ) {
 			sprintCooldown--;
-			if( sprintCooldown < 0 ) {
-				sprintStamina++;
+			if(sprintCooldown < 0)
+			{
+				sprintStamina += 2;
+			}
+			else if(sprintCooldown < 60)
+			{
+				sprintStamina += 1;
 			}
 		}
 		
@@ -174,6 +184,21 @@ public class Player extends Unit {
 			if(!isSprinting) velocityMultipliers.add(Sprint_Boost);
 			isSprinting = true;
 		} else stopSprinting();
+
+	public void draw(Graphics g)
+	{
+		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) //idk how to get mouse relative to the player
+		{
+			mirroredSprite = true;
+		}
+		else
+		{
+			mirroredSprite = false;
+		}
+		
+		super.draw(g);
+		
+		testWeapon.draw(g); //ill move this to the managers
 	}
 	public void stopSprinting() {
 		isSprinting = false;

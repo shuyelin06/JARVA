@@ -38,8 +38,6 @@ public class Button {
 		if (this.image != null) {
 			image.draw(centerX - (w / 2), centerY - (h / 2), w, h);
 			
-		} else {
-//			System.out.println("null image");
 		}
 		if (outline) {
 			g.setColor(Color.white);
