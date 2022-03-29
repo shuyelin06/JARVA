@@ -57,13 +57,8 @@ public class DisplayManager {
 	}
 	
 	public void render(Graphics g) {
-		//crosshair first
-		crosshair.draw(g);
 		// Determine Camera Position
 		cameraPosition();
-		
-		// Draw HUD
-		renderHUD(g);
 		
 		// Render Game Elements
 		g.scale(Settings.Scale, Settings.Scale); // Scaling
@@ -71,12 +66,18 @@ public class DisplayManager {
 		
 		renderArena(g); // Render Arena
 		renderObjects(g); // Render All Objects
+		
+		g.resetTransform();
+	
+		// Draw HUD (on top of everything else)
+		renderHUD(g);
 	}
 	
 	public void renderHUD(Graphics g) {
 		//render the HUD
 		//health bar, item list, tutorial, etc.
 		
+		crosshair.draw(g);
 		sprintbar.render(g);
 	}
 	
