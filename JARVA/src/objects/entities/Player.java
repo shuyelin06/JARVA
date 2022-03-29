@@ -92,31 +92,21 @@ public class Player extends Unit {
 	/* --- Inherited Methods --- */
 	public void draw(Graphics g)
 	{
-		super.draw(g);
-		
-		if( InputManager.getScaledMouseX() < getX() ) {
+		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) //idk how to get mouse relative to the player
+		{
 			mirroredSprite = true;
-		} else { 
+		}
+		else
+		{
 			mirroredSprite = false;
 		}
 		
-		
-		
-		 //temp sprint bar
-		g.drawRect(this.x - rectW * 0.5f - 1, this.y + (rectH * 0.5f) + 9, 
-				rectW + 1f, 11);
-		g.setColor(new Color( 1f - (sprintStamina * 2f / maxSprintStamina),
-				0.1f,
-				sprintStamina * 2f / maxSprintStamina));
-		g.fillRect(this.x - rectW * 0.5f, this.y + (rectH * 0.5f) + 10, 
-				rectW * sprintStamina / maxSprintStamina, 10);
+		super.draw(g);
 		
 		testWeapon.draw(g); //ill move this to the managers
 	}
 	
 	public void unitUpdate() {
-		System.out.println(velocityMultipliers);
-		
 		this.maxVelocity = Player_Max_Velocity;
 		for(Float f: velocityMultipliers) {
 			maxVelocity *= f;
@@ -184,22 +174,8 @@ public class Player extends Unit {
 			if(!isSprinting) velocityMultipliers.add(Sprint_Boost);
 			isSprinting = true;
 		} else stopSprinting();
-
-	public void draw(Graphics g)
-	{
-		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) //idk how to get mouse relative to the player
-		{
-			mirroredSprite = true;
-		}
-		else
-		{
-			mirroredSprite = false;
-		}
-		
-		super.draw(g);
-		
-		testWeapon.draw(g); //ill move this to the managers
 	}
+	
 	public void stopSprinting() {
 		isSprinting = false;
 		velocityMultipliers.remove(Sprint_Boost);
