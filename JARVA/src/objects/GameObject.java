@@ -42,6 +42,10 @@ public abstract class GameObject {
 	protected ObjectType type;
 	protected ObjectTeam team;
 	
+	// Object Damage
+	protected float contactDamage; // Contact Damage
+	protected float baseDamage; // Base Damage
+	
 	// Debug
 	protected boolean collision;
 	
@@ -64,6 +68,9 @@ public abstract class GameObject {
     this.mirroredSprite = false;
 		this.collision = false; // Collision
 		this.remove = false; // Remove
+		
+		this.contactDamage = 0;
+		this.baseDamage = 0;
 	}
 	
 	/* --- Ineherited Methods --- */
@@ -171,6 +178,9 @@ public abstract class GameObject {
 	
 	public float getAngleTo(float x, float y) { return Utility.angleBetween(this, x, y); }
 	public float getAngleTo(GameObject o) { return Utility.angleBetween(this, o); }
+	
+	public float getBaseDamage() { return baseDamage; }
+	public float getContactDamage() { return contactDamage; }
 	
 	public Polygon getHitbox() { return hitbox; }
 	
