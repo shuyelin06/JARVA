@@ -29,9 +29,6 @@ public abstract class Unit extends GameObject {
 	protected float knockbackBlock; // % Knockback Blocked
 	protected float damageBlock; // % Damage Blocked
 	
-	protected float contactDamage; // Contact Damage
-	protected float baseDamage; // Base Damage
-	
 	public Unit(Polygon polygon) {
 		super(polygon);
 		
@@ -120,10 +117,6 @@ public abstract class Unit extends GameObject {
 			invulnerable();
 		}
 	}
-	
-	/* --- Accessor Methods --- */
-	public float getBaseDamage() { return baseDamage; }
-	public float getContactDamage() { return contactDamage; }
 	
 	/* --- Mutator / Construtor Methods --- */	
 	public Unit setHealth(float newHealth) { health = newHealth; return this; }
