@@ -29,18 +29,21 @@ public class Title extends BasicGameState {
 	public int getID() { return id; }
 	
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException { }
+
+	@Override
+    public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		canStart = false;
 		startButton = new Button()
 				.setCenterX(Settings.Resolution_X / 2)
 				.setCenterY(Settings.Resolution_Y / 2)
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
-				.setImage("Placeholder")
+				.setImage("placeholder")
 				.enableOutline()
 				;
 	}
-
+	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawString("Title", Settings.Resolution_X / 2, Settings.Resolution_Y / 2);
