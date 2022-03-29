@@ -2,6 +2,7 @@ package objects.entities;
 
 import java.util.ArrayList;
 
+import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
 

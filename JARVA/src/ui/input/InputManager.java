@@ -64,14 +64,11 @@ public class InputManager {
 			else		{	velocityAngle.add(0f);	}
 		}
 		
-		if(input.isKeyDown(Input.KEY_LSHIFT) && Game.Player.hasSprintStamina()) 
-		{ 
-			Game.Player.isSprinting();
-			movementVelocity *= 1.8f;
-		}
-		else
-		{
-			Game.Player.isNotSprinting();
+		// Sprinting
+		if( input.isKeyDown(Input.KEY_LSHIFT) ) { 
+			Game.Player.startSprinting();
+		} else {
+			Game.Player.stopSprinting();;
 		}
 		
 		//averages the angles

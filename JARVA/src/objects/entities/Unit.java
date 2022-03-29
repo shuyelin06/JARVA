@@ -1,10 +1,13 @@
 package objects.entities;
 
+import java.util.ArrayList;
+
 import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
+import components.conditions.Condition;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
@@ -16,7 +19,10 @@ public abstract class Unit extends GameObject {
 	// Switches
 	protected boolean immovable; // Knockback Switch 
 	protected boolean invulnerable; // Invulnerable Switch 
-		
+	
+	// Effects
+	protected ArrayList<Condition> conditions;
+	
 	// Invulnerability
 	protected static float Default_Invulnerability = 0.25f; // Default Invulnerability Timer
 	protected float invulnerability; // Invulnerability Timer
@@ -35,6 +41,9 @@ public abstract class Unit extends GameObject {
 		this.type = ObjectType.Unit;
 		this.team = ObjectTeam.Neutral;
 		
+		// Unit Conditions
+		this.conditions = new ArrayList<>();
+				
 		// Default Values
 		this.invulnerability = Default_Invulnerability; // Seconds Invulnerable
 		
@@ -93,6 +102,9 @@ public abstract class Unit extends GameObject {
 		invulnerable = true;
 		invulnerability = time;
 		lastDamageTaken = Game.getTicks();
+	}
+	public void takeCondition(Condition condition) {
+		conditions.add(condition);
 	}
 	public void takeHealing(float heal) {
 		health += heal;
