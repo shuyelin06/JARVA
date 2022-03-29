@@ -14,6 +14,7 @@ import objects.GameObject;
 import objects.collisions.CollisionManager;
 import objects.entities.Unit;
 import objects.entities.Player;
+import objects.entities.Projectile;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
@@ -29,13 +30,6 @@ public class Game extends BasicGameState {
 	// Game Objects
 	public static ArrayList<GameObject> GameObjects; 
 	public static Player Player;
-
-	/*
-	 * TerritoryManager
-	 * EntityManager
-	 * SoundManager
-	 * 
-	 */
 	
 	/* --- Managers --- */
 	public static DisplayManager DisplayManager;
@@ -50,6 +44,7 @@ public class Game extends BasicGameState {
 	@Override
 	public int getID() { return id; }
 	public static float getTicks() { return Ticks; }
+	public static float TicksPerFrame() { return Settings.Tick_Speed / Settings.Frames_Per_Second; }
 	
 	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
 	

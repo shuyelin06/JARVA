@@ -9,12 +9,24 @@ import engine.Settings;
 import objects.GameObject;
 import ui.input.InputManager;
 
-public class Weapon extends Item
+public abstract class Weapon extends Item
 {
+	private float baseDamage;
 	
+	// Weapon Usage
+	private float lastUsed;
+	private float useTimer;
 	
 	public Weapon(GameObject owner)
 	{
 		super(owner);
+		
+		// Default Variables
+		this.baseDamage = 1f;
 	}
+	
+	abstract public void equip();
+	abstract public void unequip();
+	
+	abstract public void use();
 }

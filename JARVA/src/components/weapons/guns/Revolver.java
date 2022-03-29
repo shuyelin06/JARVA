@@ -15,6 +15,13 @@ public class Revolver extends Weapon
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
 	}
+
+	@Override
+	public void equip() {}
+
+	@Override
+	public void unequip() {}
 	
-	
+	@Override
+	public void use() {}
 }
