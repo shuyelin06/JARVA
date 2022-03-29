@@ -1,5 +1,6 @@
 package objects.entities;
 
+import engine.Settings;
 import engine.Utility;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -32,16 +33,14 @@ public class Player extends Unit {
 	private float rectW;
 	private float rectH;
 	
-
-	
 	// Gun Inventory
 	private Revolver testWeapon;
 	
 	public Player() {
 		super(Polygon.rectangle(5f, 10f));
 		
-		this.rectW = 150f;
-		this.rectH = 50f;
+		this.rectW = 5f;
+		this.rectH = 10f;
 		
 		this.maxVelocity = Player_Max_Velocity;
 		
@@ -63,6 +62,9 @@ public class Player extends Unit {
 	}
 	
 	public boolean canMove() { return !dashing; }
+	public int getSprintStamina() { return sprintStamina; }
+	public int getMaxSprintStamina() { return maxSprintStamina; }
+	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	public void unitUpdate() {
 		// Dash Determining
@@ -74,13 +76,17 @@ public class Player extends Unit {
 		
 		if( isSprinting ) {
 			sprintStamina--;
-			sprintCooldown = 60;
+			sprintCooldown = 120;
 		}
 		else if( sprintStamina < maxSprintStamina ) {
 			sprintCooldown--;
 			if(sprintCooldown < 0)
 			{
-				sprintStamina++;
+				sprintStamina += 2;
+			}
+			else if(sprintCooldown < 60)
+			{
+				sprintStamina += 1;
 			}
 		}
 		
@@ -118,7 +124,7 @@ public class Player extends Unit {
 	
 	public void draw(Graphics g)
 	{
-		if(InputManager.getScaledMouseX() < getX())
+		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) //idk how to get mouse relative to the player
 		{
 			mirroredSprite = true;
 		}
@@ -128,15 +134,6 @@ public class Player extends Unit {
 		}
 		
 		super.draw(g);
-		
-		 //temp sprint bar
-		g.drawRect(this.x - rectW * 0.5f - 1, this.y + (rectH * 0.5f) + 9, 
-				rectW + 1f, 11);
-		g.setColor(new Color( 1f - (sprintStamina * 2f / maxSprintStamina),
-				0.1f,
-				sprintStamina * 2f / maxSprintStamina));
-		g.fillRect(this.x - rectW * 0.5f, this.y + (rectH * 0.5f) + 10, 
-				rectW * sprintStamina / maxSprintStamina, 10);
 		
 		testWeapon.draw(g); //ill move this to the managers
 	}
