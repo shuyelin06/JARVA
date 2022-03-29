@@ -101,18 +101,13 @@ public abstract class GameObject {
 	// Rendering Methods
 	private void drawSprite(Graphics g) { sprite.drawCentered(x, y); }
 	protected void drawHitbox(Graphics g) {
-		Vector[] vertices = hitbox.getVertices();
+//		Vector[] vertices = hitbox.getVertices();
 		
 		if(collision) { g.setColor(Color.green);
 		} else { g.setColor(Color.white);}
 
 		// Draw Edges
-		for (int i = 0; i < vertices.length - 1; i++) {			
-			Vector vertex1 = vertices[i];
-			Vector vertex2 = vertices[i + 1];
-				
-			g.drawLine(x + vertex1.x, y + vertex1.y, x + vertex2.x, y + vertex2.y);
-		}
+		hitbox.draw(g, x, y);
 		
 		collision = false;
 	}
@@ -137,6 +132,8 @@ public abstract class GameObject {
 	
 	public float getX() { return x; }
 	public float getY() { return y; }
+	
+	public float getVelocity() { return velocity.magnitude(); }
 	
 	public float getDistance(float x, float y) { return Utility.distance(this, x, y); }
 	public float getDistance(GameObject o) { return Utility.distance(this, o); }

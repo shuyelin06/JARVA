@@ -22,6 +22,7 @@ public class DisplayManager {
 	
 	public DisplayManager(Game game) {
 		this.game = game;
+		arena = game.getArenaManager().getArena();
 	}
 	
 	public void update() {
@@ -54,7 +55,7 @@ public class DisplayManager {
 	
 	public void renderArena(Graphics g) {
 		//render arena
-		//arena.draw(g);
+		arena.draw(g);
 
 	}
 }

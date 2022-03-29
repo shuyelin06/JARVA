@@ -99,7 +99,13 @@ public abstract class Unit extends GameObject {
 	}
 	public void takeKnockback(GameObject o, float knockback) {
 		if(!immovable) {
-			float angle = Utility.atan( o.getY() - getY(), o.getX() - getX() );
+			
+			takeKnockback(angle + (float)Math.PI, knockback);
+		}
+	}
+	
+	public void takeKnockback(float angle, float knockback) {
+		if(!immovable) {
 			angle += Math.PI;
 			
 			float knockbackReceived = knockback - knockback * knockbackBlock;
@@ -107,6 +113,7 @@ public abstract class Unit extends GameObject {
 			addYVelocity( knockbackReceived * Utility.sin(angle) );
 		}
 	}
+	
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;

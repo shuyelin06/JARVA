@@ -134,6 +134,8 @@ public class Game extends BasicGameState {
 		
 		// Determine Collisions
 		CollisionManager.update();
+		
+		ArenaManager.update();
 	}
 	
 	/* --- Helper Methods --- */

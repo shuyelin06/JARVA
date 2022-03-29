@@ -12,12 +12,13 @@ public class Arena {
 	protected int centerY;
 	
 	//protected Border border;
-	
+	protected Border border;
+		
 	protected int sizeX;
 	protected int sizeY;
 	
 	public Arena() {
-		//border = new Border(Polygon.rectangle(500f,500f));
+		border = new Border();
 
 	}
 	
@@ -25,10 +26,10 @@ public class Arena {
 	public int getCenterX() { return centerX; }
 	public int getCenterY() { return centerY; }
 	
-	
+	public Polygon getBorder() { return border; }
 	
 	public void draw(Graphics g) {
-		//border.draw(g);
+		border.draw(g, 0, 0);
 	}
 
 
