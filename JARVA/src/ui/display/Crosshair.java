@@ -21,18 +21,12 @@ public class Crosshair
 	{
 		this.r = radius;
 		
-		try {
-			sprite = new Image("res/images/crosshair.png");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//		sprite = ImageManager.getImageCopy("crosshair", 50, 50);
+		sprite = ImageManager.getImageCopy("crosshair");
 		this.color = color;
 		
 		x = 0;
 		y = 0;
+		r = 25;
 	}
 	
 	//mutators
@@ -41,12 +35,13 @@ public class Crosshair
 	
 	public void update()
 	{
-		x = InputManager.getScaledMouseX();
-		y = InputManager.getScaledMouseY();
+		x = InputManager.getScreenMouseX();
+		y = InputManager.getScreenMouseY();
 	}
 	
 	public void draw(Graphics g)
 	{
+		sprite.setFilter(Image.FILTER_NEAREST);
 		sprite.setImageColor(color.r, color.g, color.b);
 		sprite.draw(x - r * 0.5f, y - r * 0.5f, r, r);
 	}

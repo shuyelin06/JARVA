@@ -52,7 +52,7 @@ public class Item
 			
 			theta = (float) Math.toDegrees(
 											Math.atan2(
-														InputManager.getScaledMouseY() - pivotY, InputManager.getScaledMouseX() - pivotX
+														InputManager.getMapMouseY() - pivotY, InputManager.getMapMouseX() - pivotX
 																																			)
 																																					); //lol formatting
 		}
