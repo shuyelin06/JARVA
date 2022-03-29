@@ -7,7 +7,7 @@ public class Settings {
 	final public static float Tick_Speed = 1f; // 1 TPS
 	
 	// Video Settings
-	final public static float Scale = 1.5f;
+	final public static float Scale = 10f;
 	
 	final public static int Resolution_X = 1920;
 	final public static int Resolution_Y = 1080;

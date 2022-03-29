@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Input;
 
 import engine.Settings;
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 
@@ -29,17 +30,18 @@ public class InputManager {
 	public static float getScaledMouseY()	{		return mouseY / Settings.Scale;	} //doin a little static trollin
 	
 	// Check for Keys Down
-	public void update() 
-	{
-		movement();
-		
-		mouseX = input.getMouseX();
+	public void update() {
+    mouseX = input.getMouseX();
 		mouseY = input.getMouseY();
+    
+		if( !Game.Player.canMove() ) return;
+
+		movement();
 	}
 	
 	public void movement()
 	{
-		float movementVelocity = 70f;
+		float movementVelocity = Game.Player.getMaxVelocity();
 		//so it doesn't go faster on the diagonal
 		boolean flip = false; //lol i give up
 		float sumVelocityAngle = 0;
@@ -90,8 +92,12 @@ public class InputManager {
 	}
 	
 	// Mouse Pressed
-	public void mousePressed(int key) {
+	public void mousePressed(int key, int x, int y) {
 		switch(key) {
+			case Input.MOUSE_RIGHT_BUTTON:
+				Game.Player.dash();
+				break;
+			
 			default:
 				break;
 		}

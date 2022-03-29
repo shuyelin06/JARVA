@@ -16,6 +16,7 @@ public class Vector {
 	}
 	
 	// Object Helper Methods
+	public float direction() { return Utility.atan(y, x); }
 	public float magnitude() { return (float) Math.sqrt(x * x + y * y); }
 	
 	// Mutator Methods
