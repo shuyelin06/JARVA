@@ -134,6 +134,10 @@ public abstract class Unit extends GameObject {
 			invulnerable();
 		}
 	}
+	/* --- Accessor Methods --- */	
+	public float getMaxHealth() { return maxHealth; }
+	public float getCurHealth() { return health; }
+	public float getPercentHealth() { return health / maxHealth; }
 	
 	/* --- Mutator / Construtor Methods --- */	
 	public Unit setHealth(float newHealth) { health = newHealth; return this; }

@@ -17,6 +17,8 @@ public class Tumbleweed extends Unit {
 		this.sprite = ImageManager.getImageCopy("tumbleweed", 50, 50);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
+		this.baseDamage = 5;
+		
 		timer = 0;
 //		timer = (int) (1000 * Math.random());
 		
