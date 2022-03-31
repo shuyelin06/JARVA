@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Input;
 
+import engine.Settings;
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 
@@ -11,14 +13,36 @@ public class InputManager {
 	private Game game;	
 	private Input input;
 	
+	private static float mouseX;
+	private static float mouseY;
+	
 	public InputManager(Game game, Input input) {
 		this.game = game;
 		this.input = input;
+		
+		mouseX = 0;
+		mouseY = 0;
 	}
+	
+	//doin a little static trollin
+	public static float getScreenMouseX()	{		return mouseX;					} //on the screen
+	public static float getScreenMouseY()	{		return mouseY;					}
+	public static float getMapMouseX()		{		return (mouseX - (Settings.Resolution_X * 0.5f)) / Settings.Scale + Game.Player.getX();	} //relative to coordinate system (assumes player is always centered)
+	public static float getMapMouseY()		{		return (mouseY - (Settings.Resolution_Y * 0.5f)) / Settings.Scale + Game.Player.getY();	}
 	
 	// Check for Keys Down
 	public void update() {
-		float movementVelocity = 70f;
+    mouseX = input.getMouseX();
+		mouseY = input.getMouseY();
+    
+		if( !Game.Player.canMove() ) return;
+
+		movement();
+	}
+	
+	public void movement()
+	{
+		float movementVelocity = Game.Player.getMaxVelocity();
 		//so it doesn't go faster on the diagonal
 		boolean flip = false; //lol i give up
 		float sumVelocityAngle = 0;
@@ -40,14 +64,11 @@ public class InputManager {
 			else		{	velocityAngle.add(0f);	}
 		}
 		
-		if(input.isKeyDown(Input.KEY_LSHIFT) && Game.Player.hasSprintStamina()) 
-		{ 
-			Game.Player.isSprinting();
-			movementVelocity *= 1.8f;
-		}
-		else
-		{
-			Game.Player.isNotSprinting();
+		// Sprinting
+		if( input.isKeyDown(Input.KEY_LSHIFT) ) { 
+			Game.Player.startSprinting();
+		} else {
+			Game.Player.stopSprinting();;
 		}
 		
 		//averages the angles
@@ -67,10 +88,14 @@ public class InputManager {
 		sumVelocityAngle = 0;
 		velocityAngle.clear();
 	}
-
+	
 	// Mouse Pressed
-	public void mousePressed(int key) {
+	public void mousePressed(int key, int x, int y) {
 		switch(key) {
+			case Input.MOUSE_RIGHT_BUTTON:
+				Game.Player.dash();
+				break;
+			
 			default:
 				break;
 		}

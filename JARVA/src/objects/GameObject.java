@@ -20,8 +20,9 @@ public abstract class GameObject {
 	public enum ObjectTeam { Ally, Enemy, Neutral }
 	
 	/* --- Instance Variables --- */
-	// Removal Mark
-	protected boolean remove;
+	// Switches
+	protected boolean remove; // Removal Switch
+	protected boolean friction; // Friction Switch
 	
 	// Physics Variables
 	protected float x, y;
@@ -33,12 +34,17 @@ public abstract class GameObject {
 	protected Polygon hitbox;
 	
 	// Rendering
-	protected Animation animation;
+	protected Animation animation; // Animation
 	protected Image sprite; // Temp
+	protected boolean mirroredSprite;
 	
 	// Object Type and Team
 	protected ObjectType type;
 	protected ObjectTeam team;
+	
+	// Object Damage
+	protected float contactDamage; // Contact Damage
+	protected float baseDamage; // Base Damage
 	
 	// Debug
 	protected boolean collision;
@@ -58,8 +64,13 @@ public abstract class GameObject {
 		this.team = ObjectTeam.Neutral; // Team
 		
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
+    this.friction = true; // Friction
+    this.mirroredSprite = false;
 		this.collision = false; // Collision
 		this.remove = false; // Remove
+		
+		this.contactDamage = 0;
+		this.baseDamage = 0;
 	}
 	
 	/* --- Ineherited Methods --- */
@@ -73,7 +84,7 @@ public abstract class GameObject {
 	// Update 
 	public void update() {
 		if( remove ) return;
-
+		
 		objectUpdate();
 		updatePhysics();
 	}
@@ -88,8 +99,18 @@ public abstract class GameObject {
 		this.rotate(omega / Settings.Frames_Per_Second);
 
 		// Friction
-		final float Friction = 0.15f;
-		velocity.reduce(Friction);
+    final float Friction = 0.35f;
+		if( friction ) velocity.reduce(Friction);
+		
+		// Hi
+		if(velocity.x < 0) 
+		{
+			mirroredSprite = true;
+		}
+		else
+		{
+			mirroredSprite = false;
+		}
 	}
 	
 	// Rendering
@@ -99,7 +120,18 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) { sprite.drawCentered(x, y); }
+	private void drawSprite(Graphics g) 
+	{
+		if(mirroredSprite)
+		{
+			sprite.getFlippedCopy(true, false).drawCentered(x, y);
+		}
+		else
+		{
+			sprite.drawCentered(x, y); 
+		}
+	}
+	
 	protected void drawHitbox(Graphics g) {
 //		Vector[] vertices = hitbox.getVertices();
 		
@@ -126,9 +158,12 @@ public abstract class GameObject {
 	
 	/* --- Accessor Methods --- */
 	public boolean removalMarked() { return remove; }
+	public boolean isMirrored() { return mirroredSprite; }
 	
 	public ObjectTeam getTeam() { return team; }
 	public ObjectType getType() { return type; }
+	
+	public float getMaxVelocity() { return maxVelocity; }
 	
 	public float getX() { return x; }
 	public float getY() { return y; }
@@ -140,6 +175,9 @@ public abstract class GameObject {
 	
 	public float getAngleTo(float x, float y) { return Utility.angleBetween(this, x, y); }
 	public float getAngleTo(GameObject o) { return Utility.angleBetween(this, o); }
+	
+	public float getBaseDamage() { return baseDamage; }
+	public float getContactDamage() { return contactDamage; }
 	
 	public Polygon getHitbox() { return hitbox; }
 	

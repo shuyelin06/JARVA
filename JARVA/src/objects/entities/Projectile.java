@@ -2,6 +2,7 @@ package objects.entities;
 
 import java.util.ArrayList;
 
+import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
 
@@ -13,19 +14,22 @@ public abstract class Projectile extends GameObject {
 	protected int pierce; 
 	
 	// Damage of the Projectile
-	protected Unit source;
+	protected GameObject source;
 	
 	protected float knockback;
 	protected float damageMultiplier;
 	
-	public Projectile(Polygon polygon, Unit u) {
+	public Projectile(Polygon polygon, GameObject source) {
 		super(polygon);
 		
-		this.source = u;
+		this.source = source;
 		this.type = ObjectType.Projectile;
 		
+		this.pierced = new ArrayList<Unit>();
+		
 		// Default Variables
-		this.pierce = 1; // Number of Units Projectile can Pierce
+		this.friction = false; // No Friction
+		this.pierce = 1; // # Units Projectile can Pierce
 		this.damageMultiplier = 1f; // Base Damage
 	}
 	
@@ -62,9 +66,11 @@ public abstract class Projectile extends GameObject {
 		}
 	}
 	
-	/* --- Mutator / Construtor Methods --- */
-	public void setPierce(int newPierce) { pierce = newPierce; }
 	
-	public void setKnockback(float newKnockback) { knockback = newKnockback; }
-	public void setDamageMultiplier(float newMultiplier) { damageMultiplier = newMultiplier; }
+	
+	/* --- Mutator / Construtor Methods --- */
+	public Projectile setPierce(int newPierce) { pierce = newPierce; return this; }
+	
+	public Projectile setKnockback(float newKnockback) { knockback = newKnockback; return this; }
+	public Projectile setDamageMultiplier(float newMultiplier) { damageMultiplier = newMultiplier; return this; }
 }

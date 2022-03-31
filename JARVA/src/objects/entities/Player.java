@@ -1,73 +1,199 @@
 package objects.entities;
 
+import engine.Settings;
+import engine.Utility;
+
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-
 import engine.states.Game;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
+import ui.input.InputManager;
+import components.weapons.guns.Revolver;
 
 public class Player extends Unit {
-	private float rectW;
-	private float rectH;
+	private static float Player_Max_Velocity = 75f;
+	
+	// Max Velocity Multipliers
+	private ArrayList<Float> velocityMultipliers;
+	
+	// Dashing
+	private static Float Dash_Boost = 2.5f;
+	private static float Dash_Timer = 0.15f;
+	private static float Dash_Threshold = 0.5f;
+	
+	private float lastDashed;
+	private boolean dashing;
+	
+	// Sprinting
+	private static Float Sprint_Boost = 1.5f;
+	private static int Max_Sprint_Stamina = 150;
 	
 	private int maxSprintStamina;
 	private int sprintStamina;
 	private int sprintCooldown;
 	private boolean isSprinting;
 	
-	public Player() {
-		super(Polygon.rectangle(150f, 50f));
-		rectW = 150f;
-		rectH = 50f;
-		
-		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("Placeholder", 150, 50);
+	// Width and Height
+	private float rectW;
+	private float rectH;
 	
-		this.contactDamage = 500f;
+	// Gun Inventory
+	private Revolver testWeapon;
+	
+	public Player() {
+		super(Polygon.rectangle(5f, 10f));
+	  
+		// Team and Sprite
+		this.team = ObjectTeam.Ally;
+		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 10);
 		
-		maxSprintStamina = 150;
-		sprintStamina = maxSprintStamina;
-		sprintCooldown = 0;
-		isSprinting = false;
+		// Width and Height
+		this.rectW = 5f;
+		this.rectH = 10f;
 		
+		// Contact Damage
+		this.contactDamage = 25f;
+		
+		// Velocity Determinants
+		this.maxVelocity = Player_Max_Velocity;
+		this.velocityMultipliers = new ArrayList<>();
+		
+		// Dashing
+		this.lastDashed = Game.getTicks();
+		this.dashing = false;
+		
+		// Sprinting
+		this.sprintStamina = maxSprintStamina = Max_Sprint_Stamina;
+		this.sprintCooldown = 0;
+		this.isSprinting = false;
+		
+		// Test Weapon
+		this.testWeapon = new Revolver(this);
+		
+		this.build();
 	}
 	
-	public void unitUpdate() 
-	{
-		if(isSprinting)
-		{
-			sprintStamina--;
-			sprintCooldown = 60;
+	public float getMaxVelocity() {
+		float output = maxVelocity;
+		for(Float f: velocityMultipliers) {
+			output *= f;
 		}
-		else if(sprintStamina < maxSprintStamina)
+		return output;
+	}
+	public boolean canMove() { return !dashing; }
+	public int getSprintStamina() { return sprintStamina; }
+	public int getMaxSprintStamina() { return maxSprintStamina; }
+	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
+	
+	/* --- Inherited Methods --- */
+	public void draw(Graphics g)
+	{
+		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) //idk how to get mouse relative to the player
 		{
+			mirroredSprite = true;
+		}
+		else
+		{
+			mirroredSprite = false;
+		}
+		
+		super.draw(g);
+		
+		testWeapon.draw(g); //ill move this to the managers
+	}
+	
+	public void unitUpdate() {
+		this.maxVelocity = Player_Max_Velocity;
+		for(Float f: velocityMultipliers) {
+			maxVelocity *= f;
+		}
+		
+		// Dash Determining
+		if( dashing ) {
+			if ( Game.getTicks() - lastDashed > Dash_Timer ) stopDashing();
+		}
+		
+		// Sprint Determining
+		if( isSprinting ) {
+			sprintStamina--;
+			sprintCooldown = 120;
+		}
+		else if( sprintStamina < maxSprintStamina ) {
 			sprintCooldown--;
 			if(sprintCooldown < 0)
 			{
-				sprintStamina++;
+				sprintStamina += 2;
 			}
+			else if(sprintCooldown < 60)
+			{
+				sprintStamina += 1;
+			}
+		}
+		
+		// Update Weapon
+		testWeapon.update(); //ill move this somewhere else, just testing
+	}
+	
+	/* --- Dash Behavior --- */
+	public void dash() {
+		if( dashing ) return;
+		
+		if( velocity.magnitude() > maxVelocity * Dash_Threshold ) {
+			beginDashing();
+			
+			final float Direction = velocity.direction();
+			final float VelocityBoost = this.getMaxVelocity();
+			
+			this.setXVelocity( VelocityBoost * Utility.cos(Direction) );
+			this.setYVelocity( VelocityBoost * Utility.sin(Direction) );
 		}
 	}
 	
-	public void draw(Graphics g)
-	{
-		super.draw(g);
+	private void beginDashing() {
+		invulnerable(Dash_Timer);
+		dashing = true;
 		
-		 //temp sprint bar
-		g.drawRect(this.x - rectW * 0.5f - 1, this.y + (rectH * 0.5f) + 9, 
-				rectW + 1f, 11);
-		g.setColor(new Color( 1f - (sprintStamina * 2f / maxSprintStamina),
-				0.1f,
-				sprintStamina * 2f / maxSprintStamina));
-		g.fillRect(this.x - rectW * 0.5f, this.y + (rectH * 0.5f) + 10, 
-				rectW * sprintStamina / maxSprintStamina, 10);
+		lastDashed = Game.getTicks();
+		friction = false;
+		velocityMultipliers.add(Dash_Boost);
+	}
+	private void stopDashing() {
+		dashing = false;
 		
+		friction = true;
+		velocityMultipliers.remove(Dash_Boost);
 	}
 	
-	public boolean hasSprintStamina() { return sprintStamina > 0; }
+	/* --- Sprint Behavior --- */
+	public void startSprinting() {
+		if( sprintStamina > 0 ) {
+			if(!isSprinting) velocityMultipliers.add(Sprint_Boost);
+			isSprinting = true;
+		} else stopSprinting();
+	}
+	
+	public void stopSprinting() {
+		isSprinting = false;
+		velocityMultipliers.remove(Sprint_Boost);
+	}
+	
+	
+	private boolean hasSprintStamina() { return sprintStamina > 0; }
 	public void isSprinting() { isSprinting = true; }
 	public void isNotSprinting() { isSprinting = false; }
+	
+	/*
+	 * private int maxSprintStamina;
+	private int sprintStamina;
+	private int sprintCooldown;
+	private boolean isSprinting;
+	
+	 */
+
+	
 	public Player buildPlayer() { Game.GameObjects.add(this); return this; }
 }
