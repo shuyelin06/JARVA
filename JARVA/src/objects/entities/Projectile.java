@@ -9,6 +9,9 @@ import objects.geometry.Polygon;
 public abstract class Projectile extends GameObject {
 	public enum ProjectileType {}
 	
+	// Projectile Stun
+	protected float stun = 0.125f;
+	
 	// Piercing Variables
 	protected ArrayList<Unit> pierced; 
 	protected int pierce; 
@@ -28,6 +31,7 @@ public abstract class Projectile extends GameObject {
 		this.pierced = new ArrayList<Unit>();
 		
 		// Default Variables
+		this.knockback = 50f;
 		this.friction = false; // No Friction
 		this.pierce = 1; // # Units Projectile can Pierce
 		this.damageMultiplier = 1f; // Base Damage
@@ -47,17 +51,16 @@ public abstract class Projectile extends GameObject {
 		// Projectile AI
 		projectileUpdate();
 	}
-	@Override
-	public void collision(GameObject o) {
-		super.collision(o);
-		
+	
+	public void objectCollision(GameObject o) {
 		if( o.getType() == ObjectType.Unit && source.getTeam() != o.getTeam() ) {
 			Unit unit = (Unit) o;
 			
 			if( pierced.contains(unit) ) return;
 			else {
-				unit.takeDamage(source.getBaseDamage() * damageMultiplier);
-				unit.takeKnockback(this, knockback);
+				unit.takeDamage(source.getBaseDamage() * damageMultiplier); // Damage
+				unit.takeKnockback(this, knockback); // Knockback
+				unit.stunned(stun); // Stun
 				
 				pierced.add(unit);
 				pierce--;

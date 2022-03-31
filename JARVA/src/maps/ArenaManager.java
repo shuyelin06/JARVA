@@ -20,7 +20,7 @@ public class ArenaManager {
 	
 	// Initialize a random arena for the game
 	private void initialize() {
-		arena = new Arena(1000f, 1000f);
+		arena = new Arena(250f, 250f);
 	}
 	
 	public void update() {

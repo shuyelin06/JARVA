@@ -45,6 +45,7 @@ public class Thorn extends Projectile {
 
 	@Override
 	public void projectileUpdate() {
+		this.knockback = 60f;
 		timer++;
 		if (timer < maxTimer) {
 			theta = Math.atan2(target.getY() - origin.getY(), target.getX() - origin.getX());
@@ -54,7 +55,7 @@ public class Thorn extends Projectile {
 			new Thorn(this, Game.Player)
 				.setMaxTimer(500)
 				.setPierce(1)
-				.setKnockback(0)
+				.setKnockback(50f)
 				.setDamageMultiplier(1)
 				.build();
 		}
