@@ -14,6 +14,7 @@ import maps.Arena;
 import objects.GameObject;
 import objects.entities.Player;
 import ui.display.hud.Healthbar;
+import ui.display.hud.Crosshair;
 import ui.display.hud.Sprintbar;
 import ui.input.InputManager;
 

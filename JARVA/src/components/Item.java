@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import objects.GameObject;
+import objects.entities.projectiles.MediumBullet;
 import ui.input.InputManager;
 
 public class Item 
@@ -19,9 +20,15 @@ public class Item
 	protected float pivotX;
 	protected float pivotY;
 	
+	protected float tempX;
+	protected float tempY;
+	protected float tempTheta;
+	
 	protected float w;
 	protected float h;	
 	protected float theta;
+	
+	protected boolean isWeapon; //temporary cheese method to get the use method, sowwy
 	
 	public Item(GameObject owner)
 	{
@@ -38,7 +45,11 @@ public class Item
 		
 		this.isEquipped = true;
 		this.rotationLocked = false;
+		
+		this.isWeapon = false;
 	}
+	
+	public boolean isWeapon() { return isWeapon; }
 	
 	public void update()
 	{

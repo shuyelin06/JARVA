@@ -11,7 +11,7 @@ import objects.GameObject;
 
 public class InputManager {
 	private Game game;	
-	private Input input;
+	private static Input input;
 	
 	private static float mouseX;
 	private static float mouseY;
@@ -29,6 +29,7 @@ public class InputManager {
 	public static float getScreenMouseY()	{		return mouseY;					}
 	public static float getMapMouseX()		{		return (mouseX - (Settings.Resolution_X * 0.5f)) / Settings.Scale + Game.Player.getX();	} //relative to coordinate system (assumes player is always centered)
 	public static float getMapMouseY()		{		return (mouseY - (Settings.Resolution_Y * 0.5f)) / Settings.Scale + Game.Player.getY();	}
+	public static boolean isLMBDown() {		return input.isMousePressed(Input.MOUSE_LEFT_BUTTON); }
 	
 	// Check for Keys Down
 	public void update() {

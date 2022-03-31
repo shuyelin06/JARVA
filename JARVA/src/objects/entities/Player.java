@@ -13,6 +13,7 @@ import objects.GameObject;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
+import components.Inventory;
 import components.weapons.guns.Revolver;
 
 public class Player extends Unit {
@@ -43,7 +44,7 @@ public class Player extends Unit {
 	private float rectH;
 	
 	// Gun Inventory
-	private Revolver testWeapon;
+	private Inventory inventory;
 	
 	public Player() {
 		super(Polygon.rectangle(5f, 10f));
@@ -73,7 +74,9 @@ public class Player extends Unit {
 		this.isSprinting = false;
 		
 		// Test Weapon
-		this.testWeapon = new Revolver(this);
+		this.inventory = new Inventory();
+		inventory.addItem(new Revolver(this));
+		inventory.equipItem(0);
 		
 		this.build();
 	}
@@ -104,7 +107,7 @@ public class Player extends Unit {
 		
 		super.draw(g);
 		
-		testWeapon.draw(g); //ill move this to the managers
+		inventory.draw(g); //ill move this to the managers
 	}
 	
 	public void unitUpdate() {
@@ -139,7 +142,12 @@ public class Player extends Unit {
 		}
 		
 		// Update Weapon
-		testWeapon.update(); //ill move this somewhere else, just testing
+		inventory.update(); //ill move this somewhere else, just testing
+		
+		if(InputManager.isLMBDown())
+		{
+			inventory.getWeapon().use();
+		}
 	}
 	
 	/* --- Helper Methods --- */
