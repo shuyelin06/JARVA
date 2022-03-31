@@ -3,6 +3,7 @@ package objects.entities.units;
 import engine.states.Game;
 import objects.entities.Projectile;
 import objects.entities.Unit;
+import objects.entities.projectiles.Dagger;
 import objects.entities.projectiles.Thorn;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
@@ -28,6 +29,11 @@ public class Tumbleweed extends Unit {
 		if (timer % 200 == 0) {
 			new Thorn(this, Game.Player)
 				.setMaxTimer(200)
+				.setPierce(1)
+				.setKnockback(0)
+				.setDamageMultiplier(1)
+				.build();
+			new Dagger(this, Game.Player)
 				.setPierce(1)
 				.setKnockback(0)
 				.setDamageMultiplier(1)
