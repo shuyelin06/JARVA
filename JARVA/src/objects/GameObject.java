@@ -167,7 +167,10 @@ public abstract class GameObject {
 	
 	public float getX() { return x; }
 	public float getY() { return y; }
-	
+
+	public float getXVelocity() { return velocity.x; }
+	public float getYVelocity() { return velocity.y; }
+
 	public float getVelocity() { return velocity.magnitude(); }
 	
 	public float getDistance(float x, float y) { return Utility.distance(this, x, y); }
