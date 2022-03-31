@@ -9,6 +9,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import engine.states.Game;
+import objects.GameObject;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
@@ -138,6 +139,14 @@ public class Player extends Unit {
 		testWeapon.update(); //ill move this somewhere else, just testing
 	}
 	
+	/* --- Helper Methods --- */
+	public void move(float movementVelocity, float sumVelocityAngle) {
+		if(!stunned) {
+			Game.Player.addYVelocity(movementVelocity * (float) -Math.sin(Math.toRadians(sumVelocityAngle)));
+			Game.Player.addXVelocity(movementVelocity * (float) Math.cos(Math.toRadians(sumVelocityAngle)));
+		}
+	}
+	
 	/* --- Dash Behavior --- */
 	public void dash() {
 		if( dashing ) return;
@@ -157,6 +166,7 @@ public class Player extends Unit {
 		invulnerable(Dash_Timer);
 		dashing = true;
 		
+		collidable = false;
 		lastDashed = Game.getTicks();
 		friction = false;
 		velocityMultipliers.add(Dash_Boost);
@@ -164,6 +174,7 @@ public class Player extends Unit {
 	private void stopDashing() {
 		dashing = false;
 		
+		collidable = true;
 		friction = true;
 		velocityMultipliers.remove(Dash_Boost);
 	}
