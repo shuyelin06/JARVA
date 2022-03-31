@@ -1,5 +1,6 @@
 package maps;
 
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Projectile;
@@ -19,7 +20,7 @@ public class ArenaManager {
 	
 	// Initialize a random arena for the game
 	private void initialize() {
-		arena = new Arena();
+		arena = new Arena(1000f, 1000f);
 	}
 	
 	public void update() {
@@ -30,11 +31,12 @@ public class ArenaManager {
 		for(GameObject o : Game.GameObjects) {
 			
 			if(!arena.getBorder().intersects(o.getHitbox())) {
-				
-				if(o instanceof Unit ) {
-					((Unit) o).takeKnockback(o.getAngleTo(0,0), o.getVelocity() * 1.1f);
+				// Object Border Control
+				if( o instanceof Unit ) {
+					( (Unit) o).takeKnockback( Utility.atan(o.getY(), o.getX()) + (float) Math.PI, 200f );
 					
 				}
+				// Projectile Border Control
 				else if(o instanceof Projectile) {
 					o.remove();
 				}

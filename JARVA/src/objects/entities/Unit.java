@@ -99,15 +99,13 @@ public abstract class Unit extends GameObject {
 	}
 	public void takeKnockback(GameObject o, float knockback) {
 		if(!immovable) {
-			
-			takeKnockback(angle + (float)Math.PI, knockback);
+			float angle = Utility.atan( y - o.getY(), x - o.getX() );
+			takeKnockback(angle, knockback);
 		}
 	}
 	
 	public void takeKnockback(float angle, float knockback) {
 		if(!immovable) {
-			angle += Math.PI;
-			
 			float knockbackReceived = knockback - knockback * knockbackBlock;
 			addXVelocity( knockbackReceived * Utility.cos(angle) );
 			addYVelocity( knockbackReceived * Utility.sin(angle) );

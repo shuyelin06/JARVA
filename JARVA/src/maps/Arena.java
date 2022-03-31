@@ -5,24 +5,37 @@ import org.newdawn.slick.Graphics;
 import engine.Settings;
 import objects.entities.Unit;
 import objects.geometry.Polygon;
+import objects.geometry.Vector;
 
 public class Arena {
-
+	// Width and Height of Arena
+	protected float width;
+	protected float height;
+	
+	// Center of the Arena 
 	protected int centerX;
 	protected int centerY;
 	
-	//protected Border border;
-	protected Border border;
-		
-	protected int sizeX;
-	protected int sizeY;
+	// Friction in the Arena
+	protected float friction;
 	
-	public Arena() {
-		border = new Border();
+	// Protected Border border;
+	protected Border border;
+	
+	public Arena(float width, float height) {
+		this.friction = 0.5f;
+		
+		this.width = width;
+		this.height = height;
+		
+		Vector[] vertices = Polygon.rectangleEdges(width, height);
+		border = new Border( this, vertices );
 
 	}
 	
 	// Return Centers
+	public float getFriction() { return friction; }
+	
 	public int getCenterX() { return centerX; }
 	public int getCenterY() { return centerY; }
 	

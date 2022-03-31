@@ -7,19 +7,17 @@ import objects.geometry.Polygon;
 import objects.geometry.Vector;
 
 public class Border extends Polygon {
+	private Arena arena;
 	
 	@Override
-	public float getCenterX() { return 0f; }
+	public float getCenterX() { return arena.getCenterX(); }
 	@Override
-	public float getCenterY() { return 0f; }
-		
+	public float getCenterY() { return arena.getCenterY(); }
 	
-	public Border() {
-		super( Polygon.rectangleEdges(1000f, 1000f) ); 
-	}
-
+	public Arena getArena() { return arena; }
 	
-	
-	public void draw(Graphics g) {
+	public Border(Arena arena, Vector[] vertices) {
+		super( vertices ); 
+		this.arena = arena;
 	}
 }
