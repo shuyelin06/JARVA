@@ -19,9 +19,15 @@ public abstract class Unit extends GameObject {
 	// Switches
 	protected boolean immovable; // Knockback Switch 
 	protected boolean invulnerable; // Invulnerable Switch 
+	protected boolean stunned; // Stunned Switch
 	
 	// Effects
 	protected ArrayList<Condition> conditions;
+	
+	// Stunning
+	protected static float Default_Stun = 0.25f; // Default Stun Timer
+	protected float stun;
+	protected float lastStunned;
 	
 	// Invulnerability
 	protected static float Default_Invulnerability = 0.25f; // Default Invulnerability Timer
@@ -40,6 +46,11 @@ public abstract class Unit extends GameObject {
 		
 		this.type = ObjectType.Unit;
 		this.team = ObjectTeam.Neutral;
+		
+		// Switches
+		this.immovable = false;
+		this.invulnerable = false;
+		this.stunned = false;
 		
 		// Unit Conditions
 		this.conditions = new ArrayList<>();
@@ -78,14 +89,15 @@ public abstract class Unit extends GameObject {
 		// Invulnerability Timer
 		if(Game.getTicks() - lastDamageTaken > invulnerability) { invulnerable = false; }
 		
+		// Stun Timer
+		if(Game.getTicks() - lastStunned > stun) { stunned = false; }
+		
 		// Entity AI
-		unitUpdate();
+		if(!stunned) unitUpdate();
 	}
 	
 	@Override
-	public void collision(GameObject o) {
-		super.collision(o);
-		
+	public void objectCollision(GameObject o) {
 		if( o.getType() == ObjectType.Unit ) {
 			Unit unit = (Unit) o;
 			unit.takeKnockback(this, ContactKnockback);
@@ -97,6 +109,13 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Helper Methods --- */
+	protected void stunned() { stunned(Default_Stun); }
+	protected void stunned(float time) {
+		stunned = true;
+		stun = time;
+		lastStunned = Game.getTicks();
+	}
+	
 	protected void invulnerable() { invulnerable(Default_Invulnerability); }
 	protected void invulnerable(float time) {
 		invulnerable = true;
@@ -131,6 +150,8 @@ public abstract class Unit extends GameObject {
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
+			
+			velocity.reduce(0.75f);
 			invulnerable();
 		}
 	}

@@ -49,6 +49,7 @@ public class Thorn extends Projectile {
 
 	@Override
 	public void projectileUpdate() {
+		this.knockback = 60f;
 		timer++;
 		
 		// if this is a primary source thorn, it will home for a bit and then split in 3

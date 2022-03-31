@@ -81,8 +81,7 @@ public class InputManager {
 			
 			sumVelocityAngle /= velocityAngle.size();
 			
-			Game.Player.addYVelocity(movementVelocity * (float) -Math.sin(Math.toRadians(sumVelocityAngle)));
-			Game.Player.addXVelocity(movementVelocity * (float) Math.cos(Math.toRadians(sumVelocityAngle)));
+			Game.Player.move(movementVelocity, sumVelocityAngle);
 		}
 		
 		sumVelocityAngle = 0;
