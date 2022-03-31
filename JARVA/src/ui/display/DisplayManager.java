@@ -35,7 +35,7 @@ public class DisplayManager {
 	
 	public DisplayManager(Game game) {
 		this.game = game;
-		
+
 		this.arena = game.getArenaManager().getArena();
 		this.crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
 		this.sprintbar = new Sprintbar(Game.Player);
@@ -92,6 +92,7 @@ public class DisplayManager {
 	
 	public void renderArena(Graphics g) {
 		//render arena
+		arena.draw(g);
 
 	}
 }
