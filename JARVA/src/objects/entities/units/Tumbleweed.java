@@ -25,9 +25,9 @@ public class Tumbleweed extends Unit {
 	
 	protected void unitUpdate() {
 		timer++;
-		if (timer % 100 == 0) {
+		if (timer % 200 == 0) {
 			new Thorn(this, Game.Player)
-				.setMaxTimer(2000)
+				.setMaxTimer(200)
 				.setPierce(1)
 				.setKnockback(0)
 				.setDamageMultiplier(1)

@@ -2,6 +2,7 @@ package objects.entities.projectiles;
 
 import org.newdawn.slick.Graphics;
 
+import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Player;
 import objects.entities.Projectile;
@@ -48,9 +49,15 @@ public class Thorn extends Projectile {
 		if (timer < maxTimer) {
 			theta = Math.atan2(target.getY() - origin.getY(), target.getX() - origin.getX());
 			this.setXVelocity((float) Math.cos(theta) * baseSpeed);
-			this.setYVelocity((float) Math.cos(theta) * baseSpeed);
-		} else if (timer == maxTimer && !(origin instanceof Thorn)) {
-			//make a new thorn lmao
+			this.setYVelocity((float) Math.sin(theta) * baseSpeed);
+//		} else if (timer == maxTimer && !(origin instanceof Thorn)) {
+		} else if (timer % maxTimer == 0) {
+			new Thorn(this, Game.Player)
+				.setMaxTimer(500)
+				.setPierce(1)
+				.setKnockback(0)
+				.setDamageMultiplier(1)
+				.build();
 		}
 	}
 
