@@ -50,8 +50,7 @@ public class Thorn extends Projectile {
 			theta = Math.atan2(target.getY() - origin.getY(), target.getX() - origin.getX());
 			this.setXVelocity((float) Math.cos(theta) * baseSpeed);
 			this.setYVelocity((float) Math.sin(theta) * baseSpeed);
-//		} else if (timer == maxTimer && !(origin instanceof Thorn)) {
-		} else if (timer % maxTimer == 0) {
+		} else if (timer == maxTimer && !(origin instanceof Thorn)) {
 			new Thorn(this, Game.Player)
 				.setMaxTimer(500)
 				.setPierce(1)
