@@ -70,7 +70,6 @@ public abstract class Projectile extends GameObject {
 	
 	/* --- Mutator / Construtor Methods --- */
 	public Projectile setPierce(int newPierce) { pierce = newPierce; return this; }
-	
 	public Projectile setKnockback(float newKnockback) { knockback = newKnockback; return this; }
 	public Projectile setDamageMultiplier(float newMultiplier) { damageMultiplier = newMultiplier; return this; }
 }
