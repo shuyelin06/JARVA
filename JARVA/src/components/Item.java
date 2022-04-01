@@ -81,14 +81,19 @@ public class Item
 		}
 		else
 		{
-			g.rotate(pivotX, pivotY, theta);
+			rotateSprite(g, 1);
 			drawSprite(tempSprite);
-			g.rotate(pivotX, pivotY, -theta);
+			rotateSprite(g, -1);
 		}
 	}
 	
 	public void drawSprite(Image s)
 	{
 		s.draw(x, y, w, h);
+	}
+	
+	public void rotateSprite(Graphics g, int side)
+	{
+		g.rotate(pivotX, pivotY, theta * side);
 	}
 }

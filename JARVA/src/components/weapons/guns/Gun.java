@@ -52,15 +52,21 @@ public class Gun extends Weapon
 		
 		recoilX += baseRecoil * (float) -Math.cos(angleToMouse);
 		recoilY += baseRecoil * (float) -Math.sin(angleToMouse);
+		
+		recoilTheta -= baseRecoil * 20f;
 	}
 	
 	public void update()
 	{
 		super.update();
 		
-		recoilX *= 0.8f;
-		recoilY *= 0.8f;
-		recoilTheta *= 0.8f;
+		recoilX *= 0.9f;
+		recoilY *= 0.9f;
+		recoilTheta *= 0.95f;
+		//cleaning up numbers
+		if(Math.abs(recoilX) < 0.01f) recoilX = 0;
+		if(Math.abs(recoilY) < 0.01f) recoilY = 0;
+		if(Math.abs(recoilTheta) < 0.01f) recoilTheta = 0;
 		
 		lastUsed--;
 	}
@@ -68,5 +74,13 @@ public class Gun extends Weapon
 	public void drawSprite(Image s)
 	{
 		s.draw(x + recoilX, y + recoilY, w, h);
+	}
+	
+	public void rotateSprite(Graphics g, int side)
+	{
+		float tempTheta = recoilTheta;
+		if(owner.isMirrored()) tempTheta *= -1;
+		
+		g.rotate(pivotX + recoilX, pivotY + recoilY, (theta + tempTheta) * side);
 	}
 }
