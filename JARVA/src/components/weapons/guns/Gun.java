@@ -50,8 +50,8 @@ public class Gun extends Weapon
 		
 		float angleToMouse = (float)Math.toRadians(owner.getAngleTo(InputManager.getMapMouseX(), InputManager.getMapMouseY()));
 		
-		recoilX += (float) -Math.cos(angleToMouse);
-		recoilY += (float) -Math.sin(angleToMouse);
+		recoilX += baseRecoil * (float) -Math.cos(angleToMouse);
+		recoilY += baseRecoil * (float) -Math.sin(angleToMouse);
 	}
 	
 	public void update()
@@ -63,5 +63,10 @@ public class Gun extends Weapon
 		recoilTheta *= 0.8f;
 		
 		lastUsed--;
+	}
+	
+	public void drawSprite(Image s)
+	{
+		s.draw(x + recoilX, y + recoilY, w, h);
 	}
 }

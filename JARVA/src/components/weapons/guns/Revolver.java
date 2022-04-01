@@ -20,7 +20,7 @@ public class Revolver extends Gun
 		this.h = 5;
 		
 		useTimer = 30;
-		baseRecoil = 10;
+		baseRecoil = 20;
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
 	}
@@ -41,23 +41,5 @@ public class Revolver extends Gun
 		super.fire();
 		
 		new MediumBullet(owner).build();
-	}
-	
-	public void draw(Graphics g)
-	{
-		Image tempSprite = sprite;
-		
-		if(owner.isMirrored()) tempSprite = sprite.getFlippedCopy(false, true);
-		
-		if(rotationLocked)
-		{
-			tempSprite.draw(x + recoilX, y + recoilY, w, h);
-		}
-		else
-		{
-			g.rotate(pivotX, pivotY, theta);
-			tempSprite.draw(x + recoilX, y + recoilY, w, h);
-			g.rotate(pivotX, pivotY, -theta);
-		}
 	}
 }

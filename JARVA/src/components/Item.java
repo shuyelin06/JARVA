@@ -77,13 +77,18 @@ public class Item
 		
 		if(rotationLocked)
 		{
-			tempSprite.draw(x, y, w, h);
+			drawSprite(tempSprite);
 		}
 		else
 		{
 			g.rotate(pivotX, pivotY, theta);
-			tempSprite.draw(x, y, w, h);
+			drawSprite(tempSprite);
 			g.rotate(pivotX, pivotY, -theta);
 		}
+	}
+	
+	public void drawSprite(Image s)
+	{
+		s.draw(x, y, w, h);
 	}
 }
