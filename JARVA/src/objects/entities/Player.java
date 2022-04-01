@@ -51,7 +51,7 @@ public class Player extends Unit {
 	  
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 10);
+		this.sprite = ImageManager.getImageCopy("jarvis", 5, 10);
 		
 		// Width and Height
 		this.rectW = 5f;
