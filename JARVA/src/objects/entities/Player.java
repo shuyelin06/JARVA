@@ -111,8 +111,8 @@ public class Player extends Unit {
 	}
 	
 	public void unitUpdate() {
-		System.out.println("Health: " + health);
-		System.out.println("Percent Health: " + getPercentHealth());
+//		System.out.println("Health: " + health);
+//		System.out.println("Percent Health: " + getPercentHealth());
 		
 		this.maxVelocity = Player_Max_Velocity;
 		for(Float f: velocityMultipliers) {

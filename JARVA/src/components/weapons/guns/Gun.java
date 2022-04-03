@@ -1,6 +1,7 @@
 package components.weapons.guns;
 
 import objects.GameObject;
+import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
 import org.newdawn.slick.Graphics;
@@ -11,10 +12,18 @@ import components.weapons.Weapon;
 public class Gun extends Weapon
 {	
 	protected float baseRecoil;
+	protected float currentRecoil;
+	protected float maxRecoil;
+	protected float recoilRecovery; //higher is slower
 	
 	protected float recoilX;
 	protected float recoilY;
 	protected float recoilTheta;
+	
+	protected Image muzzleFlash;
+	protected float flashTimer;	
+	protected float barrelX; //for the muzzle flash, and maybe for the bullet
+	protected float barrelY;
 	
 	public Gun(GameObject owner) 
 	{
@@ -24,6 +33,15 @@ public class Gun extends Weapon
 		useTimer = 0;
 		
 		baseRecoil = 0;
+		currentRecoil = 0;
+		maxRecoil = 0;
+		recoilRecovery = 1;
+		
+		sprite = ImageManager.getImageCopy("revolver");
+		muzzleFlash = ImageManager.getImageCopy("muzzleFlash");
+		flashTimer = 0;
+		barrelX = 0;
+		barrelY = 0;
 	}
 
 	@Override
@@ -53,7 +71,10 @@ public class Gun extends Weapon
 		recoilX += baseRecoil * (float) -Math.cos(angleToMouse);
 		recoilY += baseRecoil * (float) -Math.sin(angleToMouse);
 		
-		recoilTheta -= baseRecoil * 20f;
+		recoilTheta -= baseRecoil * 50f;
+		currentRecoil += baseRecoil * recoilRecovery;
+		
+		flashTimer = 2;
 	}
 	
 	public void update()
@@ -62,13 +83,39 @@ public class Gun extends Weapon
 		
 		recoilX *= 0.9f;
 		recoilY *= 0.9f;
-		recoilTheta *= 0.95f;
+		recoilTheta *= 0.92f;
 		//cleaning up numbers
 		if(Math.abs(recoilX) < 0.01f) recoilX = 0;
 		if(Math.abs(recoilY) < 0.01f) recoilY = 0;
 		if(Math.abs(recoilTheta) < 0.01f) recoilTheta = 0;
 		
 		lastUsed--;
+		flashTimer--;
+		
+		if(currentRecoil > 0)	currentRecoil--;
+		if(currentRecoil > maxRecoil) currentRecoil = maxRecoil;
+	}
+	
+	public void draw(Graphics g)
+	{
+		g.rotate(pivotX, pivotY, theta);
+		
+//		if(flashTimer > 0 && owner.isMirrored())
+//		{
+//			muzzleFlash.draw(x + barrelX, y + barrelY, w * 0.8f, h);
+//		} else
+			
+		if(flashTimer > 0)
+		{
+			float tempBarrelY = barrelY;
+			if(owner.isMirrored()) tempBarrelY *= 0; //huh?? where does the offset even go
+			
+			muzzleFlash.draw(x + barrelX, y + tempBarrelY, w * 0.8f, h * 1.8f);
+		}
+		
+		g.rotate(pivotX, pivotY, -theta);
+		
+		super.draw(g);
 	}
 	
 	public void drawSprite(Image s)
@@ -77,7 +124,7 @@ public class Gun extends Weapon
 	}
 	
 	public void rotateSprite(Graphics g, int side)
-	{
+	{		
 		float tempTheta = recoilTheta;
 		if(owner.isMirrored()) tempTheta *= -1;
 		

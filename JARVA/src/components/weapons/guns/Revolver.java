@@ -12,6 +12,7 @@ import components.weapons.Weapon;
 
 public class Revolver extends Gun
 {	
+	
 	public Revolver(GameObject owner) 
 	{
 		super(owner);
@@ -19,10 +20,15 @@ public class Revolver extends Gun
 		this.w = 8;
 		this.h = 5;
 		
-		useTimer = 30;
-		baseRecoil = 2;
+		useTimer = 20; //20
+		baseRecoil = 2; // 2
+		maxRecoil = 70;
+		recoilRecovery = 15;
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
+		
+		barrelX = this.w * 0.95f;
+		barrelY = -this.w * 0.7f;
 	}
 
 	@Override
@@ -38,8 +44,8 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		super.fire();
+		new MediumBullet(owner, currentRecoil).build();
 		
-		new MediumBullet(owner).build();
+		super.fire();
 	}
 }

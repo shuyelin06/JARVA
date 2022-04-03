@@ -8,21 +8,14 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
-public class MediumBullet extends Projectile
+public class MediumBullet extends Bullet
 {
-	private float baseSpeed;
 	
-	public MediumBullet(GameObject source) {
-		super(Polygon.rectangle(2f, 2f), source);
+	public MediumBullet(GameObject source, float recoil) {
+		super(source, recoil);
 		
 		this.setSprite(ImageManager.getImageCopy("test", 2, 2));
 		this.baseSpeed = 12;
-		
-		this.x = source.getX();
-		this.y = source.getY();
-		
-		this.velocity.x =  baseSpeed * (float) Math.cos(Math.toRadians(source.getAngleTo(InputManager.getMapMouseX(), InputManager.getMapMouseY())));
-		this.velocity.y =  baseSpeed * (float) Math.sin(Math.toRadians(source.getAngleTo(InputManager.getMapMouseX(), InputManager.getMapMouseY())));
 		
 		this.damageMultiplier = 10f;
 	}
@@ -35,7 +28,7 @@ public class MediumBullet extends Projectile
 
 	public void objectDraw(Graphics g) 
 	{
-		System.out.println("test");
+		
 	}
 
 }
