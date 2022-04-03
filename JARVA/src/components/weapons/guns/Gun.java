@@ -64,14 +64,14 @@ public class Gun extends Weapon
 	
 	public void fire()
 	{
-		lastUsed += useTimer;
+		lastUsed = useTimer;
 		
 		float angleToMouse = (float)Math.toRadians(owner.getAngleTo(InputManager.getMapMouseX(), InputManager.getMapMouseY()));
 		
 		recoilX += baseRecoil * (float) -Math.cos(angleToMouse);
 		recoilY += baseRecoil * (float) -Math.sin(angleToMouse);
 		
-		recoilTheta -= baseRecoil * 50f;
+		recoilTheta -= baseRecoil * 40f;
 		currentRecoil += baseRecoil * recoilRecovery;
 		
 		flashTimer = 2;
@@ -81,13 +81,13 @@ public class Gun extends Weapon
 	{
 		super.update();
 		
-		recoilX *= 0.9f;
-		recoilY *= 0.9f;
-		recoilTheta *= 0.92f;
+		recoilX *= 0.95f;
+		recoilY *= 0.95f;
+		recoilTheta *= 0.9f;
 		//cleaning up numbers
-		if(Math.abs(recoilX) < 0.01f) recoilX = 0;
-		if(Math.abs(recoilY) < 0.01f) recoilY = 0;
-		if(Math.abs(recoilTheta) < 0.01f) recoilTheta = 0;
+		if(Math.abs(recoilX) < 0.1f) recoilX = 0;
+		if(Math.abs(recoilY) < 0.1f) recoilY = 0;
+		if(Math.abs(recoilTheta) < 0.1f) recoilTheta = 0;
 		
 		lastUsed--;
 		flashTimer--;
@@ -100,11 +100,6 @@ public class Gun extends Weapon
 	{
 		g.rotate(pivotX, pivotY, theta);
 		
-//		if(flashTimer > 0 && owner.isMirrored())
-//		{
-//			muzzleFlash.draw(x + barrelX, y + barrelY, w * 0.8f, h);
-//		} else
-			
 		if(flashTimer > 0)
 		{
 			float tempBarrelY = barrelY;

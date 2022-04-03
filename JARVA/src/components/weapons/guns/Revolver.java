@@ -20,10 +20,10 @@ public class Revolver extends Gun
 		this.w = 8;
 		this.h = 5;
 		
-		useTimer = 20; //20
-		baseRecoil = 2; // 2
+		useTimer = 15; //20
+		baseRecoil = 3; // 2
 		maxRecoil = 70;
-		recoilRecovery = 15;
+		recoilRecovery = 8;
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
 		
