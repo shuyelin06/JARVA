@@ -2,6 +2,7 @@ package objects.entities.projectiles;
 
 import org.newdawn.slick.Graphics;
 
+import engine.Settings;
 import objects.GameObject;
 import objects.entities.Projectile;
 import objects.geometry.Polygon;
@@ -12,14 +13,14 @@ public class Bullet extends Projectile
 {
 	protected float baseSpeed;
 	
-	public Bullet(GameObject source, float recoil) {
+	public Bullet(GameObject source, float recoil, float offsetX, float offsetY) {
 		super(Polygon.rectangle(2f, 2f), source);
 		
 		this.setSprite(ImageManager.getImageCopy("test", 2, 2));
 		this.baseSpeed = 5;
 		
-		this.x = source.getX();
-		this.y = source.getY();
+		this.x = source.getX(); //+ offsetX;
+		this.y = source.getY(); //+ offsetY;
 		
 		this.velocity.x =  baseSpeed * (float) Math.cos(Math.toRadians(InputManager.getAngleToMouse(source)));
 		this.velocity.y =  baseSpeed * (float) Math.sin(Math.toRadians(InputManager.getAngleToMouse(source)));
@@ -41,4 +42,9 @@ public class Bullet extends Projectile
 		
 	}
 	
+	public void setSpeed(float speed)
+	{
+		this.velocity.x =  speed * (float) Math.cos(Math.toRadians(InputManager.getAngleToMouse(source)));
+		this.velocity.y =  speed * (float) Math.sin(Math.toRadians(InputManager.getAngleToMouse(source)));
+	}
 }

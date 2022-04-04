@@ -20,6 +20,8 @@ public class Gun extends Weapon
 	protected float recoilY;
 	protected float recoilTheta;
 	
+	protected float recoilThetaMult; //in case you don't want it spinning 1 million cirlces each time
+	
 	protected Image muzzleFlash;
 	protected float flashTimer;	
 	protected float barrelX; //for the muzzle flash, and maybe for the bullet
@@ -36,6 +38,10 @@ public class Gun extends Weapon
 		currentRecoil = 0;
 		maxRecoil = 0;
 		recoilRecovery = 1;
+		
+		recoilX = 0;
+		recoilY = 0;
+		recoilThetaMult = 1;
 		
 		sprite = ImageManager.getImageCopy("revolver");
 		muzzleFlash = ImageManager.getImageCopy("muzzleFlash");
@@ -71,7 +77,7 @@ public class Gun extends Weapon
 		recoilX += baseRecoil * (float) -Math.cos(angleToMouse);
 		recoilY += baseRecoil * (float) -Math.sin(angleToMouse);
 		
-		recoilTheta -= baseRecoil * 40f;
+		recoilTheta -= baseRecoil * recoilThetaMult;
 		currentRecoil += baseRecoil * recoilRecovery;
 		
 		flashTimer = 2;

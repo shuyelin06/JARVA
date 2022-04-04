@@ -24,6 +24,7 @@ public class Revolver extends Gun
 		baseRecoil = 3; // 2
 		maxRecoil = 70;
 		recoilRecovery = 8;
+		recoilThetaMult = 40;
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
 		
@@ -44,7 +45,7 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		new MediumBullet(owner, currentRecoil).build();
+		new MediumBullet(owner, currentRecoil, barrelX, barrelY).build();
 		
 		super.fire();
 	}

@@ -22,7 +22,7 @@ public class Inventory
 	
 	public Weapon getWeapon() //cheese temporary method
 	{
-		if(equippedItem.isWeapon()) 
+		if(equippedItem != null && equippedItem.isWeapon()) 
 		{
 			return((Weapon)equippedItem);
 		}
@@ -31,6 +31,8 @@ public class Inventory
 			return null;
 		}
 	}
+	
+	public ArrayList<Item> getItems()	{	return items;	}
 	
 	public void equipItem(int index)
 	{

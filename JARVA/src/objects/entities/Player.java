@@ -14,6 +14,7 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 import components.Inventory;
+import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
 
 public class Player extends Unit {
@@ -73,10 +74,11 @@ public class Player extends Unit {
 		this.sprintCooldown = 0;
 		this.isSprinting = false;
 		
-		// Test Weapon
+		// Test Weapons
 		this.inventory = new Inventory();
 		inventory.addItem(new Revolver(this));
-		inventory.equipItem(0);
+		inventory.addItem(new HeavySniper(this));
+		System.out.println(inventory.getItems());
 		
 		this.build();
 	}
@@ -88,6 +90,9 @@ public class Player extends Unit {
 		}
 		return output;
 	}
+	
+	public Inventory getInventory()	{	return inventory;	}
+	
 	public boolean canMove() { return !dashing; }
 	public int getSprintStamina() { return sprintStamina; }
 	public int getMaxSprintStamina() { return maxSprintStamina; }
@@ -144,10 +149,11 @@ public class Player extends Unit {
 		// Update Weapon
 		inventory.update(); //ill move this somewhere else, just testing
 		
-		if(InputManager.isLMBDown())
+		if(InputManager.isLMBDown() && inventory.getWeapon() != null)
 		{
 			inventory.getWeapon().use();
 		}
+		
 	}
 	
 	/* --- Helper Methods --- */

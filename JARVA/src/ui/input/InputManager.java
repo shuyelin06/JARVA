@@ -102,9 +102,12 @@ public class InputManager {
 				break;
 		}
 	}
+	
 	// Key Pressed
 	public void keyPressed(int key) {
 		switch(key) {
+		case Input.KEY_1: Game.Player.getInventory().equipItem(0); break;
+		case Input.KEY_2: Game.Player.getInventory().equipItem(1); break;
 			default: 
 				break;
 		}
