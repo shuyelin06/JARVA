@@ -15,7 +15,7 @@ public class Shotgun extends Gun
 		this.w = 15;
 		this.h = 6;
 		
-		useTimer = 15; //20
+		useTimer = 30; //20
 		baseRecoil = 3; // 2
 		maxRecoil = 70;
 		recoilRecovery = 8;
@@ -24,7 +24,7 @@ public class Shotgun extends Gun
 		this.sprite = ImageManager.getImageCopy("shotgun");
 		
 		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.7f;
+		barrelY = -this.w * 0.3f;
 	}
 	
 	@Override
@@ -40,9 +40,9 @@ public class Shotgun extends Gun
 	
 	public void fire()
 	{
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < 12; i++)
 		{
-			new LightBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
+			new LightBullet(owner, InputManager.getAngleToMouse(owner) + (i - 4 - (float) Math.random()) * 3, currentRecoil).build();
 		}
 		
 		super.fire();
