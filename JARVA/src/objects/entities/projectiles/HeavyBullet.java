@@ -12,6 +12,7 @@ public class HeavyBullet extends Bullet
 		super(source, Polygon.rectangle(4f, 1f), angle, recoil);
 		
 		this.setSprite(ImageManager.getImageCopy("heavyBulletComplete", 4, 1));
+		this.setSprite(ImageManager.getImageCopy("test", 2, 2));
 		
 //		this.hitbox.rotate((float)Math.toRadians(angle));
 //		
@@ -20,6 +21,8 @@ public class HeavyBullet extends Bullet
 		
 		this.baseSpeed = 15f;
 		this.damageMultiplier = 20f;
+		this.knockback = 200f;
+		this.pierce = 5;
 		
 		init(angle);
 	}

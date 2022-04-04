@@ -19,7 +19,7 @@ public class Shotgun extends Gun
 		baseRecoil = 3; // 2
 		maxRecoil = 70;
 		recoilRecovery = 8;
-		recoilThetaMult = 40;
+		recoilThetaMult = 400;
 		
 		this.sprite = ImageManager.getImageCopy("shotgun");
 		
