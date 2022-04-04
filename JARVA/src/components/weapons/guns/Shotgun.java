@@ -12,8 +12,8 @@ public class Shotgun extends Gun
 	{
 		super(owner);
 		
-		this.w = 8;
-		this.h = 5;
+		this.w = 15;
+		this.h = 6;
 		
 		useTimer = 15; //20
 		baseRecoil = 3; // 2
