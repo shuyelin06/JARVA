@@ -9,10 +9,9 @@ import ui.display.images.ImageManager;
 public class HeavyBullet extends Bullet
 {
 	public HeavyBullet(GameObject source, float angle, float recoil) {
-		super(source, Polygon.rectangle(4f, 1f), angle, recoil);
+		super(source, Polygon.rectangle(3f, 1f), angle, recoil);
 		
-		this.setSprite(ImageManager.getImageCopy("heavyBulletComplete", 4, 1));
-		this.setSprite(ImageManager.getImageCopy("test", 2, 2));
+		this.setSprite(ImageManager.getImageCopy("heavyBullet", 3, 1));
 		
 //		this.hitbox.rotate((float)Math.toRadians(angle));
 //		

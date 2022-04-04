@@ -10,11 +10,11 @@ public class LightBullet extends Bullet
 {
 	public LightBullet(GameObject source, float angle, float recoil)
 	{
-		super(source, Polygon.rectangle(2f, 1f), angle, recoil);
+		super(source, Polygon.rectangle(1f, 1f), angle, recoil);
 		
-		this.setSprite(ImageManager.getImageCopy("test", 2, 1));
+		this.setSprite(ImageManager.getImageCopy("lightBullet", 1, 1));
 		
-		this.baseSpeed = 5;
+		this.baseSpeed = 6;
 		
 		this.damageMultiplier = 3f;
 		

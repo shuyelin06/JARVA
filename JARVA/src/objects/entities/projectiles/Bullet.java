@@ -1,6 +1,7 @@
 package objects.entities.projectiles;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import engine.Settings;
 import objects.GameObject;
@@ -61,10 +62,10 @@ public class Bullet extends Projectile
 //		sprite.draw(x - 4, y - 1);
 //		
 //		hitbox.draw(g, x, y);
-		
+		sprite.setFilter(Image.FILTER_NEAREST);
 		sprite.draw(x - sprite.getWidth() * 0.5f, y - sprite.getHeight() * 0.5f);
 		
-		hitbox.draw(g, x, y);
+		//hitbox.draw(g, x, y);
 	}
 	
 	public void setSpeed(float speed)

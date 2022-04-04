@@ -6,12 +6,18 @@ import org.newdawn.slick.Image;
 import objects.GameObject;
 import objects.entities.Player;
 import objects.entities.projectiles.MediumBullet;
+import ui.display.animation.Animation;
 import ui.input.InputManager;
 
 public class Item 
 {
 	protected Image sprite; //might wanna change this to something from imageManager later
 	protected GameObject owner;
+	
+	protected Animation animation;
+	protected boolean animating;
+	protected int animFrame;
+	protected int animTick;
 	
 	protected boolean isEquipped;
 	protected boolean rotationLocked;
@@ -35,6 +41,10 @@ public class Item
 	{
 		this.owner = owner;
 		
+		this.animFrame = 0;
+		this.animating = false;
+		this.animTick = 0;
+		
 		this.x = owner.getX();
 		this.y = owner.getY();
 		this.w = 0;
@@ -56,6 +66,8 @@ public class Item
 	{
 		x = owner.getX();
 		y = owner.getY();
+		
+		animTick++;
 	}
 	
 	public void rotateTo(float x, float y)
@@ -71,9 +83,10 @@ public class Item
 	
 	public void draw(Graphics g)
 	{
-		Image tempSprite = sprite;
+		Image tempSprite = setDrawSprite();
+		if(owner.isMirrored()) tempSprite = tempSprite.getFlippedCopy(false, true);
 		
-		if(owner.isMirrored()) tempSprite = sprite.getFlippedCopy(false, true);
+		tempSprite.setFilter(Image.FILTER_NEAREST);
 		
 		if(rotationLocked)
 		{
@@ -85,6 +98,16 @@ public class Item
 			drawSprite(tempSprite);
 			rotateSprite(g, -1);
 		}
+	}
+	
+	public Image setDrawSprite()
+	{
+		if(animation != null)
+		{
+			return animation.getFrame(animFrame);
+		}
+		
+		return sprite;
 	}
 	
 	public void drawSprite(Image s)

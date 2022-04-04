@@ -1,8 +1,12 @@
 package components.weapons.guns;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import objects.GameObject;
 import objects.entities.projectiles.LightBullet;
 import objects.entities.projectiles.MediumBullet;
+import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
@@ -12,14 +16,18 @@ public class Shotgun extends Gun
 	{
 		super(owner);
 		
-		this.w = 15;
-		this.h = 6;
+		this.w = 20;
+		this.h = 3;
 		
-		useTimer = 30; //20
-		baseRecoil = 3; // 2
+		useTimer = 30; //30
+		baseRecoil = 3; // 3
 		maxRecoil = 70;
 		recoilRecovery = 8;
-		recoilThetaMult = 400;
+		recoilThetaMult = 10; //400
+		
+		animation = new Animation("shotgunPump", 96, 16);
+		animFrame = 0;
+		animating = false;
 		
 		this.sprite = ImageManager.getImageCopy("shotgun");
 		
@@ -46,5 +54,22 @@ public class Shotgun extends Gun
 		}
 		
 		super.fire();
+		
+		animating = true;
+	}
+	
+	public void update()
+	{
+		super.update();
+		
+		if(animation != null)
+		{
+			if(animating && animTick % 2 == 0) animFrame++;
+			if(animFrame > animation.animationSize() - 1)
+			{
+				 animFrame %= animation.animationSize(); 
+				 animating = false;
+			}
+		}
 	}
 }

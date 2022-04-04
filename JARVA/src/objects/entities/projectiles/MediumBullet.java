@@ -12,9 +12,9 @@ public class MediumBullet extends Bullet
 {
 	
 	public MediumBullet(GameObject source, float angle, float recoil) {
-		super(source, Polygon.rectangle(3f, 1f), angle, recoil);
+		super(source, Polygon.rectangle(2f, 1f), angle, recoil);
 		
-		this.setSprite(ImageManager.getImageCopy("test", 3, 1));
+		this.setSprite(ImageManager.getImageCopy("mediumBullet", 2, 1));
 		this.baseSpeed = 8;
 		
 		this.damageMultiplier = 10f;	
