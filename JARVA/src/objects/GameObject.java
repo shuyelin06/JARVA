@@ -122,7 +122,7 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) 
+	protected void drawSprite(Graphics g) 
 	{
 		if(mirroredSprite)
 		{
@@ -161,7 +161,7 @@ public abstract class GameObject {
 		this.x += xVelocity;
 		this.y += yVelocity;
 	}
-	private void rotate(float omega) {
+	protected void rotate(float omega) {
 		this.angle += omega;
 		this.sprite.rotate( Utility.ConvertToDegrees(omega) );
 		this.hitbox.rotate(omega);
@@ -184,7 +184,7 @@ public abstract class GameObject {
 
 	public float getVelocity() { return velocity.magnitude(); }
 	
-	public Vector getVelocity() { return velocity; }
+	public Vector getVelocityVector() { return velocity; }
 	
 	public float getDistance(float x, float y) { return Utility.distance(this, x, y); }
 	public float getDistance(GameObject o) { return Utility.distance(this, o); }

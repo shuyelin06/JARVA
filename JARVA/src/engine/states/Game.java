@@ -15,6 +15,7 @@ import objects.collisions.CollisionManager;
 import objects.entities.Unit;
 import objects.entities.Player;
 import objects.entities.Projectile;
+import objects.entities.units.Eagle;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
@@ -104,6 +105,11 @@ public class Game extends BasicGameState {
 				.setX(200f)
 				.setY(0f)
 				.setYVelocity(0.25f)
+				.build();
+		
+		new Eagle()
+				.setX(200f)
+				.setY(-100f)
 				.build();
 	}
 

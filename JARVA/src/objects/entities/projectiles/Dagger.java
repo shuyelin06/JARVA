@@ -11,7 +11,7 @@ import ui.display.images.ImageManager;
 
 public class Dagger extends Projectile{
 	private float baseSpeed = 190f;
-	private double theta;
+	private float theta;
 	
 	private int timer;
 	private int delay = 40;
@@ -21,21 +21,31 @@ public class Dagger extends Projectile{
 	private float spawnRadius = 70f;
 	
 	public Dagger(GameObject source, GameObject t) {
-		super(Polygon.rectangle(1f, 1f), source);
+		super(Polygon.rectangle(1f, 10f), source);
 		
 		target = t;
 		
-		theta = Math.atan2(target.getVelocity().y, target.getVelocity().x);
+		theta = (float)Math.atan2(target.getVelocityVector().y, target.getVelocityVector().x);
 		
 		timer = 0;
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 1, 1);
+		
+		this.sprite = ImageManager.getImageCopy("placeholder", 1, 10);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
+		this.rotate(theta + (float) Math.PI / 2f);
+//		this.hitbox.rotate(theta + (float) Math.PI / 2f);
+//		sprite.rotate(theta + (float) Math.PI / 2f);
+//		
 		telegraph();
 		
 	}
 
+	@Override
+	protected void drawSprite(Graphics g) {
+		sprite.drawCentered(x, y); 
+	}
+	
 	@Override
 	public void projectileUpdate() {
 		if(timer > delay) {

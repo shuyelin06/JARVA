@@ -35,11 +35,6 @@ public class Tumbleweed extends Unit {
 				.setKnockback(0)
 				.setDamageMultiplier(1)
 				.build();
-			new Dagger(this, Game.Player)
-				.setPierce(1)
-				.setKnockback(0)
-				.setDamageMultiplier(1)
-				.build();
 		}
 		
 	}

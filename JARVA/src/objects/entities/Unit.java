@@ -25,12 +25,12 @@ public abstract class Unit extends GameObject {
 	protected ArrayList<Condition> conditions;
 	
 	// Stunning
-	protected static float Default_Stun = 0.25f; // Default Stun Timer
+	protected static float Default_Stun = 0.10f; // Default Stun Timer
 	protected float stun;
 	protected float lastStunned;
 	
 	// Invulnerability
-	protected static float Default_Invulnerability = 0.25f; // Default Invulnerability Timer
+	protected static float Default_Invulnerability = 0.10f; // Default Invulnerability Timer
 	protected float invulnerability; // Invulnerability Timer
 	protected float lastDamageTaken; // Damage Last Taken
 	
