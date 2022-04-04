@@ -52,6 +52,10 @@ public abstract class Projectile extends GameObject {
 		projectileUpdate();
 	}
 	
+	public void applyCondition(Unit u) {
+		//apply condition, should be overridden in projectile
+	}
+	
 	public void objectCollision(GameObject o) {
 		if( o.getType() == ObjectType.Unit && source.getTeam() != o.getTeam() ) {
 			Unit unit = (Unit) o;
@@ -61,6 +65,8 @@ public abstract class Projectile extends GameObject {
 				unit.takeDamage(source.getBaseDamage() * damageMultiplier); // Damage
 				unit.takeKnockback(this, knockback); // Knockback
 				unit.stunned(stun); // Stun
+				
+				applyCondition(unit);
 				
 				pierced.add(unit);
 				pierce--;

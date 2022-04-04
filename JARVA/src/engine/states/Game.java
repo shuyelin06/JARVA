@@ -130,7 +130,7 @@ public class Game extends BasicGameState {
 		// Determine Collisions
 		CollisionManager.update();
 		
-    // Update Arena
+		// Update Arena
 		ArenaManager.update();
 
 		// Update displays

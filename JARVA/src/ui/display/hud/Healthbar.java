@@ -41,6 +41,7 @@ public class Healthbar
 	
 	public void render(Graphics g)
 	{
+		g.setColor(Color.white);
 		g.fillRect(x - 2, y - 2, w + 4, h + 4);
 		
 		g.setColor(new Color(0f, 0f, 0f));
