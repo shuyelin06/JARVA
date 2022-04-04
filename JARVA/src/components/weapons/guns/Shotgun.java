@@ -1,19 +1,14 @@
 package components.weapons.guns;
 
 import objects.GameObject;
+import objects.entities.projectiles.LightBullet;
 import objects.entities.projectiles.MediumBullet;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-
-import components.weapons.Weapon;
-
-public class Revolver extends Gun
-{	
-	
-	public Revolver(GameObject owner) 
+public class Shotgun extends Gun
+{
+	public Shotgun(GameObject owner)
 	{
 		super(owner);
 		
@@ -26,12 +21,12 @@ public class Revolver extends Gun
 		recoilRecovery = 8;
 		recoilThetaMult = 40;
 		
-		this.sprite = ImageManager.getImageCopy("revolver");
+		this.sprite = ImageManager.getImageCopy("shotgun");
 		
 		barrelX = this.w * 0.95f;
 		barrelY = -this.w * 0.7f;
 	}
-
+	
 	@Override
 	public void equip() {}
 
@@ -45,7 +40,10 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		new MediumBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
+		for(int i = 0; i < 8; i++)
+		{
+			new LightBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
+		}
 		
 		super.fire();
 	}

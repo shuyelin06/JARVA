@@ -11,14 +11,15 @@ import ui.input.InputManager;
 public class MediumBullet extends Bullet
 {
 	
-	public MediumBullet(GameObject source, float recoil, float offsetX, float offsetY) {
-		super(source, recoil, offsetX, offsetY);
+	public MediumBullet(GameObject source, float angle, float recoil) {
+		super(source, Polygon.rectangle(3f, 1f), angle, recoil);
 		
-		this.setSprite(ImageManager.getImageCopy("test", 2, 2));
+		this.setSprite(ImageManager.getImageCopy("test", 3, 1));
 		this.baseSpeed = 8;
-		setSpeed(this.baseSpeed);
 		
 		this.damageMultiplier = 10f;
+		
+		init(angle);
 	}
 
 	public void projectileUpdate() 

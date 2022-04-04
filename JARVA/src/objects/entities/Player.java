@@ -16,6 +16,7 @@ import ui.input.InputManager;
 import components.Inventory;
 import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
+import components.weapons.guns.Shotgun;
 
 public class Player extends Unit {
 	private static float Player_Max_Velocity = 75f;
@@ -78,7 +79,7 @@ public class Player extends Unit {
 		this.inventory = new Inventory();
 		inventory.addItem(new Revolver(this));
 		inventory.addItem(new HeavySniper(this));
-		System.out.println(inventory.getItems());
+		inventory.addItem(new Shotgun(this));
 		
 		this.build();
 	}
@@ -149,11 +150,15 @@ public class Player extends Unit {
 		// Update Weapon
 		inventory.update(); //ill move this somewhere else, just testing
 		
-		if(InputManager.isLMBDown() && inventory.getWeapon() != null)
+		if(inventory.getWeapon() != null)
 		{
-			inventory.getWeapon().use();
+			inventory.getEquippedItem().rotateTo(InputManager.getMapMouseX(), InputManager.getMapMouseY());
+			
+			if(InputManager.isLMBDown())
+			{
+				inventory.getWeapon().use();
+			}
 		}
-		
 	}
 	
 	/* --- Helper Methods --- */

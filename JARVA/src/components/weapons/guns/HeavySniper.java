@@ -4,6 +4,7 @@ import objects.GameObject;
 import objects.entities.projectiles.HeavyBullet;
 import objects.entities.projectiles.MediumBullet;
 import ui.display.images.ImageManager;
+import ui.input.InputManager;
 
 public class HeavySniper extends Gun
 {
@@ -39,7 +40,7 @@ public class HeavySniper extends Gun
 	
 	public void fire()
 	{
-		new HeavyBullet(owner, currentRecoil, barrelX, barrelY).build();
+		new HeavyBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
 		
 		super.fire();
 	}

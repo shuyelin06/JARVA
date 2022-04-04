@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import objects.GameObject;
+import objects.entities.Player;
 import objects.entities.projectiles.MediumBullet;
 import ui.input.InputManager;
 
@@ -55,17 +56,16 @@ public class Item
 	{
 		x = owner.getX();
 		y = owner.getY();
-		
+	}
+	
+	public void rotateTo(float x, float y)
+	{
 		if(!rotationLocked)
 		{
-			pivotX = x + (w * 0.2f);
-			pivotY = y + (h * 0.5f);
+			pivotX = this.x + (w * 0.2f);
+			pivotY = this.y + (h * 0.5f);
 			
-			theta = (float) Math.toDegrees(
-											Math.atan2(
-														InputManager.getMapMouseY() - pivotY, InputManager.getMapMouseX() - pivotX
-																																			)
-																																					); //lol formatting
+			theta = (float) Math.toDegrees( Math.atan2( y - pivotY, x - pivotX ) ); //lol formatting
 		}
 	}
 	
