@@ -101,7 +101,7 @@ public abstract class GameObject {
 		this.rotate(omega / Settings.Frames_Per_Second);
 
 		// Friction
-    final float Friction = 0.35f;
+		final float Friction = 0.35f;
 		if( friction ) velocity.reduce(Friction);
 		
 		// Hi
@@ -122,7 +122,7 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) 
+	protected void drawSprite(Graphics g) 
 	{
 		if(mirroredSprite)
 		{

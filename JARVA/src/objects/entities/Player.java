@@ -27,6 +27,7 @@ public class Player extends Unit {
 	private static Float Dash_Boost = 2.5f;
 	private static float Dash_Timer = 0.15f;
 	private static float Dash_Threshold = 0.5f;
+	private static float Dash_Cooldown = 0.5f;
 	
 	private float lastDashed;
 	private boolean dashing;
@@ -48,11 +49,11 @@ public class Player extends Unit {
 	private Inventory inventory;
 	
 	public Player() {
-		super(Polygon.rectangle(5f, 10f));
+		super(Polygon.rectangle(4f, 8f));
 	  
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("jarvis", 5, 10);
+		this.sprite = ImageManager.getImageCopy("jarvis", 4, 8);
 		
 		// Width and Height
 		this.rectW = 5f;
@@ -167,6 +168,7 @@ public class Player extends Unit {
 	/* --- Dash Behavior --- */
 	public void dash() {
 		if( dashing ) return;
+		if( Game.getTicks() - lastDashed < Dash_Cooldown ) return;
 		
 		if( velocity.magnitude() > maxVelocity * Dash_Threshold ) {
 			beginDashing();

@@ -15,6 +15,7 @@ import objects.collisions.CollisionManager;
 import objects.entities.Unit;
 import objects.entities.Player;
 import objects.entities.Projectile;
+import objects.entities.units.AngryBoulder;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
@@ -59,6 +60,8 @@ public class Game extends BasicGameState {
 	
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		gc.setMouseGrabbed(true);
+		
 		// Initialize Timers
 		Ticks = 0f;
 		
@@ -75,23 +78,19 @@ public class Game extends BasicGameState {
 		Player = new Player();
 				
 		// Other Objects
-		new Tumbleweed()
-				.setOmega(0.1f)
+		new AngryBoulder()
 				.setX(2f)
 				.setY(5f)
-				.setXVelocity(0.15f)
 				.build();
-		
-		new Tumbleweed()
+	
+		new AngryBoulder()
 				.setX(2f)
 				.setY(1f)
-				.setYVelocity(0.15f)
 				.build();
 		
-		new Tumbleweed()
+		new AngryBoulder()
 				.setX(300f)
 				.setY(150f)
-				.setXVelocity(-0.3f)
 				.build();
 		
 		new Tumbleweed()
