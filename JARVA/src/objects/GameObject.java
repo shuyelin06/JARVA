@@ -21,6 +21,7 @@ public abstract class GameObject {
 	
 	/* --- Instance Variables --- */
 	// Switches
+	protected boolean collidable; // Collision Switch
 	protected boolean remove; // Removal Switch
 	protected boolean friction; // Friction Switch
 	
@@ -54,6 +55,11 @@ public abstract class GameObject {
 		this.hitbox = polygon;
 		polygon.setObject(this);
 		
+		// Switches
+		this.friction = true; // Friction
+		this.collidable = true; // Collidable
+		this.remove = false; // Remove
+		
 		// Default Variables
 		this.x = this.y = 0f; // Positions 
 		this.angle = this.omega = 0f; // Angle
@@ -64,10 +70,8 @@ public abstract class GameObject {
 		this.team = ObjectTeam.Neutral; // Team
 		
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
-    this.friction = true; // Friction
-    this.mirroredSprite = false;
 		this.collision = false; // Collision
-		this.remove = false; // Remove
+		this.mirroredSprite = false;
 		
 		this.contactDamage = 0;
 		this.baseDamage = 0;
@@ -76,9 +80,7 @@ public abstract class GameObject {
 	/* --- Ineherited Methods --- */
 	public abstract void objectUpdate();
 	public abstract void objectDraw(Graphics g);
-	public void collision(GameObject o) { 
-		this.collision = true;
-	}
+	protected abstract void objectCollision(GameObject o);
 	
 	/* --- Main Methods --- */
 	// Update 
@@ -133,22 +135,26 @@ public abstract class GameObject {
 	}
 	
 	protected void drawHitbox(Graphics g) {
-		Vector[] vertices = hitbox.getVertices();
+//		Vector[] vertices = hitbox.getVertices();
 		
 		if(collision) { g.setColor(Color.green);
 		} else { g.setColor(Color.white);}
 
 		// Draw Edges
-		for (int i = 0; i < vertices.length - 1; i++) {			
-			Vector vertex1 = vertices[i];
-			Vector vertex2 = vertices[i + 1];
-				
-			g.drawLine(x + vertex1.x, y + vertex1.y, x + vertex2.x, y + vertex2.y);
-		}
+		hitbox.draw(g, x, y);
 		
 		collision = false;
 	}
 
+	// Collisions
+	public void collision(GameObject o) { 
+		if( !collidable || !o.collidable ) return;
+		else {
+			collision = true;
+			objectCollision(o);
+		}
+	}
+	
 	/* --- Helper Methods --- */
 	public void remove() { this.remove = true; }
 	private void move(float xVelocity, float yVelocity) {
@@ -172,6 +178,11 @@ public abstract class GameObject {
 	
 	public float getX() { return x; }
 	public float getY() { return y; }
+
+	public float getXVelocity() { return velocity.x; }
+	public float getYVelocity() { return velocity.y; }
+
+	public float getVelocity() { return velocity.magnitude(); }
 	
 	public Vector getVelocity() { return velocity; }
 	

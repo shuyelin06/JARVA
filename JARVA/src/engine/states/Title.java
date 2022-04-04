@@ -39,7 +39,7 @@ public class Title extends BasicGameState {
 				.setCenterY(Settings.Resolution_Y / 2)
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
-				.setImage("placeholder")
+				.setImage("startButton")
 				.enableOutline()
 				;
 	}

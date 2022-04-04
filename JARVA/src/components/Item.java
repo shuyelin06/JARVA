@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import objects.GameObject;
+import objects.entities.projectiles.MediumBullet;
 import ui.input.InputManager;
 
 public class Item 
@@ -19,9 +20,15 @@ public class Item
 	protected float pivotX;
 	protected float pivotY;
 	
+	protected float tempX;
+	protected float tempY;
+	protected float tempTheta;
+	
 	protected float w;
 	protected float h;	
 	protected float theta;
+	
+	protected boolean isWeapon; //temporary cheese method to get the use method, sowwy
 	
 	public Item(GameObject owner)
 	{
@@ -38,7 +45,11 @@ public class Item
 		
 		this.isEquipped = true;
 		this.rotationLocked = false;
+		
+		this.isWeapon = false;
 	}
+	
+	public boolean isWeapon() { return isWeapon; }
 	
 	public void update()
 	{
@@ -66,13 +77,23 @@ public class Item
 		
 		if(rotationLocked)
 		{
-			tempSprite.draw(x, y, w, h);
+			drawSprite(tempSprite);
 		}
 		else
 		{
-			g.rotate(pivotX, pivotY, theta);
-			tempSprite.draw(x, y, w, h);
-			g.rotate(pivotX, pivotY, -theta);
+			rotateSprite(g, 1);
+			drawSprite(tempSprite);
+			rotateSprite(g, -1);
 		}
+	}
+	
+	public void drawSprite(Image s)
+	{
+		s.draw(x, y, w, h);
+	}
+	
+	public void rotateSprite(Graphics g, int side)
+	{
+		g.rotate(pivotX, pivotY, theta * side);
 	}
 }

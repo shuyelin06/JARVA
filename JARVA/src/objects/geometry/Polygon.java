@@ -1,4 +1,7 @@
+
 package objects.geometry;
+
+import org.newdawn.slick.Graphics;
 
 import engine.Utility;
 import objects.GameObject;
@@ -53,6 +56,21 @@ public class Polygon {
 	}
 	
 	/* --- Static Shape Methods --- */
+	// Returns the Edges for a Rectangle
+	public static Vector[] rectangleEdges(float width, float height) {
+		Vector[] edges = new Vector[5];
+		
+		float x = width / 2;
+		float y = height / 2;
+		
+		edges[0] = new Vector(-x, -y);
+		edges[1] = new Vector(-x, y);
+		edges[2] = new Vector(x, y);
+		edges[3] = new Vector(x, -y);
+		edges[4] = new Vector(-x, -y);
+		
+		return edges;
+	}
 	// Creates a new rectangle
 	public static Polygon rectangle(float width, float height) {
 		Vector[] edges = new Vector[5];
@@ -128,6 +146,15 @@ public class Polygon {
 		}
 		
 		return projection;
+	}
+	
+	public void draw(Graphics g, float x, float y) {
+		for (int i = 0; i < vertices.length - 1; i++) {			
+			Vector vertex1 = vertices[i];
+			Vector vertex2 = vertices[i + 1];
+				
+			g.drawLine(x + vertex1.x, y + vertex1.y, x + vertex2.x, y + vertex2.y);
+		}
 	}
 
 }

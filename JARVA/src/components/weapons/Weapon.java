@@ -11,11 +11,11 @@ import ui.input.InputManager;
 
 public abstract class Weapon extends Item
 {
-	private float baseDamage;
+	protected float baseDamage;
 	
 	// Weapon Usage
-	private float lastUsed;
-	private float useTimer;
+	protected float lastUsed;
+	protected float useTimer;
 	
 	public Weapon(GameObject owner)
 	{
@@ -23,6 +23,8 @@ public abstract class Weapon extends Item
 		
 		// Default Variables
 		this.baseDamage = 1f;
+		
+		this.isWeapon = true;
 	}
 	
 	abstract public void equip();

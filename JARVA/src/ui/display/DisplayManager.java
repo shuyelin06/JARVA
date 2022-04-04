@@ -13,6 +13,8 @@ import engine.states.Game;
 import maps.Arena;
 import objects.GameObject;
 import objects.entities.Player;
+import ui.display.hud.Healthbar;
+import ui.display.hud.Crosshair;
 import ui.display.hud.Sprintbar;
 import ui.input.InputManager;
 
@@ -32,13 +34,16 @@ public class DisplayManager {
 	private float cameraY;
 	private Crosshair crosshair;
 	private Sprintbar sprintbar;
+	private Healthbar playerHealthbar;
 	
 	public DisplayManager(Game game) {
 		this.game = game;
-		
+
 		this.arena = game.getArenaManager().getArena();
 		this.crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
 		this.sprintbar = new Sprintbar(Game.Player);
+		this.playerHealthbar = new Healthbar(Game.Player);
+		
 	}
 	
 	private void cameraPosition() {
@@ -54,6 +59,9 @@ public class DisplayManager {
 		crosshair.update();
 		
 		sprintbar.update();
+		
+		playerHealthbar.setUnit(Game.Player);
+		playerHealthbar.update();
 	}
 	
 	public void render(Graphics g) {
@@ -79,6 +87,7 @@ public class DisplayManager {
 		
 		crosshair.draw(g);
 		sprintbar.render(g);
+		playerHealthbar.render(g);
 	}
 	
 
@@ -92,6 +101,7 @@ public class DisplayManager {
 	
 	public void renderArena(Graphics g) {
 		//render arena
+		arena.draw(g);
 
 	}
 }

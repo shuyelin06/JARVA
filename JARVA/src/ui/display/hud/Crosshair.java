@@ -1,4 +1,4 @@
-package ui.display;
+package ui.display.hud;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

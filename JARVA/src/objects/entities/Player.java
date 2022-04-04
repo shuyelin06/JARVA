@@ -9,9 +9,12 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import engine.states.Game;
+import objects.GameObject;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
+import components.Inventory;
+import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
 
 public class Player extends Unit {
@@ -42,14 +45,14 @@ public class Player extends Unit {
 	private float rectH;
 	
 	// Gun Inventory
-	private Revolver testWeapon;
+	private Inventory inventory;
 	
 	public Player() {
 		super(Polygon.rectangle(5f, 10f));
 	  
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("Placeholder", 5, 10);
+		this.sprite = ImageManager.getImageCopy("jarvis", 5, 10);
 		
 		// Width and Height
 		this.rectW = 5f;
@@ -71,8 +74,11 @@ public class Player extends Unit {
 		this.sprintCooldown = 0;
 		this.isSprinting = false;
 		
-		// Test Weapon
-		this.testWeapon = new Revolver(this);
+		// Test Weapons
+		this.inventory = new Inventory();
+		inventory.addItem(new Revolver(this));
+		inventory.addItem(new HeavySniper(this));
+		System.out.println(inventory.getItems());
 		
 		this.build();
 	}
@@ -84,6 +90,9 @@ public class Player extends Unit {
 		}
 		return output;
 	}
+	
+	public Inventory getInventory()	{	return inventory;	}
+	
 	public boolean canMove() { return !dashing; }
 	public int getSprintStamina() { return sprintStamina; }
 	public int getMaxSprintStamina() { return maxSprintStamina; }
@@ -103,10 +112,13 @@ public class Player extends Unit {
 		
 		super.draw(g);
 		
-		testWeapon.draw(g); //ill move this to the managers
+		inventory.draw(g); //ill move this to the managers
 	}
 	
 	public void unitUpdate() {
+//		System.out.println("Health: " + health);
+//		System.out.println("Percent Health: " + getPercentHealth());
+		
 		this.maxVelocity = Player_Max_Velocity;
 		for(Float f: velocityMultipliers) {
 			maxVelocity *= f;
@@ -135,7 +147,21 @@ public class Player extends Unit {
 		}
 		
 		// Update Weapon
-		testWeapon.update(); //ill move this somewhere else, just testing
+		inventory.update(); //ill move this somewhere else, just testing
+		
+		if(InputManager.isLMBDown() && inventory.getWeapon() != null)
+		{
+			inventory.getWeapon().use();
+		}
+		
+	}
+	
+	/* --- Helper Methods --- */
+	public void move(float movementVelocity, float sumVelocityAngle) {
+		if(!stunned) {
+			Game.Player.addYVelocity(movementVelocity * (float) -Math.sin(Math.toRadians(sumVelocityAngle)));
+			Game.Player.addXVelocity(movementVelocity * (float) Math.cos(Math.toRadians(sumVelocityAngle)));
+		}
 	}
 	
 	/* --- Dash Behavior --- */
@@ -157,6 +183,7 @@ public class Player extends Unit {
 		invulnerable(Dash_Timer);
 		dashing = true;
 		
+		collidable = false;
 		lastDashed = Game.getTicks();
 		friction = false;
 		velocityMultipliers.add(Dash_Boost);
@@ -164,6 +191,7 @@ public class Player extends Unit {
 	private void stopDashing() {
 		dashing = false;
 		
+		collidable = true;
 		friction = true;
 		velocityMultipliers.remove(Dash_Boost);
 	}
