@@ -25,6 +25,8 @@ public class Bullet extends Projectile
 		this.x = source.getX(); //+ offsetX;
 		this.y = source.getY(); //+ offsetY;
 		
+		this.angle = angle;
+		
 		this.velocity.x =  baseSpeed * (float) Math.cos(Math.toRadians(angle));
 		this.velocity.y =  baseSpeed * (float) Math.sin(Math.toRadians(angle));
 		
@@ -67,7 +69,7 @@ public class Bullet extends Projectile
 	
 	public void setSpeed(float speed)
 	{
-		this.velocity.x =  speed * (float) Math.cos(Math.toRadians(InputManager.getAngleToMouse(source)));
-		this.velocity.y =  speed * (float) Math.sin(Math.toRadians(InputManager.getAngleToMouse(source)));
+		this.velocity.x =  speed * (float) Math.cos(Math.toRadians(angle));
+		this.velocity.y =  speed * (float) Math.sin(Math.toRadians(angle));
 	}
 }
