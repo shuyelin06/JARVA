@@ -11,14 +11,14 @@ public abstract class Condition {
 	protected GameObject owner;
 	protected Unit target;
 	
-	public Condition(GameObject owner, Unit target) {
+	public Condition(GameObject owner, Unit target, float timer) {
 		this.owner = owner;
 		this.target = target;
 		
 		this.timer = 1f;
 	}
 	
-	abstract public void applyEffect(GameObject target);
+	abstract public void applyEffect(Unit target);
 	public void remove() {
 		this.remove = true;
 	}
