@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
 import components.conditions.Condition;
+import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
@@ -80,6 +81,11 @@ public abstract class Unit extends GameObject {
 	}
 	@Override
 	public void objectUpdate() {
+		// Apply Conditions
+		for (Condition c: conditions) {
+			c.apply();
+		}
+		
 		// Entity Dying
 		if(health <= 0f) {
 			remove();
@@ -116,6 +122,7 @@ public abstract class Unit extends GameObject {
 		lastStunned = Game.getTicks();
 	}
 	
+	
 	protected void invulnerable() { invulnerable(Default_Invulnerability); }
 	protected void invulnerable(float time) {
 		invulnerable = true;
@@ -132,6 +139,7 @@ public abstract class Unit extends GameObject {
 			health = maxHealth; 
 		}
 	}
+	
 	public void takeKnockback(GameObject o, float knockback) {
 		if(!immovable) {
 			float angle = Utility.atan( y - o.getY(), x - o.getX() );
@@ -150,11 +158,10 @@ public abstract class Unit extends GameObject {
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
-			
 			velocity.reduce(0.75f);
-			invulnerable();
 		}
 	}
+	
 	/* --- Accessor Methods --- */	
 	public float getMaxHealth() { return maxHealth; }
 	public float getCurHealth() { return health; }

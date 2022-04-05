@@ -13,9 +13,9 @@ public class Tumbleweed extends Unit {
 	private int timer;
 	
 	public Tumbleweed() {
-		super(Polygon.rectangle(50f, 50f));
+		super(Polygon.rectangle(7f, 7f));
 		
-		this.sprite = ImageManager.getImageCopy("tumbleweed", 50, 50);
+		this.sprite = ImageManager.getImageCopy("tumbleweed", 7, 7);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
 		this.baseDamage = 5;

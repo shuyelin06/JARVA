@@ -2,6 +2,7 @@ package objects.entities.projectiles;
 
 import org.newdawn.slick.Graphics;
 
+import components.conditions.Confusion;
 import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Player;
@@ -32,7 +33,7 @@ public class Thorn extends Projectile {
 		
 		this.setTeam(origin.getTeam());
 		
-		this.sprite = ImageManager.getImageCopy("tumbleweed", 3, 3);
+		this.sprite = ImageManager.getImageCopy("thorn", 3, 3);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
 		if (this.target != null) {
@@ -99,6 +100,11 @@ public class Thorn extends Projectile {
 		
 	}
 
+	@Override
+	public void applyCondition(Unit u) {
+		u.takeCondition(new Confusion(this, u, 2f));
+	}
+	
 	@Override
 	public void objectDraw(Graphics g) {
 		

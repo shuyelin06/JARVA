@@ -17,7 +17,18 @@ public class Animation {
 	
 	// Called by the GameObject for Drawing
 	public Image getFrame() {
+		spritesheet.getSubImage((int) Game.getTicks(), 0).setFilter(Image.FILTER_NEAREST);
 		return spritesheet.getSubImage((int) Game.getTicks(), 0);
 	}
 	
+	public Image getFrame(int frame) {
+		spritesheet.getSubImage(0, frame).setFilter(Image.FILTER_NEAREST);
+		return spritesheet.getSubImage(0, frame);
+		//return spritesheet.getSubImage(frame, 0);
+	}
+	
+	public int animationSize()
+	{
+		return spritesheet.getVerticalCount();
+	}
 }

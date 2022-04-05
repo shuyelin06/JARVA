@@ -24,6 +24,7 @@ public abstract class GameObject {
 	protected boolean collidable; // Collision Switch
 	protected boolean remove; // Removal Switch
 	protected boolean friction; // Friction Switch
+	protected boolean confused; // Confused Switch
 	
 	// Physics Variables
 	protected float x, y;
@@ -89,6 +90,7 @@ public abstract class GameObject {
 		
 		objectUpdate();
 		updatePhysics();
+		
 	}
 	
 	private void updatePhysics() {
@@ -97,11 +99,16 @@ public abstract class GameObject {
 		if(magnitude > maxVelocity) { velocity.scalarMultiply(maxVelocity / magnitude ); }
 		
 		// Update Positions
-		this.move(velocity.x / Settings.Frames_Per_Second, velocity.y / Settings.Frames_Per_Second);
-		this.rotate(omega / Settings.Frames_Per_Second);
+		if (!confused) {
+			this.move(velocity.x / Settings.Frames_Per_Second, velocity.y / Settings.Frames_Per_Second);
+			this.rotate(omega / Settings.Frames_Per_Second);
+		} else {
+			this.move(-velocity.x / Settings.Frames_Per_Second, -velocity.y / Settings.Frames_Per_Second);
+			this.rotate(-omega / Settings.Frames_Per_Second);
+		}
 
 		// Friction
-    final float Friction = 0.35f;
+		final float Friction = 0.35f;
 		if( friction ) velocity.reduce(Friction);
 		
 		// Hi
@@ -156,6 +163,8 @@ public abstract class GameObject {
 	}
 	
 	/* --- Helper Methods --- */
+	public void confused(boolean confused) { this.confused = confused; }
+	
 	public void remove() { this.remove = true; }
 	private void move(float xVelocity, float yVelocity) {
 		this.x += xVelocity;

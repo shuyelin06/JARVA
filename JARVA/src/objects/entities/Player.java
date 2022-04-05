@@ -16,6 +16,7 @@ import ui.input.InputManager;
 import components.Inventory;
 import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
+import components.weapons.guns.Shotgun;
 
 public class Player extends Unit {
 	private static float Player_Max_Velocity = 75f;
@@ -27,6 +28,7 @@ public class Player extends Unit {
 	private static Float Dash_Boost = 2.5f;
 	private static float Dash_Timer = 0.15f;
 	private static float Dash_Threshold = 0.5f;
+	private static float Dash_Cooldown = 0.5f;
 	
 	private float lastDashed;
 	private boolean dashing;
@@ -48,11 +50,11 @@ public class Player extends Unit {
 	private Inventory inventory;
 	
 	public Player() {
-		super(Polygon.rectangle(5f, 10f));
+		super(Polygon.rectangle(4f, 8f));
 	  
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("jarvis", 5, 10);
+		this.sprite = ImageManager.getImageCopy("jarvis", 4, 8);
 		
 		// Width and Height
 		this.rectW = 5f;
@@ -78,7 +80,7 @@ public class Player extends Unit {
 		this.inventory = new Inventory();
 		inventory.addItem(new Revolver(this));
 		inventory.addItem(new HeavySniper(this));
-		System.out.println(inventory.getItems());
+		inventory.addItem(new Shotgun(this));
 		
 		this.build();
 	}
@@ -116,9 +118,6 @@ public class Player extends Unit {
 	}
 	
 	public void unitUpdate() {
-//		System.out.println("Health: " + health);
-//		System.out.println("Percent Health: " + getPercentHealth());
-		
 		this.maxVelocity = Player_Max_Velocity;
 		for(Float f: velocityMultipliers) {
 			maxVelocity *= f;
@@ -149,11 +148,22 @@ public class Player extends Unit {
 		// Update Weapon
 		inventory.update(); //ill move this somewhere else, just testing
 		
-		if(InputManager.isLMBDown() && inventory.getWeapon() != null)
+		if(inventory.getWeapon() != null)
 		{
-			inventory.getWeapon().use();
+			inventory.getEquippedItem().rotateTo(InputManager.getMapMouseX(), InputManager.getMapMouseY());
+			
+			if(InputManager.isLMBDown())
+			{
+				inventory.getWeapon().use();
+			}
 		}
-		
+	}
+	
+	/* --- Overwritten Methods --- */
+	@Override
+	public void takeDamage(float damage) {
+		super.takeDamage(damage);
+		invulnerable();
 	}
 	
 	/* --- Helper Methods --- */
@@ -167,6 +177,7 @@ public class Player extends Unit {
 	/* --- Dash Behavior --- */
 	public void dash() {
 		if( dashing ) return;
+		if( Game.getTicks() - lastDashed < Dash_Cooldown ) return;
 		
 		if( velocity.magnitude() > maxVelocity * Dash_Threshold ) {
 			beginDashing();

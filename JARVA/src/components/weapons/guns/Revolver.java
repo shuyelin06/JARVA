@@ -17,8 +17,8 @@ public class Revolver extends Gun
 	{
 		super(owner);
 		
-		this.w = 8;
-		this.h = 5;
+		this.w = 6;
+		this.h = 4;
 		
 		useTimer = 15; //20
 		baseRecoil = 3; // 2
@@ -45,7 +45,7 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		new MediumBullet(owner, currentRecoil, barrelX, barrelY).build();
+		new MediumBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
 		
 		super.fire();
 	}
