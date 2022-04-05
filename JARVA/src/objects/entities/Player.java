@@ -158,6 +158,13 @@ public class Player extends Unit {
 		}
 	}
 	
+	/* --- Overwritten Methods --- */
+	@Override
+	public void takeDamage(float damage) {
+		super.takeDamage(damage);
+		invulnerable();
+	}
+	
 	/* --- Helper Methods --- */
 	public void move(float movementVelocity, float sumVelocityAngle) {
 		if(!stunned) {

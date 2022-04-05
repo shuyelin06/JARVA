@@ -158,9 +158,7 @@ public abstract class Unit extends GameObject {
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
 			health -= damage - damage * damageBlock;
-			
 			velocity.reduce(0.75f);
-			invulnerable();
 		}
 	}
 	
