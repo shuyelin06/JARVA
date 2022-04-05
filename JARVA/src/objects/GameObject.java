@@ -129,7 +129,7 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	private void drawSprite(Graphics g) 
+	protected void drawSprite(Graphics g) 
 	{
 		if(mirroredSprite)
 		{

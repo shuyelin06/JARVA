@@ -33,7 +33,7 @@ public class Thorn extends Projectile {
 		
 		this.setTeam(origin.getTeam());
 		
-		this.sprite = ImageManager.getImageCopy("tumbleweed", 3, 3);
+		this.sprite = ImageManager.getImageCopy("thorn", 3, 3);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
 		if (this.target != null) {

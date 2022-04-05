@@ -39,7 +39,7 @@ public abstract class Projectile extends GameObject {
 	
 	/* --- Inherited Methods --- */
 	public abstract void projectileUpdate();
-	
+
 	/* --- Implemented Methods --- */
 	@Override
 	public void objectUpdate() {
