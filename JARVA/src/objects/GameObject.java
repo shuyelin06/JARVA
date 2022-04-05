@@ -170,7 +170,7 @@ public abstract class GameObject {
 		this.x += xVelocity;
 		this.y += yVelocity;
 	}
-	private void rotate(float omega) {
+	protected void rotate(float omega) {
 		this.angle += omega;
 		this.sprite.rotate( Utility.ConvertToDegrees(omega) );
 		this.hitbox.rotate(omega);
@@ -192,6 +192,8 @@ public abstract class GameObject {
 	public float getYVelocity() { return velocity.y; }
 
 	public float getVelocity() { return velocity.magnitude(); }
+	
+	public Vector getVelocityVector() { return velocity; }
 	
 	public float getDistance(float x, float y) { return Utility.distance(this, x, y); }
 	public float getDistance(GameObject o) { return Utility.distance(this, o); }

@@ -3,6 +3,7 @@ package objects.entities.units;
 import engine.states.Game;
 import objects.entities.Projectile;
 import objects.entities.Unit;
+import objects.entities.projectiles.Dagger;
 import objects.entities.projectiles.Thorn;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
