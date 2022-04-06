@@ -7,7 +7,8 @@ public class Settings {
 	final public static float Tick_Speed = 1f; // 1 TPS
 	
 	// Video Settings
-	final public static float Scale = 10f;
+	final public static float BaseScale = 10f;
+	public static float Scale = BaseScale;
 	
 	final public static int Resolution_X = 1920;
 	final public static int Resolution_Y = 1080;
@@ -21,4 +22,6 @@ public class Settings {
 	
 	// GameState Markers
 	public static int LastState = 0;
+	
+	public static void setScale(float i)	{	Scale = i;	}
 }

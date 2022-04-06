@@ -1,8 +1,9 @@
 package components.weapons.guns;
 
+import engine.Settings;
 import objects.GameObject;
-import objects.entities.projectiles.HeavyBullet;
-import objects.entities.projectiles.MediumBullet;
+import objects.entities.projectiles.Bullet;
+import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
@@ -28,10 +29,10 @@ public class HeavySniper extends Gun
 	}
 
 	@Override
-	public void equip() {}
+	public void equip() { Settings.setScale(Settings.BaseScale * 0.5f); }
 
 	@Override
-	public void unequip() {}
+	public void unequip() { Settings.setScale(Settings.BaseScale); }
 	
 	public void use()
 	{
@@ -40,7 +41,7 @@ public class HeavySniper extends Gun
 	
 	public void fire()
 	{
-		new HeavyBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
+		new Bullet(owner, 6, 1, "heavy", 12, InputManager.getAngleToMouse(owner), currentRecoil, 30f, 5f, 200f).build();
 		
 		super.fire();
 	}

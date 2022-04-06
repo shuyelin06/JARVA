@@ -5,11 +5,10 @@ import org.newdawn.slick.Image;
 
 import objects.GameObject;
 import objects.entities.Player;
-import objects.entities.projectiles.MediumBullet;
 import ui.display.animation.Animation;
 import ui.input.InputManager;
 
-public class Item 
+public abstract class Item 
 {
 	protected Image sprite; //might wanna change this to something from imageManager later
 	protected GameObject owner;
@@ -61,6 +60,11 @@ public class Item
 	}
 	
 	public boolean isWeapon() { return isWeapon; }
+	
+	abstract public void equip();
+	abstract public void unequip();
+	
+	abstract public void use();
 	
 	public void update()
 	{

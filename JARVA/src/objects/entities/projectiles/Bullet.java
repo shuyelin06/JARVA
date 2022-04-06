@@ -14,14 +14,21 @@ public class Bullet extends Projectile
 {
 	protected float baseSpeed;
 	
-	public Bullet(GameObject source, Polygon hitbox, float angle, float recoil) {
-		super(hitbox, source);
+	public Bullet(GameObject source, int w, int h, String style, float baseSpeed, float angle, float recoil, float damage, float pierce, float knockback) {
+		super(Polygon.rectangle(w, h), source);
 		
-		this.setSprite(ImageManager.getImageCopy("test", 2, 2));
+		switch(style)
+		{
+		case "heavy": 	this.setSprite(ImageManager.getImageCopy("heavyBullet", w, h)); break;
+		case "medium": 	this.setSprite(ImageManager.getImageCopy("mediumBullet", w, h)); break;
+		case "light": 	this.setSprite(ImageManager.getImageCopy("lightBullet", w, h)); break;
+		
+		default: this.setSprite(ImageManager.getImageCopy("test", 2, 2)); break;
+		}
 		
 		this.hitbox.rotate((float)Math.toRadians(angle));
 
-		this.baseSpeed = 5;
+		this.baseSpeed = baseSpeed;
 		
 		this.x = source.getX(); //+ offsetX;
 		this.y = source.getY(); //+ offsetY;
@@ -33,13 +40,16 @@ public class Bullet extends Projectile
 		
 		velocity.rotate(recoil * (float) (Math.random() - 0.5f) * 3.1415f / 180f);
 		
-		this.damageMultiplier = 1f;
+		this.damageMultiplier = damage;
+		
+		init(angle);
 	}
 
 	@Override
 	public void projectileUpdate() 
 	{
-		
+		this.x += velocity.x;
+		this.y += velocity.y;
 	}
 
 	@Override
@@ -52,8 +62,6 @@ public class Bullet extends Projectile
 	{
 		sprite.setCenterOfRotation(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
 		sprite.rotate(a);
-		
-		setSpeed(this.baseSpeed);
 	}
 	
 	public void draw(Graphics g)

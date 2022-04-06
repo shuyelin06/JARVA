@@ -26,9 +26,4 @@ public abstract class Weapon extends Item
 		
 		this.isWeapon = true;
 	}
-	
-	abstract public void equip();
-	abstract public void unequip();
-	
-	abstract public void use();
 }
