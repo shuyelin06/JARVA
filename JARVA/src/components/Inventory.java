@@ -36,6 +36,7 @@ public class Inventory
 	
 	public void equipItem(int index)
 	{
+		if( index < 0 || index >= items.size()) return;
 		equippedItem = items.get(index);
 	}
 	
