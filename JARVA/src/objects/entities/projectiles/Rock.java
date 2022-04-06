@@ -38,9 +38,4 @@ public class Rock extends Projectile {
 	@Override
 	public void objectDraw(Graphics g) {}
 	
-	@Override
-	public void applyCondition(Unit u) {
-		u.takeCondition(new Stun(this, u, 0.01f));
-	}
-	
 }
