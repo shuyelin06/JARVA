@@ -83,6 +83,7 @@ public class Player extends Unit {
 		inventory.addItem(new Revolver(this));
 		inventory.addItem(new HeavySniper(this));
 		inventory.addItem(new Shotgun(this));
+		inventory.equipItem(0);
 		
 		this.build();
 	}

@@ -37,7 +37,21 @@ public class Inventory
 	public void equipItem(int index)
 	{
 		if( index < 0 || index >= items.size()) return;
+		
+		boolean test = equippedItem != items.get(index);
+		if(items.get(index) != null && equippedItem != null && test)
+		{
+			equippedItem.unequip();
+		}
+			
 		equippedItem = items.get(index);
+		
+		if(items.get(index) != null && test)
+		{
+			equippedItem.equip();
+		}
+		
+		
 	}
 	
 	public void addItem(Item item)

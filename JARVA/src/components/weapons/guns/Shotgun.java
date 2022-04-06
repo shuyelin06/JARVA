@@ -4,8 +4,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import objects.GameObject;
-import objects.entities.projectiles.LightBullet;
-import objects.entities.projectiles.MediumBullet;
+import objects.entities.projectiles.Bullet;
+import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
@@ -50,7 +50,7 @@ public class Shotgun extends Gun
 	{
 		for(int i = 0; i < 12; i++)
 		{
-			new LightBullet(owner, InputManager.getAngleToMouse(owner) + (i - 4 - (float) Math.random()) * 3, currentRecoil).build();
+			new Bullet(owner, 1, 1, "light", 6, InputManager.getAngleToMouse(owner) + (i - 6 - (float) Math.random()) * 3, currentRecoil, 4f, 1f, 50f).build();
 		}
 		
 		super.fire();

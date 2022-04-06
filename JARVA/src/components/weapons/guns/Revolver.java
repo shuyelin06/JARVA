@@ -1,7 +1,8 @@
 package components.weapons.guns;
 
 import objects.GameObject;
-import objects.entities.projectiles.MediumBullet;
+import objects.entities.projectiles.Bullet;
+import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
@@ -45,7 +46,7 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		new MediumBullet(owner, InputManager.getAngleToMouse(owner), currentRecoil).build();
+		new Bullet(owner, 3, 1, "medium", 10, InputManager.getAngleToMouse(owner), currentRecoil, 10f, 2f, 100f).build();
 		
 		super.fire();
 	}
