@@ -14,6 +14,7 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 import components.Inventory;
+import components.conditions.Invulnerable;
 import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
 import components.weapons.guns.Shotgun;
@@ -165,7 +166,9 @@ public class Player extends Unit {
 	@Override
 	public void takeDamage(float damage) {
 		super.takeDamage(damage);
-		invulnerable();
+		if (invulnerable == false) {
+			takeCondition(new Invulnerable(this, Unit.Default_Invulnerability));
+		}
 	}
 	
 	/* --- Helper Methods --- */
@@ -193,7 +196,7 @@ public class Player extends Unit {
 	}
 	
 	private void beginDashing() {
-		invulnerable(Dash_Timer);
+		takeCondition(new Invulnerable(this, Dash_Timer));
 		dashing = true;
 		
 		collidable = false;

@@ -2,6 +2,8 @@ package objects.entities;
 
 import java.util.ArrayList;
 
+import components.conditions.Invulnerable;
+import components.conditions.Stun;
 import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
@@ -64,7 +66,7 @@ public abstract class Projectile extends GameObject {
 			else {
 				unit.takeDamage(source.getBaseDamage() * damageMultiplier); // Damage
 				unit.takeKnockback(this, knockback); // Knockback
-				unit.stunned(stun); // Stun
+//				unit.takeCondition(new Stun(this, unit, Unit.Default_Stun)); // Apply Stun
 				
 				applyCondition(unit);
 				
