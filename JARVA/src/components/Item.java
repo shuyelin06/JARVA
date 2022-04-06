@@ -35,6 +35,7 @@ public abstract class Item
 	protected float theta;
 	
 	protected boolean isWeapon; //temporary cheese method to get the use method, sowwy
+	protected boolean heldUse;
 	
 	public Item(GameObject owner)
 	{
@@ -57,9 +58,11 @@ public abstract class Item
 		this.rotationLocked = false;
 		
 		this.isWeapon = false;
+		this.heldUse = false;
 	}
 	
 	public boolean isWeapon() { return isWeapon; }
+	public boolean isHeldUse() { return heldUse; }
 	
 	abstract public void equip();
 	abstract public void unequip();

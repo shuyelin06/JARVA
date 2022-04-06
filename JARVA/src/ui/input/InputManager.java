@@ -31,7 +31,8 @@ public class InputManager {
 	public static float getMapMouseY()		{		return (mouseY - (Settings.Resolution_Y * 0.5f)) / Settings.Scale + Game.Player.getY();	}
 	public static float getAngleToMouse(GameObject entity) 	{ 		return entity.getAngleTo(InputManager.getMapMouseX(), InputManager.getMapMouseY()); }
 	
-	public static boolean isLMBDown() {		return input.isMousePressed(Input.MOUSE_LEFT_BUTTON); }
+	public static boolean isLMBClicked() {		return input.isMousePressed(Input.MOUSE_LEFT_BUTTON); }
+	public static boolean isLMBDown() {		return input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON); }
 	
 	// Check for Keys Down
 	public void update() {

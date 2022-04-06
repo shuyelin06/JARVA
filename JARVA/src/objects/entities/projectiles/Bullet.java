@@ -57,6 +57,7 @@ public class Bullet extends Projectile
 	{
 		
 	}
+
 	
 	public void init(float a) //have to call these methods afterwards since the sprite and speed gets overwritten
 	{
@@ -66,10 +67,6 @@ public class Bullet extends Projectile
 	
 	public void draw(Graphics g)
 	{
-//		sprite.rotate(angle);
-//		sprite.draw(x - 4, y - 1);
-//		
-//		hitbox.draw(g, x, y);
 		sprite.setFilter(Image.FILTER_NEAREST);
 		sprite.draw(x - sprite.getWidth() * 0.5f, y - sprite.getHeight() * 0.5f);
 		

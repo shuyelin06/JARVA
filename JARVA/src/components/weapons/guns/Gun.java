@@ -21,6 +21,7 @@ public class Gun extends Weapon
 	protected float recoilTheta;
 	
 	protected float recoilThetaMult; //in case you don't want it spinning 1 million cirlces each time
+	protected float recoilPosMult; 
 	
 	protected Image muzzleFlash;
 	protected float flashTimer;	
@@ -38,6 +39,7 @@ public class Gun extends Weapon
 		currentRecoil = 0;
 		maxRecoil = 0;
 		recoilRecovery = 1;
+		recoilPosMult = 1;
 		
 		recoilX = 0;
 		recoilY = 0;
@@ -74,8 +76,8 @@ public class Gun extends Weapon
 		
 		float angleToMouse = (float)Math.toRadians(owner.getAngleTo(InputManager.getMapMouseX(), InputManager.getMapMouseY()));
 		
-		recoilX += baseRecoil * (float) -Math.cos(angleToMouse);
-		recoilY += baseRecoil * (float) -Math.sin(angleToMouse);
+		recoilX += baseRecoil * (float) -Math.cos(angleToMouse) * recoilPosMult;
+		recoilY += baseRecoil * (float) -Math.sin(angleToMouse) * recoilPosMult;
 		
 		recoilTheta -= baseRecoil * recoilThetaMult;
 		currentRecoil += baseRecoil * recoilRecovery;

@@ -18,6 +18,7 @@ import components.conditions.Invulnerable;
 import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
 import components.weapons.guns.Shotgun;
+import components.weapons.guns.SubmachineGun;
 
 public class Player extends Unit {
 	private static float Player_Max_Velocity = 75f;
@@ -51,11 +52,11 @@ public class Player extends Unit {
 	private Inventory inventory;
 	
 	public Player() {
-		super(Polygon.rectangle(4f, 8f));
+		super(Polygon.rectangle(6f, 6f));
 	  
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("jarvis", 4, 8);
+		this.sprite = ImageManager.getImageCopy("jarvis", 6, 6);
 		
 		// Width and Height
 		this.rectW = 5f;
@@ -83,6 +84,7 @@ public class Player extends Unit {
 		inventory.addItem(new Revolver(this));
 		inventory.addItem(new HeavySniper(this));
 		inventory.addItem(new Shotgun(this));
+		inventory.addItem(new SubmachineGun(this));
 		inventory.equipItem(0);
 		
 		this.build();
@@ -155,7 +157,12 @@ public class Player extends Unit {
 		{
 			inventory.getEquippedItem().rotateTo(InputManager.getMapMouseX(), InputManager.getMapMouseY());
 			
-			if(InputManager.isLMBDown())
+			if(InputManager.isLMBClicked())
+			{
+				inventory.getWeapon().use();
+			}
+			
+			if(InputManager.isLMBDown() && inventory.getWeapon().isHeldUse())
 			{
 				inventory.getWeapon().use();
 			}

@@ -13,6 +13,7 @@ import components.weapons.Weapon;
 
 public class Revolver extends Gun
 {	
+	private int spinAnimTimer;
 	
 	public Revolver(GameObject owner) 
 	{
@@ -20,6 +21,7 @@ public class Revolver extends Gun
 		
 		this.w = 6;
 		this.h = 4;
+		spinAnimTimer = 0;
 		
 		useTimer = 15; //20
 		baseRecoil = 3; // 2
@@ -34,10 +36,10 @@ public class Revolver extends Gun
 	}
 
 	@Override
-	public void equip() {}
+	public void equip() { spinAnimTimer = 0; }
 
 	@Override
-	public void unequip() {}
+	public void unequip() { spinAnimTimer = 0; }
 	
 	public void use()
 	{
@@ -46,8 +48,20 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		new Bullet(owner, 3, 1, "medium", 10, InputManager.getAngleToMouse(owner), currentRecoil, 10f, 2f, 100f).build();
+		new Bullet(owner, 2, 1, "medium", 10, InputManager.getAngleToMouse(owner), currentRecoil, 20f, 2f, 100f).build();
 		
 		super.fire();
+	}
+	
+	public void update()
+	{
+		super.update();
+		
+		spinAnimTimer++;
+		
+		if(spinAnimTimer < 60)
+		{
+			theta += 6;
+		}
 	}
 }
