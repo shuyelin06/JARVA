@@ -19,10 +19,11 @@ public class AngryBoulder extends Unit {
 	public AngryBoulder() {
 		super(Polygon.rectangle(8f, 8f));
 		
-		this.maxHealth = 500f;
+		this.maxHealth = 100f;
 		this.health = maxHealth;
+		this.damageBlock = 0.5f;
 		
-		this.baseDamage = 20;
+		this.baseDamage = 10;
 		this.lastShot = ShotCooldown;
 		
 		this.sprite = ImageManager.getImageCopy("rock", 8, 8);

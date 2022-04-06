@@ -17,7 +17,7 @@ public class MediumBullet extends Bullet
 		this.setSprite(ImageManager.getImageCopy("mediumBullet", 2, 1));
 		this.baseSpeed = 8;
 		
-		this.damageMultiplier = 10f;	
+		this.damageMultiplier = 20f;	
 		this.knockback = 100f;
 		this.pierce = 3;
 		

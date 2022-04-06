@@ -19,7 +19,7 @@ public class HeavyBullet extends Bullet
 //		sprite.rotate(angle);
 		
 		this.baseSpeed = 15f;
-		this.damageMultiplier = 20f;
+		this.damageMultiplier = 35f;
 		this.knockback = 200f;
 		this.pierce = 5;
 		

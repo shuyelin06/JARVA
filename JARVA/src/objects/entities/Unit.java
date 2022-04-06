@@ -30,7 +30,6 @@ public abstract class Unit extends GameObject {
 	
 	// Invulnerability
 	protected static float Default_Invulnerability = 0.10f; // Default Invulnerability Timer
-	
 	// Stats
 	protected float health; // Current Health
 	protected float maxHealth; // Max Health
