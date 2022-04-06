@@ -7,7 +7,12 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
+import components.conditions.Burn;
 import components.conditions.Condition;
+import components.conditions.Confusion;
+import components.conditions.Invulnerable;
+import components.conditions.Poison;
+import components.conditions.Stun;
 import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
@@ -139,6 +144,7 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Accessor Methods --- */	
+	public ArrayList<Condition> getConditions() { return conditions; }
 	public float getMaxHealth() { return maxHealth; }
 	public float getCurHealth() { return health; }
 	public float getPercentHealth() { return health / maxHealth; }
@@ -152,4 +158,36 @@ public abstract class Unit extends GameObject {
 	
 	public Unit setContactDamage(float newDamage) { contactDamage = newDamage; return this; }
 	public Unit setBaseDamage(float newDamage) { baseDamage = newDamage; return this; }
+	
+	/* --- Condition Accessor Methods -- */
+	public boolean isBurned() { 
+		for (Condition c: getConditions()) {
+			if (c instanceof Burn) { return true; }
+		}
+		return false;
+	}
+	public boolean isPoisoned() { 
+		for (Condition c: getConditions()) {
+			if (c instanceof Poison) { return true; }
+		}
+		return false;
+	}
+	public boolean isInvulnerable() { 
+		for (Condition c: getConditions()) {
+			if (c instanceof Invulnerable) { return true; }
+		}
+		return false;
+	}
+	public boolean isStunned() { 
+		for (Condition c: getConditions()) {
+			if (c instanceof Stun) { return true; }
+		}
+		return false;
+	}
+	public boolean isConfused() { 
+		for (Condition c: getConditions()) {
+			if (c instanceof Confusion) { return true; }
+		}
+		return false;
+	}
 }
