@@ -79,33 +79,33 @@ public class Game extends BasicGameState {
 		Player = new Player();
 				
 		// Other Objects
-		new AngryBoulder()
-				.setX(2f)
-				.setY(5f)
-				.build();
-	
-		new AngryBoulder()
-				.setX(2f)
-				.setY(1f)
-				.build();
-		
-		new AngryBoulder()
-				.setX(300f)
-				.setY(150f)
-				.build();
-		
-		new Tumbleweed()
-				.setX(300f)
-				.setY(500f)
-				.setYVelocity(-0.5f)
-				.build();
-		
-		new Tumbleweed()
-				.setX(200f)
-				.setY(0f)
-				.setYVelocity(0.25f)
-				.build();
-		
+//		new AngryBoulder()
+//				.setX(2f)
+//				.setY(5f)
+//				.build();
+//	
+//		new AngryBoulder()
+//				.setX(2f)
+//				.setY(1f)
+//				.build();
+//		
+//		new AngryBoulder()
+//				.setX(300f)
+//				.setY(150f)
+//				.build();
+//		
+//		new Tumbleweed()
+//				.setX(300f)
+//				.setY(500f)
+//				.setYVelocity(-0.5f)
+//				.build();
+//		
+//		new Tumbleweed()
+//				.setX(200f)
+//				.setY(0f)
+//				.setYVelocity(0.25f)
+//				.build();
+//		
 		new Eagle()
 				.setX(200f)
 				.setY(-100f)
