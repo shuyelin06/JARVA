@@ -16,7 +16,7 @@ public class LightBullet extends Bullet
 		
 		this.baseSpeed = 6;
 		
-		this.damageMultiplier = 3f;
+		this.damageMultiplier = 5f;
 		
 		init(angle);
 	}

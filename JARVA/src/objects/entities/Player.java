@@ -61,7 +61,8 @@ public class Player extends Unit {
 		this.rectH = 10f;
 		
 		// Contact Damage
-		this.contactDamage = 25f;
+		this.baseDamage = 1f;
+		this.contactDamage = 1f;
 		
 		// Velocity Determinants
 		this.maxVelocity = Player_Max_Velocity;
