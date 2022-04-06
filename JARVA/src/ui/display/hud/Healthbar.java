@@ -3,6 +3,9 @@ package ui.display.hud;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import components.conditions.Burn;
+import components.conditions.Condition;
+import components.conditions.Poison;
 import engine.Settings;
 import engine.states.Game;
 import objects.GameObject;
@@ -47,12 +50,22 @@ public class Healthbar
 		g.setColor(new Color(0f, 0f, 0f));
 		g.fillRect(x, y, w, h);
 		
-		g.setColor(sumColors);
+		
+		
+		if (unit.isBurned()) {
+			g.setColor(Color.red);
+		} else if (unit.isPoisoned()) {
+			g.setColor(Color.green);
+		} else {
+			g.setColor(sumColors);
+		}
+		
 		g.fillRect(x, y, w * depletion, h);
 	}
 	
 	public void update()
 	{		
+		
 		if(unit != null) 
 		{
 			depletion = unit.getPercentHealth();
