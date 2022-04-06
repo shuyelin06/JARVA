@@ -2,6 +2,8 @@ package objects.entities.projectiles;
 
 import org.newdawn.slick.Graphics;
 
+import components.conditions.Confusion;
+import components.conditions.Stun;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
@@ -35,4 +37,10 @@ public class Rock extends Projectile {
 
 	@Override
 	public void objectDraw(Graphics g) {}
+	
+	@Override
+	public void applyCondition(Unit u) {
+		u.takeCondition(new Stun(this, u, 0.01f));
+	}
+	
 }

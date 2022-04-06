@@ -26,14 +26,10 @@ public abstract class Unit extends GameObject {
 	protected ArrayList<Condition> conditions;
 	
 	// Stunning
-	protected static float Default_Stun = 0.10f; // Default Stun Timer
-	protected float stun;
-	protected float lastStunned;
+	protected static float Default_Stun = 0.01f; // Default Stun Timer
 	
 	// Invulnerability
 	protected static float Default_Invulnerability = 0.10f; // Default Invulnerability Timer
-	protected float invulnerability; // Invulnerability Timer
-	protected float lastDamageTaken; // Damage Last Taken
 	
 	// Stats
 	protected float health; // Current Health
@@ -55,9 +51,6 @@ public abstract class Unit extends GameObject {
 		
 		// Unit Conditions
 		this.conditions = new ArrayList<>();
-				
-		// Default Values
-		this.invulnerability = Default_Invulnerability; // Seconds Invulnerable
 		
 		this.damageBlock = 0f;
 		this.knockbackBlock = 0f;
@@ -92,12 +85,6 @@ public abstract class Unit extends GameObject {
 			return;
 		}
 		
-		// Invulnerability Timer
-		if(Game.getTicks() - lastDamageTaken > invulnerability) { invulnerable = false; }
-		
-		// Stun Timer
-		if(Game.getTicks() - lastStunned > stun) { stunned = false; }
-		
 		// Entity AI
 		if(!stunned) unitUpdate();
 	}
@@ -115,20 +102,10 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Helper Methods --- */
-	protected void stunned() { stunned(Default_Stun); }
-	protected void stunned(float time) {
-		stunned = true;
-		stun = time;
-		lastStunned = Game.getTicks();
-	}
 	
+	public void stunned(boolean stunned) { this.stunned = stunned; }
+	public void invulnerable(boolean invulnerable) { this.invulnerable = invulnerable; }
 	
-	protected void invulnerable() { invulnerable(Default_Invulnerability); }
-	protected void invulnerable(float time) {
-		invulnerable = true;
-		invulnerability = time;
-		lastDamageTaken = Game.getTicks();
-	}
 	public void takeCondition(Condition condition) {
 		conditions.add(condition);
 	}
