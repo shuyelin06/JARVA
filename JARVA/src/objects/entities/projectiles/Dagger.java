@@ -65,7 +65,7 @@ public class Dagger extends Projectile{
 	@Override
 	public void objectDraw(Graphics g) {
 		if(timer < delay) {
-			g.setColor(Color.red);
+			g.setColor(new Color(208, 49, 45));
 			g.drawLine(this.getX(),this.getY(), this.getX() + (float)Math.cos(theta)*2*spawnRadius, this.getY()+ (float)Math.sin(theta)*2*spawnRadius);
 		}
 	}

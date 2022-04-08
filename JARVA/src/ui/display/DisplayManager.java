@@ -32,6 +32,7 @@ public class DisplayManager {
 	final private static float Screen_Y = Settings.Resolution_Y / 2f;
 	private float cameraX;
 	private float cameraY;
+	private float displayOffset;
 	private Crosshair crosshair;
 	private Sprintbar sprintbar;
 	private Healthbar playerHealthbar;
@@ -43,12 +44,16 @@ public class DisplayManager {
 		this.crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
 		this.sprintbar = new Sprintbar(Game.Player);
 		this.playerHealthbar = new Healthbar(Game.Player);
+		this.displayOffset = 0.15f;
 		
 	}
 	
 	private void cameraPosition() {
-		cameraX = Game.Player.getX();
-		cameraY = Game.Player.getY();
+		float mouseX = InputManager.getMapMouseX();
+		float mouseY = InputManager.getMapMouseY();
+		
+		cameraX = Game.Player.getX() - displayOffset * (Game.Player.getX() - mouseX);
+		cameraY = Game.Player.getY() - displayOffset * (Game.Player.getY() - mouseY);
 	}
 	
 	public void update() {
@@ -104,4 +109,8 @@ public class DisplayManager {
 		arena.draw(g);
 
 	}
+	
+	/* --- Mutator Methods */
+	public void setDisplayOffset(float displayOffset) { this.displayOffset = displayOffset; }
+	
 }
