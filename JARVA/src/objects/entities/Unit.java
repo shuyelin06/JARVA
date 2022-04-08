@@ -1,6 +1,8 @@
 package objects.entities;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
@@ -26,15 +28,11 @@ public abstract class Unit extends GameObject {
 	protected boolean immovable; // Knockback Switch 
 	protected boolean invulnerable; // Invulnerable Switch 
 	protected boolean stunned; // Stunned Switch
+	protected boolean mirrored; // Sprite mirroring
 	
 	// Effects
-	protected ArrayList<Condition> conditions;
+	protected HashMap<Condition.Type, Condition> conditions;
 	
-	// Stunning
-	protected static float Default_Stun = 0.01f; // Default Stun Timer
-	
-	// Invulnerability
-	protected static float Default_Invulnerability = 0.10f; // Default Invulnerability Timer
 	// Stats
 	protected float health; // Current Health
 	protected float maxHealth; // Max Health
@@ -52,9 +50,11 @@ public abstract class Unit extends GameObject {
 		this.immovable = false;
 		this.invulnerable = false;
 		this.stunned = false;
+		this.mirrored = false;
 		
 		// Unit Conditions
-		this.conditions = new ArrayList<>();
+		this.conditions = new HashMap<>();
+		this.initializeConditions();
 		
 		this.damageBlock = 0f;
 		this.knockbackBlock = 0f;
@@ -68,18 +68,26 @@ public abstract class Unit extends GameObject {
 	
 	/* --- Inherited Methods --- */
 	protected abstract void unitUpdate();
+	protected void unitDraw(Graphics g) {}
 	
 	/* --- Implemented Methods --- */
 	public void objectDraw(Graphics g) {
-		if(invulnerable) {
+		if(this.conditionActive(Condition.Type.Invulnerable)) {
 			g.setColor(Color.blue);
 			g.draw(new Circle(x, y, 25f));
 		}
+		unitDraw(g);
+	}
+	
+	@Override
+	protected void drawSprite(Graphics g) {
+		if(mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);
+		else sprite.drawCentered(x, y);
 	}
 	@Override
 	public void objectUpdate() {
 		// Apply Conditions
-		for (Condition c: conditions) {
+		for (Condition c: conditions.values()) {
 			c.apply();
 		}
 		
@@ -91,6 +99,9 @@ public abstract class Unit extends GameObject {
 		
 		// Entity AI
 		if(!stunned) unitUpdate();
+		
+		// Sprite Mirroring
+		mirroredCheck();
 	}
 	
 	@Override
@@ -106,12 +117,24 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Helper Methods --- */
+	private void initializeConditions() {
+		conditions.put(Condition.Type.Invulnerable, new Invulnerable(this));
+		conditions.put(Condition.Type.Confusion, new Confusion(this));
+		
+		conditions.put(Condition.Type.Burn, new Burn(this));
+		conditions.put(Condition.Type.Poison, new Poison(this));
+		conditions.put(Condition.Type.Stun, new Stun(this));
+	}
+	protected void mirroredCheck() {
+		if(velocity.x < 0) mirrored = true;
+		else mirrored = false;
+	}
 	
 	public void stunned(boolean stunned) { this.stunned = stunned; }
 	public void invulnerable(boolean invulnerable) { this.invulnerable = invulnerable; }
 	
-	public void takeCondition(Condition condition) {
-		conditions.add(condition);
+	public void takeCondition(Condition.Type type, float timer) {
+		conditions.get(type).addTimer(timer);
 	}
 	public void takeHealing(float heal) {
 		health += heal;
@@ -144,7 +167,12 @@ public abstract class Unit extends GameObject {
 	}
 	
 	/* --- Accessor Methods --- */	
-	public ArrayList<Condition> getConditions() { return conditions; }
+	public HashMap<Condition.Type, Condition> getConditions() { return conditions; }
+	public Condition getCondition(Condition.Type type) { return conditions.get(type); }
+	public boolean conditionActive(Condition.Type type) { return getCondition(type).isActive(); }
+	
+	public boolean isMirrored() { return mirrored; }
+	
 	public float getMaxHealth() { return maxHealth; }
 	public float getCurHealth() { return health; }
 	public float getPercentHealth() { return health / maxHealth; }
@@ -158,36 +186,4 @@ public abstract class Unit extends GameObject {
 	
 	public Unit setContactDamage(float newDamage) { contactDamage = newDamage; return this; }
 	public Unit setBaseDamage(float newDamage) { baseDamage = newDamage; return this; }
-	
-	/* --- Condition Accessor Methods -- */
-	public boolean isBurned() { 
-		for (Condition c: getConditions()) {
-			if (c instanceof Burn) { return true; }
-		}
-		return false;
-	}
-	public boolean isPoisoned() { 
-		for (Condition c: getConditions()) {
-			if (c instanceof Poison) { return true; }
-		}
-		return false;
-	}
-	public boolean isInvulnerable() { 
-		for (Condition c: getConditions()) {
-			if (c instanceof Invulnerable) { return true; }
-		}
-		return false;
-	}
-	public boolean isStunned() { 
-		for (Condition c: getConditions()) {
-			if (c instanceof Stun) { return true; }
-		}
-		return false;
-	}
-	public boolean isConfused() { 
-		for (Condition c: getConditions()) {
-			if (c instanceof Confusion) { return true; }
-		}
-		return false;
-	}
 }

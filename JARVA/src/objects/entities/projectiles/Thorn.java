@@ -2,6 +2,7 @@ package objects.entities.projectiles;
 
 import org.newdawn.slick.Graphics;
 
+import components.conditions.Condition;
 import components.conditions.Confusion;
 import engine.states.Game;
 import objects.GameObject;
@@ -102,7 +103,7 @@ public class Thorn extends Projectile {
 
 	@Override
 	public void applyCondition(Unit u) {
-		u.takeCondition(new Confusion(this, u, 2f));
+		u.takeCondition(Condition.Type.Confusion, 2f);
 	}
 	
 	@Override

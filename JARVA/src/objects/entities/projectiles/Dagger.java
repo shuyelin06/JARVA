@@ -3,6 +3,7 @@ package objects.entities.projectiles;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import components.conditions.Condition;
 import components.conditions.Poison;
 import objects.GameObject;
 import objects.entities.Projectile;
@@ -72,7 +73,7 @@ public class Dagger extends Projectile{
 	
 	@Override
 	public void applyCondition(Unit u) {
-		u.takeCondition(new Poison(this, u, 2));
+		u.takeCondition(Condition.Type.Poison, 2);
 	}
 	
 

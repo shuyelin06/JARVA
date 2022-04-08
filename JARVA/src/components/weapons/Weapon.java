@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import components.Item;
 import engine.Settings;
 import objects.GameObject;
+import objects.entities.Unit;
 import ui.input.InputManager;
 
 public abstract class Weapon extends Item
@@ -17,7 +18,7 @@ public abstract class Weapon extends Item
 	protected float lastUsed;
 	protected float useTimer;
 	
-	public Weapon(GameObject owner)
+	public Weapon(Unit owner)
 	{
 		super(owner);
 		

@@ -23,7 +23,7 @@ public class Arena {
 	protected Border border;
 	
 	public Arena(float width, float height) {
-		this.friction = 0.5f;
+		this.friction = 0.35f;
 		
 		this.width = width;
 		this.height = height;

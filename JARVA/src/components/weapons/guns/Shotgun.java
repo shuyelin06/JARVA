@@ -4,15 +4,15 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import objects.GameObject;
+import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
-public class Shotgun extends Gun
-{
-	public Shotgun(GameObject owner)
+public class Shotgun extends Gun {
+	public Shotgun(Unit owner)
 	{
 		super(owner);
 		

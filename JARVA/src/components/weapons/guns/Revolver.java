@@ -1,6 +1,7 @@
 package components.weapons.guns;
 
 import objects.GameObject;
+import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
@@ -11,11 +12,10 @@ import org.newdawn.slick.Image;
 
 import components.weapons.Weapon;
 
-public class Revolver extends Gun
-{	
+public class Revolver extends Gun {	
 	private int spinAnimTimer;
 	
-	public Revolver(GameObject owner) 
+	public Revolver(Unit owner) 
 	{
 		super(owner);
 		

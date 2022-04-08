@@ -6,20 +6,21 @@ import objects.entities.Unit;
 
 public class Invulnerable extends Condition {
 	
-	public Invulnerable(Unit target, float timer) {
-		super(null, target, timer);
+	public Invulnerable(Unit owner) {
+		super(owner);
 	}
 
 	@Override
-	public void remove() {
-		super.remove();
-		
-		target.invulnerable(false);
+	public void addTimer(float time) {
+		if(timer < 0) {
+			timer = time;
+		}
 	}
-	
-	@Override
-	public void applyEffect(Unit target) {
-		target.invulnerable(true);
+	public void removeEffect() {
+		owner.invulnerable(false);
+	}
+	public void applyEffect() {
+		owner.invulnerable(true);
 	}
 	
 }
