@@ -29,7 +29,7 @@ public class HeavySniper extends Gun {
 	}
 
 	@Override
-	public void equip() { Settings.setScale(Settings.BaseScale * 0.7f); }
+	public void equip() { Settings.setScale(Settings.BaseScale * 0.667f); }
 
 	@Override
 	public void unequip() { Settings.setScale(Settings.BaseScale); }
@@ -40,8 +40,17 @@ public class HeavySniper extends Gun {
 	}
 	
 	public void fire()
-	{
-		new Bullet(owner, 4, 1, "heavy", 18, InputManager.getAngleToMouse(owner), currentRecoil, 30f, 5f, 200f).build();
+	{	
+		((Bullet) new Bullet(owner, 4, 1)
+				.build())
+				.Style("heavy")
+				.BaseSpeed(18f)
+				.Angle(InputManager.getAngleToMouse(owner))
+				.Damage(30f)
+				.Knockback(200f)
+				.Pierce(5)
+				.Init()
+				.Recoil(currentRecoil);
 		
 		super.fire();
 	}

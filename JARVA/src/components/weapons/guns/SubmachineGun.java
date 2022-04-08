@@ -23,8 +23,8 @@ public class SubmachineGun extends Gun {
 		
 		this.sprite = ImageManager.getImageCopy("uzi");
 		
-		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.2f;
+		barrelX = this.w * 0.8f;
+		barrelY = -this.w * 0.5f;
 		
 		heldUse = true;
 	}
@@ -42,7 +42,17 @@ public class SubmachineGun extends Gun {
 	
 	public void fire()
 	{
-		new Bullet(owner, 1, 1, "light", 7, InputManager.getAngleToMouse(owner), currentRecoil, 10f, 1f, 50f).build();
+		
+		((Bullet) new Bullet(owner, 1, 1)
+				.build())
+				.Style("light")
+				.BaseSpeed(7f)
+				.Angle(InputManager.getAngleToMouse(owner))
+				.Damage(8f)
+				.Knockback(50f)
+				.Pierce(1)
+				.Init()
+				.Recoil(currentRecoil);
 		
 		super.fire();
 	}

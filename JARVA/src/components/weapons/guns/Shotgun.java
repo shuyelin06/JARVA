@@ -50,7 +50,16 @@ public class Shotgun extends Gun {
 	{
 		for(int i = 0; i < 12; i++)
 		{
-			new Bullet(owner, 1, 1, "light", 6, InputManager.getAngleToMouse(owner) + (i - 6 - (float) Math.random()) * 3, currentRecoil, 4f, 1f, 50f).build();
+			((Bullet) new Bullet(owner, 1, 1)
+					.build())
+					.Style("light")
+					.BaseSpeed(6f)
+					.Angle(InputManager.getAngleToMouse(owner) + (i - 6 - (float) Math.random()) * 3)
+					.Damage(4f)
+					.Knockback(50f)
+					.Pierce(1)
+					.Init()
+					.Recoil(currentRecoil);
 		}
 		
 		super.fire();

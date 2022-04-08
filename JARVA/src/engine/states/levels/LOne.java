@@ -5,17 +5,19 @@ import objects.entities.units.AngryBoulder;
 import objects.entities.units.Eagle;
 import objects.entities.units.Tumbleweed;
 
-public class LThree extends Level
+public class LOne extends Level
 {
-	public LThree(Game game) {
+	public LOne(Game game) 
+	{
 		super(game);
-		// TODO Auto-generated constructor stub
+		
+		lastSpawnTime = 100;
 	}
 	
 	public void update()
 	{
 		super.update();
-
+		
 		if(spawningTimer == 20)
 		{
 			new Eagle()
