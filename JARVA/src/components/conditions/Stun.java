@@ -5,20 +5,15 @@ import objects.entities.Unit;
 
 public class Stun extends Condition {
 	
-	public Stun(GameObject owner, Unit target, float timer) {
-		super(owner, target, timer);
-	}
-
-	@Override
-	public void remove() {
-		super.remove();
-		
-		target.stunned(false);
+	public Stun(Unit owner) {
+		super(owner);
 	}
 	
-	@Override
-	public void applyEffect(Unit target) {
-		target.stunned(true);
+	public void removeEffect() {
+		owner.stunned(false);
+	}
+	public void applyEffect() {
+		owner.stunned(true);
 	}
 	
 }

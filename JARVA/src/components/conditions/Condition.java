@@ -5,31 +5,36 @@ import objects.GameObject;
 import objects.entities.Unit;
 
 public abstract class Condition {
-	protected boolean remove;
+	public enum Type {
+		Invulnerable, Confusion,
+		Burn, Poison, Stun
+	}
+	
 	protected float timer;
+	protected Unit owner;
 	
-	protected GameObject owner;
-	protected Unit target;
-	
-	public Condition(GameObject owner, Unit target, float timer) {
+	public Condition(Unit owner) {
 		this.owner = owner;
-		this.target = target;
-		
-		this.timer = 1f;
+		this.timer = 0f;
 	}
 	
-	abstract public void applyEffect(Unit target);
-	public void remove() {
-		this.remove = true;
+	public boolean isActive() {
+		if(timer > 0) return true;
+		else return false;
 	}
+	public void addTimer(float time) {
+		if(timer < 0) timer = time;
+		else timer += time;
+	}
+	
+	abstract public void applyEffect();
+	abstract public void removeEffect();
+	
 	public void apply() {
 		timer -= Game.TicksPerFrame();
-		if(timer < 0) {
-			remove();
-			return;
-		}
 		
-		applyEffect(target);
+		if(timer > 0) applyEffect(); 
+		else removeEffect();
 	}
 	
 }

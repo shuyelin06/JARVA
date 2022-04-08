@@ -5,21 +5,14 @@ import objects.entities.Unit;
 
 public class Confusion extends Condition {
 
-	public Confusion(GameObject owner, Unit target, float timer) {
-		super(owner, target, timer);
-		
+	public Confusion(Unit owner) {
+		super(owner);
 	}
 
-	@Override
-	public void remove() {
-		super.remove();
-		
-		target.confused(false);
+	public void removeEffect() {
+		owner.confused(false);
 	}
-	
-	@Override
-	public void applyEffect(Unit target) {
-		target.confused(true);
+	public void applyEffect() {
+		owner.confused(true);
 	}
-	
 }

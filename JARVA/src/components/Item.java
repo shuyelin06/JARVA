@@ -5,13 +5,14 @@ import org.newdawn.slick.Image;
 
 import objects.GameObject;
 import objects.entities.Player;
+import objects.entities.Unit;
 import ui.display.animation.Animation;
 import ui.input.InputManager;
 
 public abstract class Item 
 {
 	protected Image sprite; //might wanna change this to something from imageManager later
-	protected GameObject owner;
+	protected Unit owner;
 	
 	protected Animation animation;
 	protected boolean animating;
@@ -37,7 +38,7 @@ public abstract class Item
 	protected boolean isWeapon; //temporary cheese method to get the use method, sowwy
 	protected boolean heldUse;
 	
-	public Item(GameObject owner)
+	public Item(Unit owner)
 	{
 		this.owner = owner;
 		
