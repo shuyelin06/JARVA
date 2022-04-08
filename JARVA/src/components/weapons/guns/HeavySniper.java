@@ -13,7 +13,7 @@ public class HeavySniper extends Gun {
 	{
 		super(owner);
 		
-		this.w = 27;
+		this.w = 32;
 		this.h = 6;
 		
 		useTimer = 45; 
@@ -29,10 +29,10 @@ public class HeavySniper extends Gun {
 	}
 
 	@Override
-	public void equip() { Settings.setScale(Settings.BaseScale * 0.667f); }
+	public void equip() { Settings.Scale *= 0.5f; }
 
 	@Override
-	public void unequip() { Settings.setScale(Settings.BaseScale); }
+	public void unequip() { Settings.Scale *= 2f; }
 	
 	public void use()
 	{

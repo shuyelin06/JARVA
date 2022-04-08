@@ -117,6 +117,9 @@ public class InputManager {
 			case Input.KEY_8: Game.Player.getInventory().equipItem(7); break;
 			case Input.KEY_9: Game.Player.getInventory().equipItem(8); break;
 			
+			case Input.KEY_COMMA: Settings.Scale *= 0.8f; break; //dev mode options
+			case Input.KEY_PERIOD: Settings.Scale *= 1.25f; break;
+			
 			default: 
 				break;
 		}

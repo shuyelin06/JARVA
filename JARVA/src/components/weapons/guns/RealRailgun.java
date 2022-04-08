@@ -11,13 +11,13 @@ public class RealRailgun extends Gun
 	public RealRailgun(Unit owner) {
 		super(owner);
 		
-		this.w = 8;
+		this.w = 16;
 		this.h = 4;
 		
 		useTimer = 1; 
 		baseRecoil = 1;
 		maxRecoil = 3;
-		recoilRecovery = 0.1f;
+		recoilRecovery = 1f;
 		recoilThetaMult = 0;
 		recoilPosMult = 0.1f;
 		
@@ -46,7 +46,7 @@ public class RealRailgun extends Gun
 		((Bullet) new Bullet(owner, 10, 1)
 		.build())
 		.Style("light")
-		.BaseSpeed(10f)
+		.BaseSpeed(20f)
 		.Angle(InputManager.getAngleToMouse(owner))
 		.Damage(50)
 		.Knockback(0)
