@@ -11,6 +11,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import engine.Settings;
 import maps.ArenaManager;
 import objects.GameObject;
+import objects.GameObject.ObjectTeam;
+import objects.GameObject.ObjectType;
 import objects.collisions.CollisionManager;
 import objects.entities.Unit;
 import objects.entities.Player;
@@ -49,6 +51,17 @@ public class Game extends BasicGameState {
 	public static float TicksPerFrame() { return Settings.Ticks_Per_Frame / Settings.Frames_Per_Second; }
 	
 	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
+	public ArrayList<GameObject> getEnemies() 
+	{ 
+		ArrayList<GameObject> enemies = new ArrayList<GameObject>();
+		
+		for(GameObject u : GameObjects)
+		{
+			if(u.getTeam() == ObjectTeam.Enemy && u.getType() == ObjectType.Unit) enemies.add(u);
+		}
+		
+		return(enemies);
+	}
 	
 	public ArenaManager getArenaManager() { return ArenaManager; }
 	public DisplayManager getDisplayManager() { return DisplayManager; }
