@@ -151,7 +151,7 @@ public class Player extends Unit {
 		}
 		
 		// Update Weapon
-		inventory.update(); //ill move this somewhere else, just testing
+		inventory.update();
 		
 		if(inventory.getWeapon() != null)
 		{
@@ -171,7 +171,8 @@ public class Player extends Unit {
 	
 	/* --- Overwritten Methods --- */
 	@Override
-	public void takeDamage(float damage) {
+	public void takeDamage(float damage) 
+	{
 		super.takeDamage(damage);
 		if (invulnerable == false) {
 			takeCondition(new Invulnerable(this, Unit.Default_Invulnerability));
@@ -179,7 +180,8 @@ public class Player extends Unit {
 	}
 	
 	/* --- Helper Methods --- */
-	public void move(float movementVelocity, float sumVelocityAngle) {
+	public void move(float movementVelocity, float sumVelocityAngle) 
+	{
 		if(!stunned) {
 			Game.Player.addYVelocity(movementVelocity * (float) -Math.sin(Math.toRadians(sumVelocityAngle)));
 			Game.Player.addXVelocity(movementVelocity * (float) Math.cos(Math.toRadians(sumVelocityAngle)));
@@ -187,7 +189,8 @@ public class Player extends Unit {
 	}
 	
 	/* --- Dash Behavior --- */
-	public void dash() {
+	public void dash() 
+	{
 		if( dashing ) return;
 		if( Game.getTicks() - lastDashed < Dash_Cooldown ) return;
 		
@@ -202,7 +205,8 @@ public class Player extends Unit {
 		}
 	}
 	
-	private void beginDashing() {
+	private void beginDashing() 
+	{
 		takeCondition(new Invulnerable(this, Dash_Timer));
 		dashing = true;
 		
@@ -211,7 +215,8 @@ public class Player extends Unit {
 		friction = false;
 		velocityMultipliers.add(Dash_Boost);
 	}
-	private void stopDashing() {
+	private void stopDashing() 
+	{
 		dashing = false;
 		
 		collidable = true;
@@ -220,14 +225,16 @@ public class Player extends Unit {
 	}
 	
 	/* --- Sprint Behavior --- */
-	public void startSprinting() {
+	public void startSprinting() 
+	{
 		if( sprintStamina > 0 ) {
 			if(!isSprinting) velocityMultipliers.add(Sprint_Boost);
 			isSprinting = true;
 		} else stopSprinting();
 	}
 	
-	public void stopSprinting() {
+	public void stopSprinting() 
+	{
 		isSprinting = false;
 		velocityMultipliers.remove(Sprint_Boost);
 	}

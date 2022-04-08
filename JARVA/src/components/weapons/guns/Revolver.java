@@ -48,7 +48,16 @@ public class Revolver extends Gun
 	
 	public void fire()
 	{
-		new Bullet(owner, 2, 1, "medium", 10, InputManager.getAngleToMouse(owner), currentRecoil, 20f, 2f, 100f).build();
+		((Bullet) new Bullet(owner, 2, 1)
+				.build())
+				.Style("medium")
+				.BaseSpeed(10f)
+				.Angle(InputManager.getAngleToMouse(owner))
+				.Damage(20f)
+				.Knockback(100f)
+				.Pierce(2)
+				.Init()
+				.Recoil(currentRecoil);
 		
 		super.fire();
 	}

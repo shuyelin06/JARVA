@@ -13,38 +13,45 @@ import ui.input.InputManager;
 public class Bullet extends Projectile
 {
 	protected float baseSpeed;
+	protected int w; protected int h;
 	
-	public Bullet(GameObject source, int w, int h, String style, float baseSpeed, float angle, float recoil, float damage, float pierce, float knockback) {
+	public Bullet(GameObject source, int w, int h) {
 		super(Polygon.rectangle(w, h), source);
 		
+		this.x = source.getX(); //+ offsetX;
+		this.y = source.getY(); //+ offsetY;
+		
+		this.w = w;
+		this.h = h;
+	}
+	
+	public Bullet Style(String style)
+	{
 		switch(style)
 		{
 		case "heavy": 	this.setSprite(ImageManager.getImageCopy("heavyBullet", w, h)); break;
 		case "medium": 	this.setSprite(ImageManager.getImageCopy("mediumBullet", w, h)); break;
 		case "light": 	this.setSprite(ImageManager.getImageCopy("lightBullet", w, h)); break;
-		
 		default: this.setSprite(ImageManager.getImageCopy("test", 2, 2)); break;
 		}
-		
-		this.hitbox.rotate((float)Math.toRadians(angle));
-
-		this.baseSpeed = baseSpeed;
-		
-		this.x = source.getX(); //+ offsetX;
-		this.y = source.getY(); //+ offsetY;
-		
-		this.angle = angle;
-		
+		return this; 
+	}
+	public Bullet BaseSpeed(float baseSpeed)	{ this.baseSpeed = baseSpeed; return this; }
+	public Bullet Angle(float angle)	{	this.angle = angle;	 return this; }
+	public Bullet Damage(float damage) {   this.damageMultiplier = damage;	return this;  }
+	public Bullet Knockback(float knockback) { this.knockback = knockback;	 return this;  }
+	public Bullet Pierce(int pierce) { this.pierce = pierce; 	 return this;  }
+	public Bullet Init() 
+	{
+		hitbox.rotate((float)Math.toRadians(angle));
+		sprite.setCenterOfRotation(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
+		sprite.rotate(angle);
 		this.velocity.x =  baseSpeed * (float) Math.cos(Math.toRadians(angle));
 		this.velocity.y =  baseSpeed * (float) Math.sin(Math.toRadians(angle));
-		
-		velocity.rotate(recoil * (float) (Math.random() - 0.5f) * 3.1415f / 180f);
-		
-		this.damageMultiplier = damage;
-		
-		init(angle);
+		return this;  
 	}
-
+	public Bullet Recoil(float recoil)	{	velocity.rotate(recoil * (float) (Math.random() - 0.5f) * 3.1415f / 180f);	return this; }
+	
 	@Override
 	public void projectileUpdate() 
 	{
@@ -57,13 +64,6 @@ public class Bullet extends Projectile
 	{
 		
 	}
-
-	
-	public void init(float a) //have to call these methods afterwards since the sprite and speed gets overwritten
-	{
-		sprite.setCenterOfRotation(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
-		sprite.rotate(a);
-	}
 	
 	public void draw(Graphics g)
 	{
@@ -71,11 +71,5 @@ public class Bullet extends Projectile
 		sprite.draw(x - sprite.getWidth() * 0.5f, y - sprite.getHeight() * 0.5f);
 		
 		//hitbox.draw(g, x, y);
-	}
-	
-	public void setSpeed(float speed)
-	{
-		this.velocity.x =  speed * (float) Math.cos(Math.toRadians(angle));
-		this.velocity.y =  speed * (float) Math.sin(Math.toRadians(angle));
 	}
 }
