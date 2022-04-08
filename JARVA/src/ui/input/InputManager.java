@@ -107,15 +107,16 @@ public class InputManager {
 	// Key Pressed
 	public void keyPressed(int key) {
 		switch(key) {
-		case Input.KEY_1: Game.Player.getInventory().equipItem(0); break;
-		case Input.KEY_2: Game.Player.getInventory().equipItem(1); break;
-		case Input.KEY_3: Game.Player.getInventory().equipItem(2); break;
-		case Input.KEY_4: Game.Player.getInventory().equipItem(3); break;
-		case Input.KEY_5: Game.Player.getInventory().equipItem(4); break;
-		case Input.KEY_6: Game.Player.getInventory().equipItem(5); break;
-		case Input.KEY_7: Game.Player.getInventory().equipItem(6); break;
-		case Input.KEY_8: Game.Player.getInventory().equipItem(7); break;
-		case Input.KEY_9: Game.Player.getInventory().equipItem(8); break;
+			case Input.KEY_1: Game.Player.getInventory().equipItem(0); break;
+			case Input.KEY_2: Game.Player.getInventory().equipItem(1); break;
+			case Input.KEY_3: Game.Player.getInventory().equipItem(2); break;
+			case Input.KEY_4: Game.Player.getInventory().equipItem(3); break;
+			case Input.KEY_5: Game.Player.getInventory().equipItem(4); break;
+			case Input.KEY_6: Game.Player.getInventory().equipItem(5); break;
+			case Input.KEY_7: Game.Player.getInventory().equipItem(6); break;
+			case Input.KEY_8: Game.Player.getInventory().equipItem(7); break;
+			case Input.KEY_9: Game.Player.getInventory().equipItem(8); break;
+			
 			default: 
 				break;
 		}

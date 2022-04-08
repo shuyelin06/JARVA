@@ -4,7 +4,7 @@ package engine;
 public class Settings {	
 	// Time Variables
 	final public static int Frames_Per_Second = 60; // 60 FPS
-	final public static float Tick_Speed = 1f; // 1 TPS
+	final public static float Ticks_Per_Frame = 1f; // 1 TPS
 	
 	// Video Settings
 	final public static float BaseScale = 10f;

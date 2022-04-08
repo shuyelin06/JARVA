@@ -2,6 +2,7 @@ package objects.entities;
 
 import engine.Settings;
 import engine.Utility;
+import engine.Values;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 import components.Inventory;
+import components.conditions.Condition;
 import components.conditions.Invulnerable;
 import components.weapons.guns.HeavySniper;
 import components.weapons.guns.Revolver;
@@ -29,7 +31,7 @@ public class Player extends Unit {
 	// Dashing
 	private static Float Dash_Boost = 2.5f;
 	private static float Dash_Timer = 0.15f;
-	private static float Dash_Threshold = 0.5f;
+	private static float Dash_Threshold = 0.35f;
 	private static float Dash_Cooldown = 0.5f;
 	
 	private float lastDashed;
@@ -44,10 +46,6 @@ public class Player extends Unit {
 	private int sprintCooldown;
 	private boolean isSprinting;
 	
-	// Width and Height
-	private float rectW;
-	private float rectH;
-	
 	// Gun Inventory
 	private Inventory inventory;
 	
@@ -57,10 +55,6 @@ public class Player extends Unit {
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
 		this.sprite = ImageManager.getImageCopy("jarvis", 6, 6);
-		
-		// Width and Height
-		this.rectW = 5f;
-		this.rectH = 10f;
 		
 		// Contact Damage
 		this.baseDamage = 1f;
@@ -106,19 +100,7 @@ public class Player extends Unit {
 	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	/* --- Inherited Methods --- */
-	public void draw(Graphics g)
-	{
-		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) //idk how to get mouse relative to the player
-		{
-			mirroredSprite = true;
-		}
-		else
-		{
-			mirroredSprite = false;
-		}
-		
-		super.draw(g);
-		
+	public void unitDraw(Graphics g) {
 		inventory.draw(g); //ill move this to the managers
 	}
 	
@@ -171,11 +153,19 @@ public class Player extends Unit {
 	
 	/* --- Overwritten Methods --- */
 	@Override
-	public void takeDamage(float damage) 
-	{
+
+	protected void mirroredCheck() {
+		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) // idk how to get mouse relative to the player
+		{ mirrored = true; }
+		
+		else { mirrored = false; }
+	}
+	
+	@Override
+	public void takeDamage(float damage) {
 		super.takeDamage(damage);
 		if (invulnerable == false) {
-			takeCondition(new Invulnerable(this, Unit.Default_Invulnerability));
+			takeCondition(Condition.Type.Invulnerable, Values.Default_Invulnerability_Timer);
 		}
 	}
 	
@@ -205,9 +195,8 @@ public class Player extends Unit {
 		}
 	}
 	
-	private void beginDashing() 
-	{
-		takeCondition(new Invulnerable(this, Dash_Timer));
+	private void beginDashing() {
+		takeCondition(Condition.Type.Invulnerable, Dash_Timer);
 		dashing = true;
 		
 		collidable = false;

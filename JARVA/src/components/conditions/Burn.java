@@ -8,22 +8,29 @@ public class Burn extends Condition {
 
 	private float cooldown;
 	//number of seconds until burn tick
-	final private float TOTAL_COOLDOWN = 1;
+	final private float TOTAL_COOLDOWN = 0.7f;
 	
-	public Burn(GameObject owner, Unit target, float timer) {
-		super(owner, target, timer);
+	public Burn(Unit owner) {
+		super(owner);
 	}
 
 	@Override
-	public void applyEffect(Unit target) {
-		
+	public void addTimer(float time) {
+		//reset the timer instead of adding
+		this.timer = time;
+	}
+	
+	public void removeEffect() {}
+	public void applyEffect() {
 		cooldown -= Game.TicksPerFrame();
 		
 		if (cooldown < 0) {
-			target.setHealth(target.getCurHealth() * 0.99f);
+			owner.setHealth(owner.getCurHealth() - owner.getMaxHealth() * 0.03f);
 			cooldown = TOTAL_COOLDOWN;
 		}
 		
+		
 	}
+	
 	
 }

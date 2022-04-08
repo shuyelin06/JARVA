@@ -52,15 +52,19 @@ public class Healthbar
 		
 		
 		
-		if (unit.isBurned()) {
+		if (unit.conditionActive(Condition.Type.Burn)) {
 			g.setColor(Color.red);
-		} else if (unit.isPoisoned()) {
+		} else if (unit.conditionActive(Condition.Type.Poison)) {
 			g.setColor(Color.green);
 		} else {
 			g.setColor(sumColors);
 		}
 		
-		g.fillRect(x, y, w * depletion, h);
+		//prevent health bar from going negative
+		if (depletion >= 0) {
+			g.fillRect(x, y, w * depletion, h);
+		}
+		
 	}
 	
 	public void update()

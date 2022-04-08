@@ -1,13 +1,14 @@
 package maps;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import engine.Settings;
 import objects.entities.Unit;
 import objects.geometry.Polygon;
 import objects.geometry.Vector;
 
-public class Arena {
+public class Arena {	
 	// Width and Height of Arena
 	protected float width;
 	protected float height;
@@ -23,7 +24,7 @@ public class Arena {
 	protected Border border;
 	
 	public Arena(float width, float height) {
-		this.friction = 0.5f;
+		this.friction = 0.35f;
 		
 		this.width = width;
 		this.height = height;

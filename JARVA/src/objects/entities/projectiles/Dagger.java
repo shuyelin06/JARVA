@@ -3,6 +3,7 @@ package objects.entities.projectiles;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import components.conditions.Condition;
 import components.conditions.Poison;
 import objects.GameObject;
 import objects.entities.Projectile;
@@ -65,14 +66,14 @@ public class Dagger extends Projectile{
 	@Override
 	public void objectDraw(Graphics g) {
 		if(timer < delay) {
-			g.setColor(Color.red);
+			g.setColor(new Color(208, 49, 45));
 			g.drawLine(this.getX(),this.getY(), this.getX() + (float)Math.cos(theta)*2*spawnRadius, this.getY()+ (float)Math.sin(theta)*2*spawnRadius);
 		}
 	}
 	
 	@Override
 	public void applyCondition(Unit u) {
-		u.takeCondition(new Poison(this, u, 2));
+		u.takeCondition(Condition.Type.Poison, 2);
 	}
 	
 

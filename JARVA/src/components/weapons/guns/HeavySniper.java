@@ -2,14 +2,14 @@ package components.weapons.guns;
 
 import engine.Settings;
 import objects.GameObject;
+import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
-public class HeavySniper extends Gun
-{
-	public HeavySniper(GameObject owner) 
+public class HeavySniper extends Gun {
+	public HeavySniper(Unit owner) 
 	{
 		super(owner);
 		

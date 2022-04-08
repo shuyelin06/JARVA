@@ -1,14 +1,14 @@
 package components.weapons.guns;
 
 import objects.GameObject;
+import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
-public class SubmachineGun extends Gun
-{
+public class SubmachineGun extends Gun {
 
-	public SubmachineGun(GameObject owner) {
+	public SubmachineGun(Unit owner) {
 		super(owner);
 		
 		this.w = 8;

@@ -1,6 +1,7 @@
 package components.weapons.guns;
 
 import objects.GameObject;
+import objects.entities.Unit;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
@@ -28,7 +29,7 @@ public class Gun extends Weapon
 	protected float barrelX; //for the muzzle flash, and maybe for the bullet
 	protected float barrelY;
 	
-	public Gun(GameObject owner) 
+	public Gun(Unit owner) 
 	{
 		super(owner);
 		

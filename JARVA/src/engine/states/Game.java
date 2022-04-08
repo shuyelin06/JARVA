@@ -49,7 +49,7 @@ public class Game extends BasicGameState {
 	@Override
 	public int getID() { return id; }
 	public static float getTicks() { return Ticks; }
-	public static float TicksPerFrame() { return Settings.Tick_Speed / Settings.Frames_Per_Second; }
+	public static float TicksPerFrame() { return Settings.Ticks_Per_Frame / Settings.Frames_Per_Second; }
 	
 	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
 	public ArrayList<GameObject> getEnemies() 
@@ -109,7 +109,7 @@ public class Game extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
 		// Update Timers
-		Ticks += Settings.Tick_Speed / Settings.Frames_Per_Second;
+		Ticks += Settings.Ticks_Per_Frame / Settings.Frames_Per_Second;
 		
 		// Input Manager
 		InputManager.update();

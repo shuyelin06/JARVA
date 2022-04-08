@@ -9,6 +9,7 @@ import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import engine.states.Loading;
+import maps.Arena;
 import objects.entities.Player;
 import objects.geometry.Polygon;
 import objects.geometry.Projection;
@@ -16,6 +17,9 @@ import objects.geometry.Vector;
 import ui.display.images.ImageManager;
 
 public abstract class GameObject {
+	// Reference Variables
+	protected Arena arena;
+	
 	public enum ObjectType { Projectile, Unit, None }
 	public enum ObjectTeam { Ally, Enemy, Neutral }
 	
@@ -36,9 +40,7 @@ public abstract class GameObject {
 	protected Polygon hitbox;
 	
 	// Rendering
-	protected Animation animation; // Animation
 	protected Image sprite; // Temp
-	protected boolean mirroredSprite;
 	
 	// Object Type and Team
 	protected ObjectType type;
@@ -52,6 +54,9 @@ public abstract class GameObject {
 	protected boolean collision;
 	
 	public GameObject(Polygon polygon) {
+		// Reference Variables
+		this.arena = Game.ArenaManager.getArena();
+		
 		// Hitbox
 		this.hitbox = polygon;
 		polygon.setObject(this);
@@ -72,7 +77,6 @@ public abstract class GameObject {
 		
 		this.sprite = ImageManager.getPlaceholder().copy(); // Sprite
 		this.collision = false; // Collision
-		this.mirroredSprite = false;
 		
 		this.contactDamage = 0;
 		this.baseDamage = 0;
@@ -99,27 +103,18 @@ public abstract class GameObject {
 		if(magnitude > maxVelocity) { velocity.scalarMultiply(maxVelocity / magnitude ); }
 		
 		// Update Positions
-		if (!confused) {
-			this.move(velocity.x / Settings.Frames_Per_Second, velocity.y / Settings.Frames_Per_Second);
-			this.rotate(omega / Settings.Frames_Per_Second);
-		} else {
-			this.move(-velocity.x / Settings.Frames_Per_Second, -velocity.y / Settings.Frames_Per_Second);
-			this.rotate(-omega / Settings.Frames_Per_Second);
-		}
+		int sign = 1;
+		if(confused) sign = -1;
+		
+		final float xDisplacement = velocity.x / Settings.Frames_Per_Second * sign;
+		final float yDisplacement = velocity.y / Settings.Frames_Per_Second * sign;
+		final float thetaDisplacement = omega / Settings.Frames_Per_Second * sign;
+		
+		this.move(xDisplacement, yDisplacement);
+		this.rotate(thetaDisplacement);
 
 		// Friction
-		final float Friction = 0.35f;
-		if( friction ) velocity.reduce(Friction);
-		
-		// Hi
-		if(velocity.x < 0) 
-		{
-			mirroredSprite = true;
-		}
-		else
-		{
-			mirroredSprite = false;
-		}
+		if( friction ) velocity.reduce( arena.getFriction() );
 	}
 	
 	// Rendering
@@ -129,16 +124,8 @@ public abstract class GameObject {
 		drawHitbox(g);
 	}
 	// Rendering Methods
-	protected void drawSprite(Graphics g) 
-	{
-		if(mirroredSprite)
-		{
-			sprite.getFlippedCopy(true, false).drawCentered(x, y);
-		}
-		else
-		{
-			sprite.drawCentered(x, y); 
-		}
+	protected void drawSprite(Graphics g)  {
+		sprite.drawCentered(x, y); 
 	}
 	
 	protected void drawHitbox(Graphics g) {
@@ -178,7 +165,6 @@ public abstract class GameObject {
 	
 	/* --- Accessor Methods --- */
 	public boolean removalMarked() { return remove; }
-	public boolean isMirrored() { return mirroredSprite; }
 	
 	public ObjectTeam getTeam() { return team; }
 	public ObjectType getType() { return type; }
@@ -208,6 +194,8 @@ public abstract class GameObject {
 	
 	/* --- Mutator / Construtor Methods --- */
 	public GameObject build() { Game.GameObjects.add(this); return this; }
+	
+	public GameObject setCollidable(boolean b) { collidable = b; return this; }
 	
 	public GameObject setSprite(Image newImage) { sprite = newImage; return this; }
 	public GameObject setTeam(ObjectTeam newTeam) { team = newTeam; return this; }

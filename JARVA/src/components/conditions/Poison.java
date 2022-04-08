@@ -5,22 +5,27 @@ import objects.GameObject;
 import objects.entities.Unit;
 
 public class Poison extends Condition {
-
-	private float cooldown;
 	//number of seconds until poison tick
-	final private float TOTAL_COOLDOWN = 1.5f;
+	final private float TOTAL_COOLDOWN = 0.5f;
+	private float cooldown;
 	
-	public Poison(GameObject owner, Unit target, float timer) {
-		super(owner, target, timer);
+	public Poison(Unit owner) {
+		super(owner);
 	}
 
 	@Override
-	public void applyEffect(Unit target) {
+	public void addTimer(float time) {
+		//reset the timer instead of adding
+		this.timer = time;
+	}
+	
+	public void removeEffect() {}
+	public void applyEffect() {
 
 		cooldown -= Game.TicksPerFrame();
 		
 		if (cooldown < 0) {
-			target.setHealth(target.getCurHealth() - target.getMaxHealth() * 0.05f);
+			owner.setHealth(owner.getCurHealth() * 0.96f);
 			cooldown = TOTAL_COOLDOWN;
 		}
 		
