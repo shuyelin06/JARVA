@@ -18,10 +18,13 @@ public class LThree extends Level
 
 		if(spawningTimer == 20)
 		{
-			new Eagle()
-			.setX(200f)
-			.setY(-100f)
-			.build();
+			for(int i = 0; i < 5; i++)
+			{
+				new Eagle()
+				.setX(20 + i *  60f)
+				.setY(-100f)
+				.build();
+			}
 		}
 		
 		if(spawningTimer == 100)

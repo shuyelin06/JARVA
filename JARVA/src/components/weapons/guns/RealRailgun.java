@@ -1,13 +1,14 @@
 package components.weapons.guns;
 
 import objects.GameObject;
+import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
 public class RealRailgun extends Gun
 {
-	public RealRailgun(GameObject owner) {
+	public RealRailgun(Unit owner) {
 		super(owner);
 		
 		this.w = 8;

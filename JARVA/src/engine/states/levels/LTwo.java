@@ -28,10 +28,13 @@ public class LTwo extends Level
 		
 		if(spawningTimer == 100)
 		{
-			new AngryBoulder()
-			.setX(2f)
-			.setY(5f)
-			.build();
+			for(int i = 0; i < 5; i++)
+			{
+				new AngryBoulder()
+				.setX(20 + i *  60f)
+				.setY(-100f)
+				.build();
+			}
 
 			new Tumbleweed()
 			.setX(300f)

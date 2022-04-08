@@ -18,6 +18,7 @@ import components.Inventory;
 import components.conditions.Condition;
 import components.conditions.Invulnerable;
 import components.weapons.guns.HeavySniper;
+import components.weapons.guns.RealRailgun;
 import components.weapons.guns.Revolver;
 import components.weapons.guns.Shotgun;
 import components.weapons.guns.SubmachineGun;
@@ -79,6 +80,7 @@ public class Player extends Unit {
 		inventory.addItem(new HeavySniper(this));
 		inventory.addItem(new Shotgun(this));
 		inventory.addItem(new SubmachineGun(this));
+		inventory.addItem(new RealRailgun(this));
 		inventory.equipItem(0);
 		
 		this.build();
