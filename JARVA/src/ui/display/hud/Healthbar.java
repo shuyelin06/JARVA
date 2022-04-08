@@ -60,7 +60,11 @@ public class Healthbar
 			g.setColor(sumColors);
 		}
 		
-		g.fillRect(x, y, w * depletion, h);
+		//prevent health bar from going negative
+		if (depletion >= 0) {
+			g.fillRect(x, y, w * depletion, h);
+		}
+		
 	}
 	
 	public void update()
