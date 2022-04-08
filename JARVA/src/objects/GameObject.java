@@ -195,6 +195,8 @@ public abstract class GameObject {
 	/* --- Mutator / Construtor Methods --- */
 	public GameObject build() { Game.GameObjects.add(this); return this; }
 	
+	public GameObject setCollidable(boolean b) { collidable = b; return this; }
+	
 	public GameObject setSprite(Image newImage) { sprite = newImage; return this; }
 	public GameObject setTeam(ObjectTeam newTeam) { team = newTeam; return this; }
 	
