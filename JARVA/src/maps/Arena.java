@@ -1,13 +1,14 @@
 package maps;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import engine.Settings;
 import objects.entities.Unit;
 import objects.geometry.Polygon;
 import objects.geometry.Vector;
 
-public class Arena {
+public class Arena {	
 	// Width and Height of Arena
 	protected float width;
 	protected float height;

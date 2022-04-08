@@ -73,6 +73,9 @@ public class DisplayManager {
 		// Determine Camera Position
 		cameraPosition();
 		
+		// Background Setting
+		g.setBackground(new Color(205, 170, 109));
+		
 		// Render Game Elements
 		g.scale(Settings.Scale, Settings.Scale); // Scaling
 		g.translate( Screen_X / Settings.Scale - cameraX, Screen_Y / Settings.Scale - cameraY ); // Centering

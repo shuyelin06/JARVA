@@ -11,7 +11,7 @@ public class AngryBoulder extends Unit {
 	private Player player;
 	
 	private static float ShotCooldown = 2.5f;
-	private static int NumberOfShots = 15;
+	private static int NumberOfShots = 10;
 	private static float ShotSpread = 90; // In Degrees
 	
 	private float lastShot;
