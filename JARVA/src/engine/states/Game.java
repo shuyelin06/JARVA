@@ -9,8 +9,10 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import engine.Settings;
+import engine.states.levels.LevelManager;
 import maps.ArenaManager;
 import objects.GameObject;
+import objects.GameObject.ObjectTeam;
 import objects.collisions.CollisionManager;
 import objects.entities.Unit;
 import objects.entities.Player;
@@ -38,6 +40,7 @@ public class Game extends BasicGameState {
 	public static InputManager InputManager;
 	public static ArenaManager ArenaManager;
 	public static CollisionManager CollisionManager;
+	public static LevelManager LevelManager;
 	
 	// Constructor
 	public Game(int id) { this.id = id; }
@@ -49,11 +52,23 @@ public class Game extends BasicGameState {
 	public static float TicksPerFrame() { return Settings.Ticks_Per_Frame / Settings.Frames_Per_Second; }
 	
 	public ArrayList<GameObject> getGameObjects() { return GameObjects; }
+	public ArrayList<GameObject> getEnemies() 
+	{ 
+		ArrayList<GameObject> enemies = new ArrayList<GameObject>();
+		
+		for(GameObject u : GameObjects)
+		{
+			if(u.getTeam() == ObjectTeam.Enemy) enemies.add(u);
+		}
+		
+		return(enemies);
+	}
 	
 	public ArenaManager getArenaManager() { return ArenaManager; }
 	public DisplayManager getDisplayManager() { return DisplayManager; }
 	public InputManager getInputManager() { return InputManager; }
 	public CollisionManager getCollisionManager() { return CollisionManager; }
+	public LevelManager getLevelManager() { return LevelManager; }
 	
 	/* --- Inherited Methods --- */
 	@Override
@@ -74,42 +89,12 @@ public class Game extends BasicGameState {
 		CollisionManager = new CollisionManager(this);
 		ArenaManager = new ArenaManager(this);
 		DisplayManager = new DisplayManager(this);
+		LevelManager = new LevelManager(this);
 		
 		// Initialize Player
 		Player = new Player();
 				
 		// Other Objects
-		new AngryBoulder()
-				.setX(2f)
-				.setY(5f)
-				.build();
-	
-		new AngryBoulder()
-				.setX(2f)
-				.setY(1f)
-				.build();
-		
-		new AngryBoulder()
-				.setX(300f)
-				.setY(150f)
-				.build();
-		
-		new Tumbleweed()
-				.setX(300f)
-				.setY(500f)
-				.setYVelocity(-0.5f)
-				.build();
-		
-		new Tumbleweed()
-				.setX(200f)
-				.setY(0f)
-				.setYVelocity(0.25f)
-				.build();
-		
-		new Eagle()
-				.setX(200f)
-				.setY(-100f)
-				.build();
 	}
 
 	@Override // Input Determining
@@ -137,6 +122,8 @@ public class Game extends BasicGameState {
 		
 		// Update Arena
 		ArenaManager.update();
+		
+		LevelManager.update();
 
 		// Update displays
 		DisplayManager.update();
