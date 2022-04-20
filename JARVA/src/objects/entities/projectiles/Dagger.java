@@ -23,7 +23,7 @@ public class Dagger extends Projectile{
 	private float spawnRadius = 70f;
 	
 	public Dagger(GameObject source, GameObject t, float offset, boolean absoluteAngle) {
-		super(Polygon.rectangle(1f, 10f), source);
+		super(Polygon.rectangle(2f, 6f), source);
 		
 		target = t;
 		
@@ -37,8 +37,8 @@ public class Dagger extends Projectile{
 		timer = 0;
 		
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 1, 10);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite = ImageManager.getImageCopy("eagleFeather", 2, 6);
+		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		this.rotate(theta + (float) Math.PI / 2f);
 //		this.hitbox.rotate(theta + (float) Math.PI / 2f);
