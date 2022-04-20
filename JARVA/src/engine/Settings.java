@@ -10,8 +10,8 @@ public class Settings {
 	final public static float BaseScale = 10f;
 	public static float Scale = BaseScale;
 	
-	final public static int Resolution_X = 1920;
-	final public static int Resolution_Y = 1080;
+	public static int Resolution_X;
+	public static int Resolution_Y;
 	
 	// Sound Settings
 	final public static float Volume = 0.5f;
