@@ -12,7 +12,7 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 
 public class Dagger extends Projectile{
-	private float baseSpeed = 190f;
+	private float baseSpeed = 195f;
 	private float theta;
 	
 	private int timer;
@@ -22,12 +22,17 @@ public class Dagger extends Projectile{
 	
 	private float spawnRadius = 70f;
 	
-	public Dagger(GameObject source, GameObject t) {
+	public Dagger(GameObject source, GameObject t, float offset, boolean absoluteAngle) {
 		super(Polygon.rectangle(1f, 10f), source);
 		
 		target = t;
 		
-		theta = (float)Math.atan2(target.getVelocityVector().y, target.getVelocityVector().x);
+		if(absoluteAngle) {
+			theta = offset;
+		}else {
+			theta = offset + (float)Math.atan2(target.getVelocityVector().y, target.getVelocityVector().x);
+
+		}
 		
 		timer = 0;
 		
