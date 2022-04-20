@@ -24,10 +24,10 @@ public class Eagle extends Unit{
 	int shotCount;
 	
 	public Eagle() {
-		super(Polygon.rectangle(25f, 25f));
+		super(Polygon.rectangle(12f, 12f));
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 25, 25);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite = ImageManager.getImageCopy("eagle", 12, 12);
+		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		this.baseDamage = 10;
 		
@@ -67,7 +67,7 @@ public class Eagle extends Unit{
 		} else {
 			// Shooting Cooldown
 			timer -= Game.TicksPerFrame();
-			if(timer < 0) {
+			if(timer < 0 && Math.random() < 0.01) {
 				firing = true;
 				shotCount = TotalShots;
 				firingTimer = rapidFireSpacing;
