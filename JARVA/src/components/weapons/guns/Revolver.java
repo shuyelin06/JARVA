@@ -51,7 +51,7 @@ public class Revolver extends Gun {
 		((Bullet) new Bullet(owner, 2, 1)
 				.build())
 				.Style("medium")
-				.BaseSpeed(10f)
+				.BaseSpeed(200f)
 				.Angle(InputManager.getAngleToMouse(owner))
 				.Damage(20f)
 				.Knockback(100f)

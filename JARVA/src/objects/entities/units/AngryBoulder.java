@@ -5,6 +5,7 @@ import objects.entities.Player;
 import objects.entities.Unit;
 import objects.entities.projectiles.Rock;
 import objects.geometry.Polygon;
+import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 
 public class AngryBoulder extends Unit {
@@ -16,6 +17,8 @@ public class AngryBoulder extends Unit {
 	
 	private float lastShot;
 	
+	private float timer;
+	
 	public AngryBoulder() {
 		super(Polygon.rectangle(8f, 8f));
 		
@@ -26,9 +29,11 @@ public class AngryBoulder extends Unit {
 		this.baseDamage = 10;
 		this.lastShot = ShotCooldown;
 		
-		this.sprite = ImageManager.getImageCopy("rock", 8, 8);
-		this.team = ObjectTeam.Enemy;
+		this.width = 8;
+		this.height = 8;
+		this.animation = new Animation("rock", 32, 32);
 		
+		this.team = ObjectTeam.Enemy;
 		this.player = Game.Player;
 	}
 
@@ -36,6 +41,8 @@ public class AngryBoulder extends Unit {
 		lastShot -= Game.TicksPerFrame();
 		
 		if(lastShot < 0) {
+			attacking = true;
+			
 			float angle = -ShotSpread / 2f;
 			for( int i = 0; i < NumberOfShots; i++ ) {
 				new Rock(this, player, angle, (float) Math.random() * 0.25f + 1f)
@@ -49,7 +56,13 @@ public class AngryBoulder extends Unit {
 	
 	@Override
 	protected void unitUpdate() {
-		
+		if( attacking ) {
+			timer += Game.TicksPerFrame();
+			if( timer > 0.5f ) {
+				timer = 0f;
+				attacking = false;
+			}
+		}
 		this.shoot();
 	}
 	

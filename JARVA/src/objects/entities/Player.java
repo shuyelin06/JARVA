@@ -186,8 +186,13 @@ public class Player extends Unit {
 		if( dashing ) return;
 		if( Game.getTicks() - lastDashed < Dash_Cooldown ) return;
 		
+		if( sprintStamina < 15) return;
+		
 		if( velocity.magnitude() > maxVelocity * Dash_Threshold ) {
 			beginDashing();
+			
+			sprintStamina -= 15;
+			sprintCooldown = 120;
 			
 			final float Direction = velocity.direction();
 			final float VelocityBoost = this.getMaxVelocity();

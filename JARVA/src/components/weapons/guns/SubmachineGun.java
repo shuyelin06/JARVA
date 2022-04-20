@@ -46,7 +46,7 @@ public class SubmachineGun extends Gun {
 		((Bullet) new Bullet(owner, 1, 1)
 				.build())
 				.Style("light")
-				.BaseSpeed(7f)
+				.BaseSpeed(175f)
 				.Angle(InputManager.getAngleToMouse(owner))
 				.Damage(8f)
 				.Knockback(50f)

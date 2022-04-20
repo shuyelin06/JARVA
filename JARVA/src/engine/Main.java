@@ -58,6 +58,8 @@ public class Main extends StateBasedGame
 		{
 			appgc = new AppGameContainer(new Main("JARVA"));
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+			Settings.Resolution_X = appgc.getScreenWidth();
+			Settings.Resolution_Y = appgc.getScreenHeight();
 			
 			appgc.setDisplayMode(Settings.Resolution_X, Settings.Resolution_Y, false);
 			appgc.setTargetFrameRate(Settings.Frames_Per_Second);

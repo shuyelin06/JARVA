@@ -44,7 +44,7 @@ public class HeavySniper extends Gun {
 		((Bullet) new Bullet(owner, 4, 1)
 				.build())
 				.Style("heavy")
-				.BaseSpeed(18f)
+				.BaseSpeed(350f)
 				.Angle(InputManager.getAngleToMouse(owner))
 				.Damage(30f)
 				.Knockback(200f)

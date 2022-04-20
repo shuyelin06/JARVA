@@ -53,7 +53,7 @@ public class Shotgun extends Gun {
 			((Bullet) new Bullet(owner, 1, 1)
 					.build())
 					.Style("light")
-					.BaseSpeed(6f)
+					.BaseSpeed(150f)
 					.Angle(InputManager.getAngleToMouse(owner) + (i - 6 - (float) Math.random()) * 3)
 					.Damage(4f)
 					.Knockback(50f)
