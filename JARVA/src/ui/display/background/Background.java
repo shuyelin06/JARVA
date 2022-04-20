@@ -6,11 +6,28 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class Background {
-	Color color;
+	private Color color;
 	
-	ArrayList<BackgroundObject> objects;
+	private ArrayList<BackgroundObject> objects;
 	
+	public Background() {
+		objects = new ArrayList<>();
+		color = new Color(205, 170, 109);
+		
+		initialize();
+	}
+	public void initialize() {
+		for( int i = 0; i < 20; i++ ) {
+			objects.add(
+					new BackgroundObject("cactus")
+					);
+		}
+	}
 	public void render(Graphics g) {
+		// Set Background Color
+		g.setBackground(color);
+		
+		// Render Background Objects
 		for(BackgroundObject o: objects) {
 			o.render(g);
 		}

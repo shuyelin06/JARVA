@@ -29,10 +29,10 @@ public class Bullet extends Projectile
 	{
 		switch(style)
 		{
-		case "heavy": 	this.setSprite(ImageManager.getImageCopy("heavyBullet", w, h)); break;
-		case "medium": 	this.setSprite(ImageManager.getImageCopy("mediumBullet", w, h)); break;
-		case "light": 	this.setSprite(ImageManager.getImageCopy("lightBullet", w, h)); break;
-		default: this.setSprite(ImageManager.getImageCopy("test", 2, 2)); break;
+			case "heavy": 	this.setSprite(ImageManager.getImageCopy("heavyBullet", w, h)); break;
+			case "medium": 	this.setSprite(ImageManager.getImageCopy("mediumBullet", w, h)); break;
+			case "light": 	this.setSprite(ImageManager.getImageCopy("lightBullet", w, h)); break;
+			default: this.setSprite(ImageManager.getImageCopy("test", 2, 2)); break;
 		}
 		return this; 
 	}
@@ -53,17 +53,9 @@ public class Bullet extends Projectile
 	public Bullet Recoil(float recoil)	{	velocity.rotate(recoil * (float) (Math.random() - 0.5f) * 3.1415f / 180f);	return this; }
 	
 	@Override
-	public void projectileUpdate() 
-	{
-		this.x += velocity.x;
-		this.y += velocity.y;
-	}
-
+	public void projectileUpdate() {}
 	@Override
-	public void objectDraw(Graphics g) 
-	{
-		
-	}
+	public void objectDraw(Graphics g) {}
 	
 	public void draw(Graphics g)
 	{

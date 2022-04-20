@@ -46,7 +46,7 @@ public class RealRailgun extends Gun
 		((Bullet) new Bullet(owner, 10, 1)
 		.build())
 		.Style("light")
-		.BaseSpeed(20f)
+		.BaseSpeed(450f)
 		.Angle(InputManager.getAngleToMouse(owner))
 		.Damage(50)
 		.Knockback(0)

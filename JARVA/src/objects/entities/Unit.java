@@ -20,6 +20,7 @@ import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
+import ui.display.animation.Animation;;
 
 public abstract class Unit extends GameObject {
 	private final float ContactKnockback = 25f;
@@ -28,7 +29,16 @@ public abstract class Unit extends GameObject {
 	protected boolean immovable; // Knockback Switch 
 	protected boolean invulnerable; // Invulnerable Switch 
 	protected boolean stunned; // Stunned Switch
-	protected boolean mirrored; // Sprite mirroring
+	protected boolean mirrored; // Sprite Mirroring
+	
+	// Animations
+	private static final int Default_Frame = 0;
+	private static final int Attack_Frame = 1;
+	
+	protected Animation animation;
+	
+	protected int width, height;
+	protected boolean attacking;
 	
 	// Effects
 	protected HashMap<Condition.Type, Condition> conditions;
@@ -51,6 +61,9 @@ public abstract class Unit extends GameObject {
 		this.invulnerable = false;
 		this.stunned = false;
 		this.mirrored = false;
+		
+		// Animation
+		this.animation = null;
 		
 		// Unit Conditions
 		this.conditions = new HashMap<>();
@@ -81,6 +94,13 @@ public abstract class Unit extends GameObject {
 	
 	@Override
 	protected void drawSprite(Graphics g) {
+		if( animation != null ) {
+			if( attacking ) sprite = animation.getFrame(Attack_Frame);
+			else sprite = animation.getFrame(Default_Frame);
+			
+			sprite = sprite.getScaledCopy(width, height);
+		}
+		
 		if(mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);
 		else sprite.drawCentered(x, y);
 	}

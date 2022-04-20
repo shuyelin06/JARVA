@@ -14,6 +14,7 @@ import maps.Arena;
 import objects.GameObject;
 import objects.entities.Player;
 import ui.display.hud.Healthbar;
+import ui.display.background.Background;
 import ui.display.hud.Crosshair;
 import ui.display.hud.Sprintbar;
 import ui.input.InputManager;
@@ -27,6 +28,9 @@ public class DisplayManager {
 	
 	private SpriteSheet tileset;
 	
+	// Background
+	private Background background;
+	
 	// Center of Dispalying
 	final private static float Screen_X = Settings.Resolution_X / 2f;
 	final private static float Screen_Y = Settings.Resolution_Y / 2f;
@@ -39,13 +43,14 @@ public class DisplayManager {
 	
 	public DisplayManager(Game game) {
 		this.game = game;
-
 		this.arena = game.getArenaManager().getArena();
+		
 		this.crosshair = new Crosshair(new Color(255, 255, 255), 20); //change the crosshair colors in the settings
 		this.sprintbar = new Sprintbar(Game.Player);
 		this.playerHealthbar = new Healthbar(Game.Player);
 		this.displayOffset = 0.15f;
 		
+		this.background = new Background();
 	}
 	
 	private void cameraPosition() {
@@ -73,13 +78,11 @@ public class DisplayManager {
 		// Determine Camera Position
 		cameraPosition();
 		
-		// Background Setting
-		g.setBackground(new Color(205, 170, 109));
-		
 		// Render Game Elements
 		g.scale(Settings.Scale, Settings.Scale); // Scaling
 		g.translate( Screen_X / Settings.Scale - cameraX, Screen_Y / Settings.Scale - cameraY ); // Centering
 		
+		renderBackground(g); // Render Background
 		renderArena(g); // Render Arena
 		renderObjects(g); // Render All Objects
 		
@@ -99,7 +102,9 @@ public class DisplayManager {
 	}
 	
 
-	
+	public void renderBackground(Graphics g) {
+		background.render(g);
+	}
 	public void renderObjects(Graphics g) {
 		for (GameObject object: game.getGameObjects()) 
 		{
