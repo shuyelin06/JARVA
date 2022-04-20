@@ -4,6 +4,7 @@ import engine.states.Game;
 import objects.entities.Unit;
 import objects.entities.projectiles.Dagger;
 import objects.geometry.Polygon;
+import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 
 public class Eagle extends Unit{
@@ -26,8 +27,9 @@ public class Eagle extends Unit{
 	public Eagle() {
 		super(Polygon.rectangle(12f, 12f));
 		
-		this.sprite = ImageManager.getImageCopy("eagle", 12, 12);
-		this.sprite.setImageColor(1f, 1f, 1f);
+		this.width = 12;
+		this.height = 12;
+		this.animation = new Animation("eagle", 32, 32);
 		
 		this.baseDamage = 10;
 		
@@ -46,6 +48,8 @@ public class Eagle extends Unit{
 	
 	
 	protected void unitUpdate() {
+		attacking = firing;
+		
 		if( firing ) {
 			
 			switch(attackMode) {
