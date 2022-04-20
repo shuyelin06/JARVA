@@ -12,7 +12,7 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 
 public class Dagger extends Projectile{
-	private float baseSpeed = 190f;
+	private float baseSpeed = 195f;
 	private float theta;
 	
 	private int timer;
@@ -22,18 +22,23 @@ public class Dagger extends Projectile{
 	
 	private float spawnRadius = 70f;
 	
-	public Dagger(GameObject source, GameObject t) {
-		super(Polygon.rectangle(1f, 10f), source);
+	public Dagger(GameObject source, GameObject t, float offset, boolean absoluteAngle) {
+		super(Polygon.rectangle(2f, 6f), source);
 		
 		target = t;
 		
-		theta = (float)Math.atan2(target.getVelocityVector().y, target.getVelocityVector().x);
+		if(absoluteAngle) {
+			theta = offset;
+		}else {
+			theta = offset + (float)Math.atan2(target.getVelocityVector().y, target.getVelocityVector().x);
+
+		}
 		
 		timer = 0;
 		
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 1, 10);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite = ImageManager.getImageCopy("eagleFeather", 2, 6);
+		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		this.rotate(theta + (float) Math.PI / 2f);
 //		this.hitbox.rotate(theta + (float) Math.PI / 2f);
