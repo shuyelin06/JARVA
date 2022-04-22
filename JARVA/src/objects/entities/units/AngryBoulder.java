@@ -1,8 +1,10 @@
 package objects.entities.units;
 
+import engine.Utility;
 import engine.states.Game;
 import objects.entities.Player;
 import objects.entities.Unit;
+import objects.entities.projectiles.Beam;
 import objects.entities.projectiles.Rock;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
@@ -35,6 +37,8 @@ public class AngryBoulder extends Unit {
 		
 		this.team = ObjectTeam.Enemy;
 		this.player = Game.Player;
+		
+		this.beam = new Beam( this, Game.Player.getX(), Game.Player.getY() );
 	}
 
 	private void shoot() {
@@ -54,8 +58,27 @@ public class AngryBoulder extends Unit {
 		}
 	}
 	
+	Beam beam;
+	float playerLastX;
+	float playerLastY;
+	
+	float theta;
+	
 	@Override
 	protected void unitUpdate() {
+//		Player player = Game.Player;
+//		
+		final float AngleToPlayer = Utility.atan( y - player.getY() , x - player.getX() ) + (float) Math.PI;
+//		
+		theta += 1 / (AngleToPlayer - theta);	
+		final float TargetX = Utility.cos(theta) * 10f;
+		final float TargetY = Utility.sin(theta) * 10f;
+//		
+		this.beam.changeTarget(TargetX, TargetY);
+		
+//		beam.changeTarget(player.getX(), player.getY());
+
+		
 		if( attacking ) {
 			timer += Game.TicksPerFrame();
 			if( timer > 0.5f ) {

@@ -8,9 +8,7 @@ import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
 
-public abstract class Projectile extends GameObject {
-	public enum ProjectileType {}
-	
+public abstract class Projectile extends GameObject {	
 	// Projectile Stun
 	protected float stun = 0.125f;
 	

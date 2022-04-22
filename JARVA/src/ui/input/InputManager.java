@@ -8,6 +8,7 @@ import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
+import ui.display.DisplayManager;
 
 public class InputManager {
 	private Game game;	
@@ -119,6 +120,8 @@ public class InputManager {
 			
 			case Input.KEY_COMMA: Settings.Scale *= 0.8f; break; //dev mode options
 			case Input.KEY_PERIOD: Settings.Scale *= 1.25f; break;
+			
+			case Input.KEY_B: DisplayManager.Debug = !DisplayManager.Debug; break;
 			
 			default: 
 				break;
