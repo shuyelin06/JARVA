@@ -1,6 +1,8 @@
 package objects.entities.projectiles;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
 import engine.Settings;
@@ -9,6 +11,7 @@ import objects.GameObject;
 import objects.entities.Projectile;
 import objects.entities.Unit;
 import objects.geometry.Polygon;
+import objects.geometry.Vector;
 
 public class Beam extends Projectile {
 	
@@ -17,10 +20,17 @@ public class Beam extends Projectile {
 	
 	private Unit source;
 	
+	private float length;
+	
+	private float targetX;
+	private float targetY;
+	
 	public Beam(Unit source, float targetX, float targetY) {
 		super( Polygon.rectangle(Beam_Length, Beam_Height), source );
 		
-		this.knockback = 0f;
+		this.length = Beam_Length;
+		
+		this.knockback = 15f;
 		
 		this.baseDamage = 0f;
 		this.damageMultiplier = 0f;
@@ -34,33 +44,59 @@ public class Beam extends Projectile {
 		this.build();
 	}
 	
-	public void changeTarget(float targetX, float targetY) {
-		final float TargetAngle = Utility.atan(targetY - source.getY(), targetX - source.getX());
+	public void projectileUpdate() {}
 
-		final float FurthestX = Beam_Length * Utility.cos(TargetAngle);
-		final float FurthestY = Beam_Length * Utility.sin(TargetAngle);
+	public void changeLength(float length) {
+		this.length += length / 2f;
 		
-		this.x = source.getX() + FurthestX / 2f;
-		this.y = source.getY() + FurthestY / 2f;
+		final float Angle = Utility.atan( targetY - source.getY(), targetX - source.getX() );
+		
+		final float AddX = Utility.cos(-Angle) * length;
+		final float AddY = Utility.sin(-Angle) * length;
+		
+		final Vector[] Vertices = hitbox.getVertices();
+		
+		Vertices[2].x += AddX;
+		Vertices[2].y += AddY;
+		
+		Vertices[3].x += AddX;
+		Vertices[3].y += AddY;
+	}
+	public void changeTarget(float targetX, float targetY) {
+		// Setting Variables for Drawing
+		this.targetX = targetX;
+		this.targetY = targetY;
+		
+		// Change x/y position
+		final float TargetAngle = Utility.atan(targetY - source.getY(), targetX - source.getX());
+		
+		this.x = source.getX() + Beam_Length * Utility.cos(TargetAngle) / 2f;
+		this.y = source.getY() + Beam_Length * Utility.sin(TargetAngle) / 2f;
+		
+		// Update Angle
+		final float AngleToSource = Utility.atan( source.getY() - y, source.getX() - x );
+		
+		float omega = AngleToSource - angle;
+		
+		angle += omega;
+		this.hitbox.rotate(omega);
 	}
 	
-	public void projectileUpdate() {
-		final float AngleToSource = Utility.atan( source.getY() - y, source.getX() - x );
-		this.omega = (AngleToSource - angle) * Settings.Frames_Per_Second;
-	}
-
+	
+	public void objectDraw(Graphics g) {}
+	
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(Color.red);
 		
+		final float Angle = Utility.atan( targetY - source.getY(), targetX - source.getX() );
+		g.setLineWidth(100f);
+		g.drawLine( 
+				source.getX(), source.getY(), 
+				source.getX() + length * Utility.cos(Angle), 
+				source.getY() + length * Utility.sin(Angle)
+				);
 	}
 
-	@Override
-	public void objectDraw(Graphics g) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	
 	
 }

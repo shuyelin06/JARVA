@@ -136,6 +136,7 @@ public abstract class GameObject {
 		} else { g.setColor(Color.white);}
 
 		// Draw Edges
+		g.setLineWidth(1f);
 		hitbox.draw(g, x, y);
 		
 		collision = false;

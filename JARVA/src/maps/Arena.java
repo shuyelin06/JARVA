@@ -43,6 +43,7 @@ public class Arena {
 	public Polygon getBorder() { return border; }
 	
 	public void draw(Graphics g) {
+		g.setLineWidth(10f);
 		border.draw(g, 0, 0);
 	}
 

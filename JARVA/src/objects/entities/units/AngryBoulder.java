@@ -62,18 +62,21 @@ public class AngryBoulder extends Unit {
 	float playerLastX;
 	float playerLastY;
 	
+	float omega;
 	float theta;
 	
 	@Override
 	protected void unitUpdate() {
 //		Player player = Game.Player;
 //		
-		final float AngleToPlayer = Utility.atan( y - player.getY() , x - player.getX() ) + (float) Math.PI;
-//		
-		theta += 1 / (AngleToPlayer - theta);	
+
+//		this.setXVelocity(2.5f);
+
+		theta += 0.015f;
 		final float TargetX = Utility.cos(theta) * 10f;
 		final float TargetY = Utility.sin(theta) * 10f;
-//		
+		
+//		this.beam.changeLength(0.05f);
 		this.beam.changeTarget(TargetX, TargetY);
 		
 //		beam.changeTarget(player.getX(), player.getY());
