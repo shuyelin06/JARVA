@@ -1,8 +1,10 @@
 package objects.entities.units;
 
+import engine.Utility;
 import engine.states.Game;
 import objects.entities.Player;
 import objects.entities.Unit;
+import objects.entities.projectiles.Beam;
 import objects.entities.projectiles.Rock;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
@@ -53,9 +55,9 @@ public class AngryBoulder extends Unit {
 			lastShot = ShotCooldown;
 		}
 	}
-	
+		
 	@Override
-	protected void unitUpdate() {
+	protected void unitUpdate() {		
 		if( attacking ) {
 			timer += Game.TicksPerFrame();
 			if( timer > 0.5f ) {

@@ -86,6 +86,9 @@ public class DisplayManager {
 		renderArena(g); // Render Arena
 		renderObjects(g); // Render All Objects
 		
+		// Debug Mode
+		if ( Debug ) renderDebug(g);
+		
 		g.resetTransform();
 	
 		// Draw HUD (on top of everything else)
@@ -102,12 +105,16 @@ public class DisplayManager {
 	}
 	
 
+	public void renderDebug(Graphics g) {
+		for( final GameObject object: game.getGameObjects() ) {
+			object.debug(g);
+		}
+	}
 	public void renderBackground(Graphics g) {
 		background.render(g);
 	}
 	public void renderObjects(Graphics g) {
-		for (GameObject object: game.getGameObjects()) 
-		{
+		for ( GameObject object: game.getGameObjects() ) {
 			object.draw(g);
 		}
 	}

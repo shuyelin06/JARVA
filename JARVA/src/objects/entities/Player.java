@@ -52,7 +52,7 @@ public class Player extends Unit {
 	
 	public Player() {
 		super(Polygon.rectangle(6f, 6f));
-	  
+		
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
 		this.sprite = ImageManager.getImageCopy("jarvis", 6, 6);
