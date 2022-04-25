@@ -24,10 +24,10 @@ public class LOne extends Level
 			new BighornSheep()
 				.build();
 			
-//			new Eagle()
-//			.setX(200f)
-//			.setY(-100f)
-//			.build();
+			new Eagle()
+				.setX(200f)
+				.setY(-100f)
+				.build();
 		}
 		
 		if(spawningTimer == 100)
