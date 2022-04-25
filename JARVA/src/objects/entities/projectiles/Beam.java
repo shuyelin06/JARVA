@@ -5,98 +5,111 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
+import components.conditions.Condition;
 import engine.Settings;
 import engine.Utility;
 import objects.GameObject;
+import objects.GameObject.ObjectType;
 import objects.entities.Projectile;
 import objects.entities.Unit;
 import objects.geometry.Polygon;
 import objects.geometry.Vector;
+import ui.display.images.ImageManager;
 
 public class Beam extends Projectile {
 	
-	private static float Beam_Height = 2.5f;
-	private static float Beam_Length = 50f;
+	final public static float Default_Beam_Length = 50f;
+	final public static float Default_Beam_Height = 1.5f;
 	
 	private Unit source;
 	
-	private float length;
+	private int length;
+	private int height;
+	
+	private float sourceX;
+	private float sourceY;
 	
 	private float targetX;
 	private float targetY;
 	
-	public Beam(Unit source, float targetX, float targetY) {
-		super( Polygon.rectangle(Beam_Length, Beam_Height), source );
-		
-		this.length = Beam_Length;
-		
-		this.knockback = 15f;
-		
-		this.baseDamage = 0f;
-		this.damageMultiplier = 0f;
+	public Beam(Unit source, int length, int height) {
+		super( Polygon.rectangle(length, height), source );
+	
+		this.length = length;
+		this.height = height;
 		
 		this.source = source;
+		this.sprite = ImageManager.getImageCopy("laser", length, height);
+		
+		this.length = length;
+		
+		this.knockback = 0f;
+		
+		this.damageMultiplier = 0.5f;
 		
 		this.pierce = Integer.MAX_VALUE;
 		
-		changeTarget(targetX, targetY);
-		
-		this.build();
+		System.out.println("Testing");
 	}
 	
-	public void projectileUpdate() {}
-
-	public void changeLength(float length) {
-		this.length += length / 2f;
-		
-		final float Angle = Utility.atan( targetY - source.getY(), targetX - source.getX() );
-		
-		final float AddX = Utility.cos(-Angle) * length;
-		final float AddY = Utility.sin(-Angle) * length;
-		
-		final Vector[] Vertices = hitbox.getVertices();
-		
-		Vertices[2].x += AddX;
-		Vertices[2].y += AddY;
-		
-		Vertices[3].x += AddX;
-		Vertices[3].y += AddY;
-	}
-	public void changeTarget(float targetX, float targetY) {
-		// Setting Variables for Drawing
-		this.targetX = targetX;
-		this.targetY = targetY;
-		
-		// Change x/y position
-		final float TargetAngle = Utility.atan(targetY - source.getY(), targetX - source.getX());
-		
-		this.x = source.getX() + Beam_Length * Utility.cos(TargetAngle) / 2f;
-		this.y = source.getY() + Beam_Length * Utility.sin(TargetAngle) / 2f;
-		
-		// Update Angle
-		final float AngleToSource = Utility.atan( source.getY() - y, source.getX() - x );
-		
-		float omega = AngleToSource - angle;
-		
-		angle += omega;
-		this.hitbox.rotate(omega);
-	}
-	
-	
+	/* --- Inherited Methods --- */
 	public void objectDraw(Graphics g) {}
 	
-	@Override
-	public void draw(Graphics g) {
-		g.setColor(Color.red);
+	public void projectileUpdate() {
+		if( source.getPercentHealth() <= 0 ) this.remove = true;
 		
-		final float Angle = Utility.atan( targetY - source.getY(), targetX - source.getX() );
-		g.setLineWidth(100f);
-		g.drawLine( 
-				source.getX(), source.getY(), 
-				source.getX() + length * Utility.cos(Angle), 
-				source.getY() + length * Utility.sin(Angle)
-				);
+		// Change x/y position based on source and target
+		final float TargetAngle = Utility.atan(targetY - sourceY, targetX - sourceX);
+		
+		this.x = sourceX + length * Utility.cos(TargetAngle) / 2f;
+		this.y = sourceY + length * Utility.sin(TargetAngle) / 2f;
+		
+		// Update Angle
+		final float AngleToSource = Utility.atan( sourceY - y, sourceX - x );
+		
+		omega = (AngleToSource - angle) * Settings.Frames_Per_Second;
 	}
 
+	@Override
+	public void objectCollision(GameObject o) {
+		if( o.getType() == ObjectType.Unit && source.getTeam() != o.getTeam() ) {
+			Unit unit = (Unit) o;
+			
+			unit.takeDamage(source.getBaseDamage() * damageMultiplier); // Damage
+			unit.takeCondition(Condition.Type.Burn, 3.5f);
+		}
+	}
 	
+	/* --- Helper Methods--- */
+	// Set the Beam Source Point
+	public void setSource(float sourceX, float sourceY) {
+		this.sourceX = sourceX;
+		this.sourceY = sourceY;
+	}
+	// Set the Beam Target Point
+	public void setTarget(float targetX, float targetY) {
+		this.targetX = targetX;
+		this.targetY = targetY;
+	}
+	
+	// Change size of beam
+	public void changeSize(float addLength, float addHeight) {
+		this.length += addLength;
+		this.height += addHeight;
+		
+		// Sprite Rescaling
+		this.sprite = ImageManager.getImageCopy("laser", length, height);
+		this.sprite.rotate( Utility.ConvertToDegrees(angle) );
+		
+		// Hitbox Rescaling
+		Vector[] vertices = hitbox.getVertices();
+		
+		vertices[0].setXY(- length / 2,  - height / 2);
+		vertices[1].setXY(- length / 2,  height / 2);
+		vertices[2].setXY(length / 2, height / 2);
+		vertices[3].setXY(length / 2,  - height / 2);
+		vertices[4].setXY(- length / 2,  - height / 2);
+		
+		this.hitbox.rotate(angle);
+	}
 }

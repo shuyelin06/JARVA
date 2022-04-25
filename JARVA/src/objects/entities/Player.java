@@ -52,8 +52,6 @@ public class Player extends Unit {
 	
 	public Player() {
 		super(Polygon.rectangle(6f, 6f));
-	  
-		this.collidable = false;
 		
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;

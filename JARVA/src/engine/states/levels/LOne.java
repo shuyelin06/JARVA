@@ -2,6 +2,7 @@ package engine.states.levels;
 
 import engine.states.Game;
 import objects.entities.units.AngryBoulder;
+import objects.entities.units.BighornSheep;
 import objects.entities.units.Eagle;
 import objects.entities.units.Tumbleweed;
 
@@ -20,10 +21,13 @@ public class LOne extends Level
 		
 		if(spawningTimer == 20)
 		{
-			new Eagle()
-			.setX(200f)
-			.setY(-100f)
-			.build();
+			new BighornSheep()
+				.build();
+			
+//			new Eagle()
+//			.setX(200f)
+//			.setY(-100f)
+//			.build();
 		}
 		
 		if(spawningTimer == 100)

@@ -37,8 +37,6 @@ public class AngryBoulder extends Unit {
 		
 		this.team = ObjectTeam.Enemy;
 		this.player = Game.Player;
-		
-		this.beam = new Beam( this, Game.Player.getX(), Game.Player.getY() );
 	}
 
 	private void shoot() {
@@ -57,31 +55,9 @@ public class AngryBoulder extends Unit {
 			lastShot = ShotCooldown;
 		}
 	}
-	
-	Beam beam;
-	float playerLastX;
-	float playerLastY;
-	
-	float omega;
-	float theta;
-	
+		
 	@Override
-	protected void unitUpdate() {
-//		Player player = Game.Player;
-//		
-
-//		this.setXVelocity(2.5f);
-
-		theta += 0.015f;
-		final float TargetX = Utility.cos(theta) * 10f;
-		final float TargetY = Utility.sin(theta) * 10f;
-		
-//		this.beam.changeLength(0.05f);
-		this.beam.changeTarget(TargetX, TargetY);
-		
-//		beam.changeTarget(player.getX(), player.getY());
-
-		
+	protected void unitUpdate() {		
 		if( attacking ) {
 			timer += Game.TicksPerFrame();
 			if( timer > 0.5f ) {
