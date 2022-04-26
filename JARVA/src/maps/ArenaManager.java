@@ -38,7 +38,9 @@ public class ArenaManager {
 				}
 				// Projectile Border Control
 				else if(o instanceof Projectile) {
-					o.remove();
+					if(!arena.getProjectileBorder().intersects(o.getHitbox())) {
+						o.remove();
+					}
 				}
 			}
 		}
