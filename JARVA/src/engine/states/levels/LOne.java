@@ -28,18 +28,18 @@ public class LOne extends Level
 			.build();
 			
 			new BananaTree()
-			.setX(400f)
+			.setX(100f)
 			.setY(100f)
 			.build();
 			
 			new BananaTree()
 			.setX(100f)
-			.setY(300f)
+			.setY(-100f)
 			.build();
 			
 			new Monkey()
-			.setX(100f)
-			.setY(-200f)
+			.setX(-100f)
+			.setY(0f)
 			.build();
 		}
 		

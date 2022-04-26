@@ -11,24 +11,23 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 
 public class Banana extends Projectile {
-	private static float baseSpeed = 15f;
+	private static float baseSpeed = 30f;
 	private float theta;
 	
 	public Banana(GameObject origin, GameObject target) {
-		super(Polygon.rectangle(4f, 4f), origin);
+		super(Polygon.rectangle(8f, 8f), origin);
 		
 		this.omega = (float) Math.PI;
 		this.knockback = 30f;
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 4, 4);
+		this.sprite = ImageManager.getImageCopy("banana", 8, 8);
 		
 		this.setX(origin.getX());
 		this.setY(origin.getY());
 		
 		this.setTeam(origin.getTeam());
 		
-		this.sprite = ImageManager.getImageCopy("thorn", 3, 3);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		if (target != null) {
 			theta = (float) Math.atan2(target.getY() - origin.getY(), target.getX() - origin.getX());

@@ -136,11 +136,6 @@ public abstract class Unit extends GameObject {
 		}
 	}
 	
-	public void moveTo(GameObject o) {
-		this.setXVelocity((float) Math.cos(this.getAngleTo(o)));
-		this.setYVelocity((float) Math.sin(this.getAngleTo(o)));
-	}
-	
 	/* --- Helper Methods --- */
 	private void initializeConditions() {
 		conditions.put(Condition.Type.Invulnerable, new Invulnerable(this));

@@ -1,5 +1,6 @@
 package objects.entities.units;
 
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.GameObject.ObjectTeam;
@@ -12,14 +13,17 @@ import ui.display.images.ImageManager;
 public class Monkey extends Unit {
 	private boolean active;
 	private int timer;
+	final static float Base_Speed = 10;
 	
 	public Monkey() {
 		super(Polygon.rectangle(7f, 7f));
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 7, 7);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite = ImageManager.getImageCopy("monkey", 7, 7);
+		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		this.baseDamage = 5;
+		
+		this.maxVelocity = Game.Player.getMaxVelocity();
 		
 		timer = 0;
 		active = false;
@@ -28,25 +32,26 @@ public class Monkey extends Unit {
 	
 	@Override
 	public void objectCollision(GameObject o) {
+		
+		super.objectCollision(o);
+		
 		if (o instanceof BananaTree) {
 			active = true;
 		}
-		super.objectCollision(o);
 	}
 	
 	protected void unitUpdate() {
-		moveTo(nearestBananaTree());
+		moveTo(Base_Speed, nearestBananaTree());
 		if (active) {
 			timer++;
+			if (timer % 20 == 0 && timer != 0) {
+				new Banana(this, Game.Player)
+					.setPierce(3)
+					.setKnockback(0)
+					.setDamageMultiplier(1)
+					.build();
+			}
 		}
-		if (timer % 200 == 0) {
-			new Banana(this, Game.Player)
-				.setPierce(3)
-				.setKnockback(0)
-				.setDamageMultiplier(1)
-				.build();
-		}
-		
 	}
 	
 	private BananaTree nearestBananaTree() {
@@ -60,5 +65,11 @@ public class Monkey extends Unit {
 			}
 		}
 		return nearest;
+	}
+	
+	public void moveTo(float baseSpeed, GameObject o) {
+		final float Angle = Utility.atan(o.getY() - y, o.getX() - x);
+		this.addXVelocity(baseSpeed * (float) Math.cos(Angle));
+		this.addYVelocity(baseSpeed * (float) Math.sin(Angle));
 	}
 }
