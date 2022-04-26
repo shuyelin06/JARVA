@@ -99,9 +99,10 @@ public abstract class Unit extends GameObject {
 			else sprite = animation.getFrame(Default_Frame);
 			
 			sprite = sprite.getScaledCopy(width, height);
+			sprite.rotate( Utility.ConvertToDegrees(angle) );
 		}
 		
-		if(mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);
+		if(angle == 0 && mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);
 		else sprite.drawCentered(x, y);
 	}
 	@Override

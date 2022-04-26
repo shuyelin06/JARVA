@@ -21,8 +21,12 @@ public class LOne extends Level
 		
 		if(spawningTimer == 20)
 		{
-			new BighornSheep()
-				.build();
+			for( int i = 0; i < 50; i++ ) {
+				new BighornSheep()
+					.setX( (float) Math.random() * 250f )
+					.setY( (float) Math.random() * 250f )
+					.build();
+			}
 			
 			new Eagle()
 				.setX(200f)
@@ -37,11 +41,12 @@ public class LOne extends Level
 			.setY(5f)
 			.build();
 
-			new Tumbleweed()
-			.setX(300f)
-			.setY(500f)
-			.setYVelocity(-0.5f)
-			.build();
+			for( int i = 0; i < 25; i++ ) {
+				new Tumbleweed()
+					.setX( (float) Math.random() * 250f )
+					.setY( (float) Math.random() * 250f )
+					.build();
+			}
 		}
 	}
 }
