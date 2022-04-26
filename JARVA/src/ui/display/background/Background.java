@@ -24,6 +24,11 @@ public class Background {
 					new BackgroundObject("cactus")
 					);
 		}
+		for( int i = 0; i < 15; i++ ) {
+			objects.add(
+					new BackgroundObject("shrub")
+					);
+		}
 	}
 	public void render(Graphics g) {
 		// Set Background Color

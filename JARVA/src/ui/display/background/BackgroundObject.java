@@ -24,18 +24,30 @@ public class BackgroundObject {
 	public BackgroundObject(String name) {
 		switch(name)
 		{
+		case("shrub"): 
+			
+			this.sprite = ImageManager.getImageCopy("shrub"); 
+		
+			xScale = (float)Math.random() * 0.3f + 0.3f;
+			yScale = xScale;
+		
+			break;
+			
 		case("cactus"): 
+			
 			this.spritesheet = new SpriteSheet(ImageManager.getImage("cactus"), 9, 18);
 			this.sprite = spritesheet.getSubImage(0, (int)(Math.random() * 4));
 			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
+			
+			xScale = (float)Math.random() * .2f + 0.8f;
+			yScale = (float)Math.random() * .5f + 0.8f;
+			
+			break;
 		default:
 		}
 		
 		this.x = Utility.random() * (X_Extent - sprite.getWidth()) - 125; //- X_Extent / 2f;
 		this.y = Utility.random() * Y_Extent - 125; // - Y_Extent / 2f;
-		
-		xScale = (float)Math.random() * .2f + 0.8f;
-		yScale = (float)Math.random() * .5f + 0.8f;
 		
 		shadow = ImageManager.getImageCopy("shadow");
 	}
