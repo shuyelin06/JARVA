@@ -1,5 +1,10 @@
 package objects.entities.units;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
+
+import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
@@ -15,21 +20,36 @@ import ui.display.images.ImageManager;
 public class BighornSheep extends Unit {
 	private Player player;
 	
-	final private static float LaserCooldown = 5f;
+	final private static float LaserCooldown = 0.75f;
+	final private static int LaserSpin = 5 * Settings.Frames_Per_Second;
+	
+	final private static int LaserLength = 50;
+	final private static int LaserHeight = 1;
+	
+	final private static float AttackRadius = LaserLength * 0.8f;
+	
+	private float AttackSpeed = Player.Player_Max_Velocity * 0.8f;
+	private float BaseSpeed = AttackSpeed * 2;
+	
+	private Beam beam;
 	
 	private float attackCooldown;
+	private float attackTheta;
+	
 	private float animationTimer;
 	
 	public BighornSheep() {
-		super(Polygon.rectangle(10f, 10f));
-		
-		this.maxHealth = 100f;
+		super(Polygon.rectangle(4, 4));
+				
+		this.maxHealth = 3f;
 		this.health = maxHealth;
 		
 		this.baseDamage = 10;
 		
-		this.width = 8;
-		this.height = 8;
+		this.maxVelocity = BaseSpeed;
+		
+		this.width = 4;
+		this.height = 4;
 		this.animation = new Animation("ram", 32, 32);
 		
 		this.team = ObjectTeam.Enemy;
@@ -37,48 +57,19 @@ public class BighornSheep extends Unit {
 		
 		this.attackCooldown = LaserCooldown;
 		
-		this.beam = new Beam( this, 10, 1 );
+		this.beam = null;
 	}
 
-	private Beam beam;
-	float theta;
-	
-	@Override
-	public GameObject build() {
-		super.build();
-		beam.build();
-		return this;
+	private float distanceToPlayer() {
+		return (float) Math.sqrt( 
+				(y - player.getY()) * (y - player.getY()) + 
+				(x - player.getX()) * (x - player.getX())
+				);
 	}
-	
-	private void shoot() {
-		attackCooldown -= Game.TicksPerFrame();
-		
-		theta += 0.15f;
-		
-		final float TargetX = Utility.cos(theta) * 10f;
-		final float TargetY = Utility.sin(theta) * 10f;
-		
-		beam.setSource(x, y);
-		beam.setTarget(TargetX, TargetY);
-		
-		if( (int) (Game.getTicks()) % 2 == 0) {
-			beam.changeSize(1, 0);
-		} else {
-			beam.changeSize(-1, 0);
-		}
-		
-		
-		if(attackCooldown < 0) {
-//			attacking = true;
-			
-			
-			
-			attackCooldown = LaserCooldown;
-		}
-	}
-		
 	@Override
-	protected void unitUpdate() {		
+	protected void unitUpdate() {
+		this.mirrored = false;
+		
 		if( attacking ) {
 			animationTimer += Game.TicksPerFrame();
 			if( animationTimer > 0.5f ) {
@@ -87,7 +78,44 @@ public class BighornSheep extends Unit {
 			}
 		}
 		
-		this.shoot();
+		final float Angle = Utility.atan(player.getY() - y, player.getX() - x);
+		if( distanceToPlayer()  < AttackRadius ) {
+			// Move Slowly
+			this.maxVelocity = AttackSpeed;
+			this.addXVelocity(AttackSpeed * Utility.cos(Angle));
+			this.addYVelocity(AttackSpeed * Utility.sin(Angle));
+			
+			omega = Utility.ConvertToRadians(LaserSpin);
+			
+			attackCooldown -= Game.TicksPerFrame();
+			if( attackCooldown < 0 ) {
+				if( beam == null ) {
+					beam = new Beam( this, LaserLength, LaserHeight );
+					beam.build();
+				}
+				
+				final float TargetX = x +  Utility.cos(angle + (float) Math.PI / 2f ) * LaserLength;
+				final float TargetY = y + Utility.sin(angle + (float) Math.PI / 2f) * LaserLength;
+				
+				beam.setSource(x, y);
+				beam.setTarget(TargetX, TargetY);
+			}
+		} else {
+			if( beam != null ) {
+				beam.remove();
+				beam = null;
+			}
+			
+			omega = 0;
+			
+			// Reset Attack Cooldown
+			this.attackCooldown = LaserCooldown;
+			
+			// Run to Player
+			this.maxVelocity = BaseSpeed;
+			this.addXVelocity(BaseSpeed * Utility.cos(Angle));
+			this.addYVelocity(BaseSpeed * Utility.sin(Angle));
+		}
 	}
 		
 }

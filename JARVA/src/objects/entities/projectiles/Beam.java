@@ -48,8 +48,6 @@ public class Beam extends Projectile {
 		this.damageMultiplier = 0.5f;
 		
 		this.pierce = Integer.MAX_VALUE;
-		
-		System.out.println("Testing");
 	}
 	
 	/* --- Inherited Methods --- */
@@ -76,7 +74,7 @@ public class Beam extends Projectile {
 			Unit unit = (Unit) o;
 			
 			unit.takeDamage(source.getBaseDamage() * damageMultiplier); // Damage
-			unit.takeCondition(Condition.Type.Burn, 3.5f);
+			unit.takeCondition(Condition.Type.Burn, 5f);
 		}
 	}
 	
