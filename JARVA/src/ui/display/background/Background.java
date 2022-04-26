@@ -21,12 +21,12 @@ public class Background {
 	}
 	
 	public void initialize() {
-		for( int i = 0; i < 35; i++ ) {
+		for( int i = 0; i < 24; i++ ) {
 			objects.add(
 					new BackgroundObject("shrub")
 					);
 		}
-		for( int i = 0; i < 25; i++ ) {
+		for( int i = 0; i < 12; i++ ) {
 			objects.add(
 					new BackgroundObject("cactus")
 					);
