@@ -24,6 +24,8 @@ public class AngryBoulder extends Unit {
 	public AngryBoulder() {
 		super(Polygon.rectangle(8f, 8f));
 		
+		this.maxVelocity = Player.Player_Max_Velocity * 0.3f;
+		
 		this.maxHealth = 100f;
 		this.health = maxHealth;
 		this.damageBlock = 0.5f;
@@ -57,7 +59,11 @@ public class AngryBoulder extends Unit {
 	}
 		
 	@Override
-	protected void unitUpdate() {		
+	protected void unitUpdate() {
+		final float Angle = Utility.atan(player.getY() - y, player.getX() - x);
+		this.addXVelocity(5f * Utility.cos(Angle));
+		this.addYVelocity(5f * Utility.sin(Angle));
+		
 		if( attacking ) {
 			timer += Game.TicksPerFrame();
 			if( timer > 0.5f ) {
