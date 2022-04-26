@@ -8,8 +8,8 @@ import engine.Utility;
 import ui.display.images.ImageManager;
 
 public class BackgroundObject {
-	protected static float X_Extent = 250f;
-	protected static float Y_Extent = 150f;
+	protected static float X_Extent = 500f;
+	protected static float Y_Extent = 300f;
 	
 	private SpriteSheet spritesheet;
 	private Image sprite;
@@ -22,15 +22,24 @@ public class BackgroundObject {
 	private float yScale;
 	
 	public BackgroundObject(String name) {
+		shadow = ImageManager.getImageCopy("shadow");
+		
 		switch(name)
 		{
 		case("shrub"): 
 			
-			this.sprite = ImageManager.getImageCopy("shrub"); 
-		
+			this.spritesheet = new SpriteSheet(ImageManager.getImage("shrub"), 16, 16);
+			this.sprite = spritesheet.getSubImage(0, (int)(Math.random() * 6));
+			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
+			
 			xScale = (float)Math.random() * 0.3f + 0.3f;
 			yScale = xScale;
-		
+			shadow = shadow.getScaledCopy(sprite.getWidth() * xScale / shadow.getWidth() * 0.8f);
+			shadow.setAlpha(0.7f);	
+			
+			this.x = Utility.random() * (X_Extent - sprite.getWidth()) - X_Extent / 2f;
+			this.y = Utility.random() * Y_Extent - 300; // - Y_Extent / 2f;
+			
 			break;
 			
 		case("cactus"): 
@@ -41,23 +50,39 @@ public class BackgroundObject {
 			
 			xScale = (float)Math.random() * .2f + 0.8f;
 			yScale = (float)Math.random() * .5f + 0.8f;
+			shadow = shadow.getScaledCopy(sprite.getWidth() * xScale / shadow.getWidth());
+			
+			this.x = Utility.random() * (X_Extent - sprite.getWidth()) - X_Extent / 2f;
+			this.y = Utility.random() * Y_Extent - Y_Extent / 2f;
+			
+			break;
+			
+		case("skull"): 
+			
+			this.sprite = ImageManager.getImageCopy("skull");
+			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
+			
+			xScale = 0.7f;
+			yScale = 0.7f;
+			shadow = shadow.getScaledCopy(sprite.getWidth() * xScale / shadow.getWidth());
+			shadow.setAlpha(0f);	
+			
+			this.x = Utility.random() * (250 - sprite.getWidth()) - 125;
+			this.y = Utility.random() * 250 - 125;
 			
 			break;
 		default:
 		}
 		
-		this.x = Utility.random() * (X_Extent - sprite.getWidth()) - 125; //- X_Extent / 2f;
-		this.y = Utility.random() * Y_Extent - 125; // - Y_Extent / 2f;
-		
-		shadow = ImageManager.getImageCopy("shadow");
+		this.x = Utility.random() * (250 - sprite.getWidth()) - 125;
+		this.y = Utility.random() * 250 - 125;
 	}
 	
 	public void render(Graphics g) {
-		float tempScale = sprite.getWidth() * xScale / shadow.getWidth();
-		shadow.setFilter(sprite.FILTER_NEAREST);
-		shadow.draw(x, y + sprite.getHeight() * yScale - shadow.getHeight() * 0.5f, tempScale);
+		shadow.setFilter(Image.FILTER_NEAREST);
+		shadow.drawCentered(x + sprite.getWidth() * xScale * 0.5f, y + sprite.getHeight() * yScale - shadow.getHeight() * 0.2f);
 		
-		sprite.setFilter(sprite.FILTER_NEAREST);
+		sprite.setFilter(Image.FILTER_NEAREST);
 		sprite.draw(x, y, sprite.getWidth() * xScale, sprite.getHeight() * yScale);
 	}
 }

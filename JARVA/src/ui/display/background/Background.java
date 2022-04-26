@@ -7,6 +7,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import ui.display.images.ImageManager;
+
 public class Background {
 	private Color color;
 	private ArrayList<BackgroundObject> objects;
@@ -14,21 +16,24 @@ public class Background {
 	public Background() {
 		objects = new ArrayList<>();
 		color = new Color(205, 170, 109);
-
+		
 		initialize();
 	}
 	
 	public void initialize() {
-		for( int i = 0; i < 15; i++ ) {
-			objects.add(
-					new BackgroundObject("cactus")
-					);
-		}
-		for( int i = 0; i < 15; i++ ) {
+		for( int i = 0; i < 35; i++ ) {
 			objects.add(
 					new BackgroundObject("shrub")
 					);
 		}
+		for( int i = 0; i < 25; i++ ) {
+			objects.add(
+					new BackgroundObject("cactus")
+					);
+		}
+		objects.add(
+				new BackgroundObject("skull")
+				);
 	}
 	public void render(Graphics g) {
 		// Set Background Color
