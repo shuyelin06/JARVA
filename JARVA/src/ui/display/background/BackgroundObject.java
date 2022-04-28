@@ -87,7 +87,7 @@ public class BackgroundObject {
 			break;
 		case("skull"): 
 			
-			this.sprite = ImageManager.getImageCopy("banana tree");
+			this.sprite = ImageManager.getImageCopy("skull");
 			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
 			
 			xScale = 0.7f;

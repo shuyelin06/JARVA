@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
 
 import components.conditions.Burn;
@@ -20,7 +21,8 @@ import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.geometry.Polygon;
-import ui.display.animation.Animation;;
+import ui.display.animation.Animation;
+import ui.display.images.ImageManager;;
 
 public abstract class Unit extends GameObject {
 	private final float ContactKnockback = 25f;
@@ -36,6 +38,7 @@ public abstract class Unit extends GameObject {
 	private static final int Attack_Frame = 1;
 	
 	protected Animation animation;
+	protected Image shadow;
 	
 	protected int width, height;
 	protected boolean attacking;
@@ -77,6 +80,9 @@ public abstract class Unit extends GameObject {
 		
 		this.contactDamage = 1f; // Contact Damage
 		this.baseDamage = 1f; // Base Damage
+		
+		this.shadow = ImageManager.getImageCopy("shadow");
+		this.shadow = shadow.getScaledCopy(width / shadow.getWidth());
 	}
 	
 	/* --- Inherited Methods --- */
@@ -116,6 +122,12 @@ public abstract class Unit extends GameObject {
 			
 			sprite = sprite.getScaledCopy(width, height);
 			sprite.rotate( Utility.ConvertToDegrees(angle) );
+		}
+		
+		if(shadow.getAlpha() != 0)
+		{
+			shadow.setFilter(Image.FILTER_NEAREST);
+			shadow.drawCentered(x + sprite.getWidth() * 0.5f, y + sprite.getHeight() - shadow.getHeight() * 0.2f);
 		}
 		
 		if(angle == 0 && mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);

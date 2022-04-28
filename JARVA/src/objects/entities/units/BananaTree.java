@@ -16,7 +16,7 @@ public class BananaTree extends Unit {
 	public BananaTree() {
 		super(Polygon.rectangle(7f, 7f));
 		
-		this.sprite = ImageManager.getImageCopy("placeholder", 7, 7);
+		this.sprite = ImageManager.getImageCopy("banana tree", 7, 7);
 		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
 		this.maxHealth = 300f;
