@@ -3,6 +3,7 @@ package engine.states.levels;
 import engine.states.Game;
 import objects.entities.units.AngryBoulder;
 import objects.entities.units.BananaTree;
+import objects.entities.units.BighornSheep;
 import objects.entities.units.Eagle;
 import objects.entities.units.Monkey;
 import objects.entities.units.Tumbleweed;
@@ -22,6 +23,13 @@ public class LOne extends Level
 		
 		if(spawningTimer == 20)
 		{
+			for( int i = 0; i < 50; i++ ) {
+				new BighornSheep()
+					.setX( (float) Math.random() * 250f )
+					.setY( (float) Math.random() * 250f )
+					.build();
+			}
+			
 			new Eagle()
 			.setX(200f)
 			.setY(-100f)
@@ -50,11 +58,12 @@ public class LOne extends Level
 			.setY(5f)
 			.build();
 
-			new Tumbleweed()
-			.setX(300f)
-			.setY(500f)
-			.setYVelocity(-0.5f)
-			.build();
+			for( int i = 0; i < 25; i++ ) {
+				new Tumbleweed()
+					.setX( (float) Math.random() * 250f )
+					.setY( (float) Math.random() * 250f )
+					.build();
+			}
 		}
 	}
 }

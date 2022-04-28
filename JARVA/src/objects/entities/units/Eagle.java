@@ -24,6 +24,9 @@ public class Eagle extends Unit{
 	private static int TotalShots = 20;
 	int shotCount;
 	
+	private float prevAddY;
+	private float prevAddX;
+	
 	public Eagle() {
 		super(Polygon.rectangle(12f, 12f));
 		
@@ -31,7 +34,7 @@ public class Eagle extends Unit{
 		this.height = 12;
 		this.animation = new Animation("eagle", 32, 32);
 		
-		this.baseDamage = 10;
+		this.baseDamage = 5;
 		
 		firing = false;
 		attackMode = 1;
@@ -81,6 +84,29 @@ public class Eagle extends Unit{
 			}
 		}
 		
+		move();
+		
+	}
+	
+	public void move() {
+//		if(Math.random() < 0.3) {
+		
+			float addY = 40 * (float) ( Math.random() - 0.5);
+			float addX = 40 * (float) (Math.random() - 0.5);
+			if(Math.abs(addY-prevAddY) > 10) {
+				addY = 0;
+			}else {
+				prevAddY = addY;
+			}
+			if(Math.abs(addX-prevAddX) > 10) {
+				addX = 0;
+			}else {
+				prevAddX = addX;
+			}
+			
+			this.addYVelocity(addY);
+			this.addXVelocity(addX);
+//		}
 	}
 	
 	public void rapidFire() {

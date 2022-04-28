@@ -1,8 +1,10 @@
 package objects.entities.units;
 
+import engine.Utility;
 import engine.states.Game;
 import objects.entities.Player;
 import objects.entities.Unit;
+import objects.entities.projectiles.Beam;
 import objects.entities.projectiles.Rock;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
@@ -21,6 +23,8 @@ public class AngryBoulder extends Unit {
 	
 	public AngryBoulder() {
 		super(Polygon.rectangle(8f, 8f));
+		
+		this.maxVelocity = Player.Player_Max_Velocity * 0.3f;
 		
 		this.maxHealth = 100f;
 		this.health = maxHealth;
@@ -53,9 +57,13 @@ public class AngryBoulder extends Unit {
 			lastShot = ShotCooldown;
 		}
 	}
-	
+		
 	@Override
 	protected void unitUpdate() {
+		final float Angle = Utility.atan(player.getY() - y, player.getX() - x);
+		this.addXVelocity(5f * Utility.cos(Angle));
+		this.addYVelocity(5f * Utility.sin(Angle));
+		
 		if( attacking ) {
 			timer += Game.TicksPerFrame();
 			if( timer > 0.5f ) {

@@ -23,6 +23,8 @@ public class Arena {
 	// Protected Border border;
 	protected Border border;
 	
+	protected Border projectileBorder;
+	
 	public Arena(float width, float height) {
 		this.friction = 0.35f;
 		
@@ -31,6 +33,9 @@ public class Arena {
 		
 		Vector[] vertices = Polygon.rectangleEdges(width, height);
 		border = new Border( this, vertices );
+		
+		Vector[] projectileVerticies = Polygon.rectangleEdges(width+150, height+150);
+		projectileBorder = new Border (this, projectileVerticies);
 
 	}
 	
@@ -41,8 +46,10 @@ public class Arena {
 	public int getCenterY() { return centerY; }
 	
 	public Polygon getBorder() { return border; }
+	public Polygon getProjectileBorder() { return projectileBorder; }
 	
 	public void draw(Graphics g) {
+		g.setLineWidth(10f);
 		border.draw(g, 0, 0);
 	}
 

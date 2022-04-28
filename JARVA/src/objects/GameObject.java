@@ -85,6 +85,7 @@ public abstract class GameObject {
 	/* --- Ineherited Methods --- */
 	public abstract void objectUpdate();
 	public abstract void objectDraw(Graphics g);
+	public void objectDebug(Graphics g) {}
 	protected abstract void objectCollision(GameObject o);
 	
 	/* --- Main Methods --- */
@@ -121,20 +122,21 @@ public abstract class GameObject {
 	public void draw(Graphics g) {
 		drawSprite(g);
 		objectDraw(g);
-		drawHitbox(g);
 	}
-	// Rendering Methods
-	protected void drawSprite(Graphics g)  {
-		sprite.drawCentered(x, y); 
+	
+	protected void drawSprite(Graphics g)  { sprite.drawCentered(x, y);  }
+		
+	// Debug
+	public void debug(Graphics g) {
+		drawHitbox(g);
 	}
 	
 	protected void drawHitbox(Graphics g) {
-//		Vector[] vertices = hitbox.getVertices();
-		
 		if(collision) { g.setColor(Color.green);
 		} else { g.setColor(Color.white);}
 
 		// Draw Edges
+		g.setLineWidth(1f);
 		hitbox.draw(g, x, y);
 		
 		collision = false;
@@ -191,6 +193,7 @@ public abstract class GameObject {
 	public float getContactDamage() { return contactDamage; }
 	
 	public Polygon getHitbox() { return hitbox; }
+	public Image getSprite() { return sprite; }
 	
 	/* --- Mutator / Construtor Methods --- */
 	public GameObject build() { Game.GameObjects.add(this); return this; }

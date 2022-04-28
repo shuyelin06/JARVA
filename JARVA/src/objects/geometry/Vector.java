@@ -20,6 +20,8 @@ public class Vector {
 	public float magnitude() { return (float) Math.sqrt(x * x + y * y); }
 	
 	// Mutator Methods
+	public void setXY(float x2, float y2) { x = x2; y = y2; }
+	
 	public void setX(float x2) { x = x2; }
 	public void setY(float y2) { y = y2; }
 	

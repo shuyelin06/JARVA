@@ -24,7 +24,7 @@ import components.weapons.guns.Shotgun;
 import components.weapons.guns.SubmachineGun;
 
 public class Player extends Unit {
-	private static float Player_Max_Velocity = 75f;
+	public static float Player_Max_Velocity = 75f;
 	
 	// Max Velocity Multipliers
 	private ArrayList<Float> velocityMultipliers;
@@ -52,7 +52,7 @@ public class Player extends Unit {
 	
 	public Player() {
 		super(Polygon.rectangle(6f, 6f));
-	  
+		
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
 		this.sprite = ImageManager.getImageCopy("jarvis", 6, 6);
