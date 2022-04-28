@@ -17,6 +17,7 @@ public class Title extends BasicGameState {
 	private int id;
 	
 	private Button startButton;
+	private Button title;
 	
 	private boolean canStart;
 	
@@ -34,13 +35,21 @@ public class Title extends BasicGameState {
 	@Override
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		canStart = false;
+		
+		title = new Button()
+				.setCenterX(Settings.Resolution_X / 2)
+				.setCenterY(Settings.Resolution_Y / 2)
+				.setW(Settings.Resolution_X)
+				.setH(Settings.Resolution_Y)
+				.setImage("titleScreen")
+				;
+		
 		startButton = new Button()
 				.setCenterX(Settings.Resolution_X / 2)
 				.setCenterY(Settings.Resolution_Y / 2)
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
 				.setImage("startButton")
-				.enableOutline()
 				;
 	}
 	
@@ -48,6 +57,7 @@ public class Title extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 //		g.drawString("Title", Settings.Resolution_X / 2, Settings.Resolution_Y / 2);
 	
+		title.render(g);
 		//Draw All Buttons
 		startButton.render(g);
 		
