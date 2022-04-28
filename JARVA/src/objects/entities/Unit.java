@@ -85,9 +85,25 @@ public abstract class Unit extends GameObject {
 	
 	/* --- Implemented Methods --- */
 	public void objectDraw(Graphics g) {
+		if(this.conditionActive(Condition.Type.Stun)) {
+			g.setColor(Color.orange);
+			g.draw(new Circle(x, y, 24f));
+		}
 		if(this.conditionActive(Condition.Type.Invulnerable)) {
 			g.setColor(Color.blue);
 			g.draw(new Circle(x, y, 25f));
+		}
+		if(this.conditionActive(Condition.Type.Confusion)) {
+			g.setColor(Color.pink);
+			g.draw(new Circle(x, y, 26f));
+		}
+		if(this.conditionActive(Condition.Type.Poison)) {
+			g.setColor(Color.red);
+			g.draw(new Circle(x, y, 27f));
+		}
+		if(this.conditionActive(Condition.Type.Burn)) {
+			g.setColor(Color.green);
+			g.draw(new Circle(x, y, 28f));
 		}
 		unitDraw(g);
 	}

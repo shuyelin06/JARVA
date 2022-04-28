@@ -2,8 +2,10 @@ package engine.states.levels;
 
 import engine.states.Game;
 import objects.entities.units.AngryBoulder;
+import objects.entities.units.BananaTree;
 import objects.entities.units.BighornSheep;
 import objects.entities.units.Eagle;
+import objects.entities.units.Monkey;
 import objects.entities.units.Tumbleweed;
 
 public class LOne extends Level
@@ -29,9 +31,24 @@ public class LOne extends Level
 			}
 			
 			new Eagle()
-				.setX(200f)
-				.setY(-100f)
-				.build();
+			.setX(200f)
+			.setY(-100f)
+			.build();
+			
+			new BananaTree()
+			.setX(100f)
+			.setY(100f)
+			.build();
+			
+			new BananaTree()
+			.setX(100f)
+			.setY(-100f)
+			.build();
+			
+			new Monkey()
+			.setX(-100f)
+			.setY(0f)
+			.build();
 		}
 		
 		if(spawningTimer == 100)
