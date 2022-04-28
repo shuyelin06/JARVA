@@ -16,6 +16,8 @@ public class Banana extends Projectile {
 	public Banana(GameObject origin, GameObject target) {
 		super(Polygon.rectangle(8f, 8f), origin);
 		
+		this.pierce = 1;
+		
 		this.omega = (float) (2 * Math.PI);
 		this.knockback = 30f;
 		
@@ -50,6 +52,6 @@ public class Banana extends Projectile {
 	
 	@Override
 	public void applyCondition(Unit u) {
-		u.takeCondition(Condition.Type.Confusion, 2f);
+		u.takeCondition(Condition.Type.Stun, 0.15f);
 	}
 }

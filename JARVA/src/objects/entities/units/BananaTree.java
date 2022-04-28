@@ -10,7 +10,9 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 
 public class BananaTree extends Unit {
-
+	public static float SpawnTimer;
+	public static float SpawnCooldown;
+	
 	public static ArrayList<BananaTree> bananaTrees = new ArrayList<BananaTree>();
 	
 	public BananaTree() {
@@ -28,10 +30,12 @@ public class BananaTree extends Unit {
 	}
 
 	@Override
-	protected void unitUpdate() {
-		if (health < 0) {
-			bananaTrees.remove(this);
-		}
+	protected void unitUpdate() {}
+	
+	@Override
+	public void remove() {
+		super.remove();
+		bananaTrees.remove(this);
 	}
 	
 	@Override
