@@ -23,7 +23,7 @@ public class Utility {
 	public static float random() { return (float) Math.random(); }
 	
 	// Calculate Information
-	public static float distance(float x1, float y1, float x2, float y2) { return (float) Math.sqrt(Math.pow(x2-x1, 2) - Math.pow(y2-y1, 2)); }
+	public static float distance(float x1, float y1, float x2, float y2) { return (float) Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2)); }
 	public static float distance(GameObject o, float x, float y) { return distance(o.getX(), o.getY(), x, y); }
 	public static float distance(GameObject o1, GameObject o2) { return distance(o1, o2.getX(), o2.getY()); }
 	

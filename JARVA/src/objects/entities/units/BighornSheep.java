@@ -20,6 +20,7 @@ import ui.display.images.ImageManager;
 public class BighornSheep extends Unit {
 	public static float SpawnTimer;
 	public static float SpawnCooldown;
+	public static int NumberMultiplier;
 	
 	private Player player;
 	

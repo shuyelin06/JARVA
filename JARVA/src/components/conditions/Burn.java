@@ -25,7 +25,7 @@ public class Burn extends Condition {
 		cooldown -= Game.TicksPerFrame();
 		
 		if (cooldown < 0) {
-			owner.setHealth(owner.getCurHealth() - owner.getMaxHealth() * 0.03f);
+			owner.setHealth(owner.getCurHealth() - owner.getMaxHealth() * 0.025f);
 			cooldown = TOTAL_COOLDOWN;
 		}
 		

@@ -46,7 +46,7 @@ public class HeavySniper extends Gun {
 				.Style("heavy")
 				.BaseSpeed(350f)
 				.Angle(InputManager.getAngleToMouse(owner))
-				.Damage(30f)
+				.Damage(50f)
 				.Knockback(200f)
 				.Pierce(5)
 				.Init()

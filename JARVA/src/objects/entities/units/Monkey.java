@@ -11,6 +11,9 @@ import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 
 public class Monkey extends Unit {
+	public static float SpawnTimer;
+	public static float SpawnCooldown;
+	
 	private boolean active;
 	private int timer;
 	final static float Base_Speed = 10;
@@ -32,7 +35,6 @@ public class Monkey extends Unit {
 	
 	@Override
 	public void objectCollision(GameObject o) {
-		
 		super.objectCollision(o);
 		
 		if (o instanceof BananaTree) {
@@ -41,7 +43,10 @@ public class Monkey extends Unit {
 	}
 	
 	protected void unitUpdate() {
-		moveTo(Base_Speed, nearestBananaTree());
+		BananaTree nearest = nearestBananaTree();
+		if(nearest == null) return;
+		
+		moveTo(Base_Speed, nearest);
 		if (active) {
 			timer++;
 			if (timer % 20 == 0 && timer != 0) {

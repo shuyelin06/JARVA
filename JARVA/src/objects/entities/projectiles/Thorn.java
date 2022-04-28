@@ -103,7 +103,7 @@ public class Thorn extends Projectile {
 
 	@Override
 	public void applyCondition(Unit u) {
-		u.takeCondition(Condition.Type.Confusion, 1f);
+		u.takeCondition(Condition.Type.Confusion, 0.5f);
 	}
 	
 	@Override
