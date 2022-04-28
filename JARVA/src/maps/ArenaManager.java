@@ -1,5 +1,6 @@
 package maps;
 
+import components.conditions.Condition;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
@@ -33,7 +34,12 @@ public class ArenaManager {
 			if(!arena.getBorder().intersects(o.getHitbox())) {
 				// Object Border Control
 				if( o instanceof Unit ) {
-					( (Unit) o).takeKnockback( Utility.atan(o.getY(), o.getX()) + (float) Math.PI, 200f );
+					Unit u = (Unit) o;
+					if (u.conditionActive(Condition.Type.Confusion)) {
+						u.takeKnockback( Utility.atan(o.getY(), o.getX()), 200f );
+					} else {
+						u.takeKnockback( Utility.atan(o.getY(), o.getX()) + (float) Math.PI, 200f );
+					}
 					
 				}
 				// Projectile Border Control
