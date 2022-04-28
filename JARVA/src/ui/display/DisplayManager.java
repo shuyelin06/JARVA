@@ -99,6 +99,8 @@ public class DisplayManager {
 		//render the HUD
 		//health bar, item list, tutorial, etc.
 		
+		g.setColor(Color.white);
+		g.drawString(( (Integer) (int) Game.Ticks).toString(), 15f, 15f);
 		crosshair.draw(g);
 		sprintbar.render(g);
 		playerHealthbar.render(g);

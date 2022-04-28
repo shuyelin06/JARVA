@@ -42,6 +42,9 @@ public class Arena {
 	// Return Centers
 	public float getFriction() { return friction; }
 	
+	public float getWidth() { return width; }
+	public float getHeight() { return height; }
+	
 	public int getCenterX() { return centerX; }
 	public int getCenterY() { return centerY; }
 	

@@ -11,10 +11,13 @@ import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 
 public class AngryBoulder extends Unit {
+	public static float SpawnTimer;
+	public static float SpawnCooldown;
+	
 	private Player player;
 	
 	private static float ShotCooldown = 2.5f;
-	private static int NumberOfShots = 10;
+	private static int NumberOfShots = 5;
 	private static float ShotSpread = 90; // In Degrees
 	
 	private float lastShot;
@@ -26,7 +29,7 @@ public class AngryBoulder extends Unit {
 		
 		this.maxVelocity = Player.Player_Max_Velocity * 0.3f;
 		
-		this.maxHealth = 100f;
+		this.maxHealth = 50f;
 		this.health = maxHealth;
 		this.damageBlock = 0.5f;
 		

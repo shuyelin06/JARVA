@@ -69,12 +69,12 @@ public class InputManager {
 			else		{	velocityAngle.add(0f);	}
 		}
 		
-		// Sprinting
-		if( input.isKeyDown(Input.KEY_LSHIFT) ) { 
-			Game.Player.startSprinting();
-		} else {
-			Game.Player.stopSprinting();;
-		}
+//		// Sprinting
+//		if( input.isKeyDown(Input.KEY_LSHIFT) ) { 
+//			Game.Player.startSprinting();
+//		} else {
+//			Game.Player.stopSprinting();;
+//		}
 		
 		//averages the angles
 		if(velocityAngle.size() != 0)
@@ -108,6 +108,9 @@ public class InputManager {
 	// Key Pressed
 	public void keyPressed(int key) {
 		switch(key) {
+			case Input.KEY_R:
+				Game.Player.respawn();
+				break;
 			case Input.KEY_1: Game.Player.getInventory().equipItem(0); break;
 			case Input.KEY_2: Game.Player.getInventory().equipItem(1); break;
 			case Input.KEY_3: Game.Player.getInventory().equipItem(2); break;
