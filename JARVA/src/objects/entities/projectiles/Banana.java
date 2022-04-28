@@ -3,7 +3,6 @@ package objects.entities.projectiles;
 import org.newdawn.slick.Graphics;
 
 import components.conditions.Condition;
-import engine.Utility;
 import objects.GameObject;
 import objects.entities.Projectile;
 import objects.entities.Unit;
@@ -17,7 +16,7 @@ public class Banana extends Projectile {
 	public Banana(GameObject origin, GameObject target) {
 		super(Polygon.rectangle(8f, 8f), origin);
 		
-		this.omega = (float) Math.PI;
+		this.omega = (float) (2 * Math.PI);
 		this.knockback = 30f;
 		
 		this.sprite = ImageManager.getImageCopy("banana", 8, 8);
@@ -30,7 +29,10 @@ public class Banana extends Projectile {
 		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		if (target != null) {
-			theta = (float) Math.atan2(target.getY() - origin.getY(), target.getX() - origin.getX());
+			float targetXAdjusted = target.getX() + (float) (Math.random()*30 - 15);
+			float targetYAdjusted = target.getY() + (float) (Math.random()*30 - 15);
+			
+			theta = (float) Math.atan2(targetYAdjusted - origin.getY(), targetXAdjusted - origin.getX());
 
 			this.setXVelocity((float) Math.cos(theta) * baseSpeed);
 			this.setYVelocity((float) Math.sin(theta) * baseSpeed);
