@@ -21,7 +21,12 @@ public class Background {
 	}
 	
 	public void initialize() {
-		for( int i = 0; i < 24; i++ ) {
+		for( int i = 0; i < 8; i++ ) {
+			objects.add(
+					new BackgroundObject("streak")
+					);
+		}
+		for( int i = 0; i < 36; i++ ) {
 			objects.add(
 					new BackgroundObject("shrub")
 					);
@@ -29,6 +34,11 @@ public class Background {
 		for( int i = 0; i < 12; i++ ) {
 			objects.add(
 					new BackgroundObject("cactus")
+					);
+		}
+		for( int i = 0; i < 12; i++ ) {
+			objects.add(
+					new BackgroundObject("boulder")
 					);
 		}
 		objects.add(

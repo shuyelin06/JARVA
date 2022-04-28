@@ -56,10 +56,38 @@ public class BackgroundObject {
 			this.y = Utility.random() * Y_Extent - Y_Extent / 2f;
 			
 			break;
+		case("boulder"): 
 			
+			this.spritesheet = new SpriteSheet(ImageManager.getImage("boulder"), 16, 16);
+			this.sprite = spritesheet.getSubImage(0, (int)(Math.random() * 3));
+			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
+			
+			xScale = (float)Math.random() * .2f + 0.5f;
+			yScale = xScale;
+			shadow = shadow.getScaledCopy(sprite.getWidth() * xScale / shadow.getWidth());
+			
+			this.x = Utility.random() * (X_Extent - sprite.getWidth()) - X_Extent / 2f;
+			this.y = Utility.random() * Y_Extent - Y_Extent / 2f;
+			
+			break;
+		case("streak"): 
+			
+			this.spritesheet = new SpriteSheet(ImageManager.getImage("streak"), 48, 16);
+			this.sprite = spritesheet.getSubImage(0, (int)(Math.random() * 5));
+			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
+			
+			xScale = (float)Math.random() * .8f + 0.8f;
+			yScale = xScale;
+			shadow = shadow.getScaledCopy(sprite.getWidth() * xScale / shadow.getWidth());
+			shadow.setAlpha(0f);
+			
+			this.x = Utility.random() * (X_Extent - sprite.getWidth()) - X_Extent / 2f;
+			this.y = Utility.random() * Y_Extent - Y_Extent / 2f;
+			
+			break;
 		case("skull"): 
 			
-			this.sprite = ImageManager.getImageCopy("skull");
+			this.sprite = ImageManager.getImageCopy("banana tree");
 			if(Math.random() > 0.5f) sprite = sprite.getFlippedCopy(true, false);
 			
 			xScale = 0.7f;
@@ -79,8 +107,11 @@ public class BackgroundObject {
 	}
 	
 	public void render(Graphics g) {
-		shadow.setFilter(Image.FILTER_NEAREST);
-		shadow.drawCentered(x + sprite.getWidth() * xScale * 0.5f, y + sprite.getHeight() * yScale - shadow.getHeight() * 0.2f);
+		if(shadow.getAlpha() != 0)
+		{
+			shadow.setFilter(Image.FILTER_NEAREST);
+			shadow.drawCentered(x + sprite.getWidth() * xScale * 0.5f, y + sprite.getHeight() * yScale - shadow.getHeight() * 0.2f);
+		}
 		
 		sprite.setFilter(Image.FILTER_NEAREST);
 		sprite.draw(x, y, sprite.getWidth() * xScale, sprite.getHeight() * yScale);
