@@ -45,7 +45,7 @@ public class Beam extends Projectile {
 		
 		this.knockback = 0f;
 		
-		this.damageMultiplier = 0.5f;
+		this.damageMultiplier = 0.35f;
 		
 		this.pierce = Integer.MAX_VALUE;
 	}

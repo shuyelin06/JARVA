@@ -8,6 +8,8 @@ import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 
 public class Eagle extends Unit{
+	public static float SpawnTimer;
+	public static float SpawnCooldown;
 	
 	private float timer;
 	private float firingTimer;

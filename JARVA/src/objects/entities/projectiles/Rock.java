@@ -17,10 +17,10 @@ public class Rock extends Projectile {
 	private static float BaseSpeed = 35f;
 	
 	public Rock(GameObject origin, GameObject target, float angleOffset, float speedMultiplier) {
-		super(Polygon.rectangle(4f, 4f), origin);
+		super(Polygon.rectangle(4, 4), origin);
 		
 		this.omega = (float) Math.PI;
-		this.knockback = 30f;
+		this.knockback = 50f;
 		
 		this.sprite = ImageManager.getImageCopy("rockProjectile", 4, 4);
 		this.setTeam(origin.getTeam()).setX(origin.getX()).setY(origin.getY());

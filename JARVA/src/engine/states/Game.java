@@ -31,6 +31,7 @@ public class Game extends BasicGameState {
 	
 	// Game Timer
 	public static float Ticks;
+	public static float Difficulty;
 	
 	// Game Objects
 	public static ArrayList<GameObject> GameObjects; 
@@ -109,6 +110,8 @@ public class Game extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
+		Difficulty = 1;
+		
 		// Update Timers
 		Ticks += Settings.Ticks_Per_Frame / Settings.Frames_Per_Second;
 		

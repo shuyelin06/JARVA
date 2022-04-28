@@ -21,27 +21,31 @@ public class LOne extends Level
 		
 		if(spawningTimer == 20)
 		{
-			for( int i = 0; i < 50; i++ ) {
+			for( int i = 0; i < 10; i++ ) {
 				new BighornSheep()
 					.setX( (float) Math.random() * 250f )
 					.setY( (float) Math.random() * 250f )
 					.build();
 			}
 			
-			new Eagle()
-				.setX(200f)
-				.setY(-100f)
-				.build();
+			for( int i = 0; i < 3; i++ ) {
+				new Eagle()
+					.setX( (float) Math.random() * 250f )
+					.setY( (float) Math.random() * 250f )
+					.build();
+			}
 		}
 		
 		if(spawningTimer == 100)
 		{
-			new AngryBoulder()
-			.setX(2f)
-			.setY(5f)
-			.build();
+			for( int i = 0; i < 3; i++ ) {
+				new AngryBoulder()
+					.setX( (float) Math.random() * 250f )
+					.setY( (float) Math.random() * 250f )
+					.build();
+			}
 
-			for( int i = 0; i < 25; i++ ) {
+			for( int i = 0; i < 1; i++ ) {
 				new Tumbleweed()
 					.setX( (float) Math.random() * 250f )
 					.setY( (float) Math.random() * 250f )

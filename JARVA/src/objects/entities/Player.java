@@ -11,6 +11,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import engine.states.Game;
 import objects.GameObject;
+import objects.collisions.BoundMonitor;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
@@ -163,14 +164,6 @@ public class Player extends Unit {
 		else { mirrored = false; }
 	}
 	
-	@Override
-	public void takeDamage(float damage) {
-		super.takeDamage(damage);
-		if (invulnerable == false) {
-			takeCondition(Condition.Type.Invulnerable, Values.Default_Invulnerability_Timer);
-		}
-	}
-	
 	/* --- Helper Methods --- */
 	public void move(float movementVelocity, float sumVelocityAngle) 
 	{
@@ -220,21 +213,6 @@ public class Player extends Unit {
 		velocityMultipliers.remove(Dash_Boost);
 	}
 	
-	/* --- Sprint Behavior --- */
-	public void startSprinting() 
-	{
-		if( sprintStamina > 0 ) {
-			if(!isSprinting) velocityMultipliers.add(Sprint_Boost);
-			isSprinting = true;
-		} else stopSprinting();
-	}
-	
-	public void stopSprinting() 
-	{
-		isSprinting = false;
-		velocityMultipliers.remove(Sprint_Boost);
-	}
-	
 	
 	private boolean hasSprintStamina() { return sprintStamina > 0; }
 	public void isSprinting() { isSprinting = true; }
@@ -248,6 +226,15 @@ public class Player extends Unit {
 	
 	 */
 
-	
+	public void respawn() {
+		if( this.health <= 0 ) {
+			remove = false;
+			health = maxHealth;
+			
+			new BoundMonitor(hitbox);
+			
+			this.buildPlayer();
+		}	
+	}
 	public Player buildPlayer() { Game.GameObjects.add(this); return this; }
 }

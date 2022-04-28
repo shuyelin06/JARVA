@@ -18,6 +18,9 @@ import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 
 public class BighornSheep extends Unit {
+	public static float SpawnTimer;
+	public static float SpawnCooldown;
+	
 	private Player player;
 	
 	final private static float LaserCooldown = 0.75f;
@@ -26,25 +29,24 @@ public class BighornSheep extends Unit {
 	final private static int LaserLength = 50;
 	final private static int LaserHeight = 1;
 	
-	final private static float AttackRadius = LaserLength * 0.8f;
-	
-	private float AttackSpeed = Player.Player_Max_Velocity * 0.8f;
-	private float BaseSpeed = AttackSpeed * 2;
+	private float AttackSpeed = Player.Player_Max_Velocity * 0.75f;
+	private float BaseSpeed = Player.Player_Max_Velocity * 1.25f;
 	
 	private Beam beam;
 	
-	private float attackCooldown;
-	private float attackTheta;
-	
+	private float attackCooldown;	
 	private float animationTimer;
+	
+	private boolean usingLaser;
 	
 	public BighornSheep() {
 		super(Polygon.rectangle(4, 4));
 				
-		this.maxHealth = 3f;
+		this.maxHealth = 1f;
 		this.health = maxHealth;
 		
 		this.baseDamage = 10;
+		this.contactDamage = 25;
 		
 		this.maxVelocity = BaseSpeed;
 		
@@ -78,8 +80,12 @@ public class BighornSheep extends Unit {
 			}
 		}
 		
+		final float Distance = distanceToPlayer();
+		if( Distance < LaserLength * 0.75f ) usingLaser = true;
+		else if( Distance > LaserLength ) usingLaser = false;
+		
 		final float Angle = Utility.atan(player.getY() - y, player.getX() - x);
-		if( distanceToPlayer()  < AttackRadius ) {
+		if( usingLaser ) {
 			// Move Slowly
 			this.maxVelocity = AttackSpeed;
 			this.addXVelocity(AttackSpeed * Utility.cos(Angle));
@@ -116,6 +122,7 @@ public class BighornSheep extends Unit {
 			this.addXVelocity(BaseSpeed * Utility.cos(Angle));
 			this.addYVelocity(BaseSpeed * Utility.sin(Angle));
 		}
+		
 	}
 		
 }
