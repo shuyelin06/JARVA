@@ -81,7 +81,7 @@ public class Player extends Unit {
 		inventory.addItem(new HeavySniper(this));
 		inventory.addItem(new Shotgun(this));
 		inventory.addItem(new SubmachineGun(this));
-		inventory.addItem(new RealRailgun(this));
+//		inventory.addItem(new RealRailgun(this)); No.
 		inventory.equipItem(0);
 		
 		this.build();
@@ -217,24 +217,6 @@ public class Player extends Unit {
 	private boolean hasSprintStamina() { return sprintStamina > 0; }
 	public void isSprinting() { isSprinting = true; }
 	public void isNotSprinting() { isSprinting = false; }
-	
-	/*
-	 * private int maxSprintStamina;
-	private int sprintStamina;
-	private int sprintCooldown;
-	private boolean isSprinting;
-	
-	 */
 
-	public void respawn() {
-		if( this.health <= 0 ) {
-			remove = false;
-			health = maxHealth;
-			
-			new BoundMonitor(hitbox);
-			
-			this.buildPlayer();
-		}	
-	}
 	public Player buildPlayer() { Game.GameObjects.add(this); return this; }
 }

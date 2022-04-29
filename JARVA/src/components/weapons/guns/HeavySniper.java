@@ -29,10 +29,10 @@ public class HeavySniper extends Gun {
 	}
 
 	@Override
-	public void equip() { Settings.Scale *= 0.5f; }
+	public void equip() { Settings.Scale *= 0.75f; }
 
 	@Override
-	public void unequip() { Settings.Scale *= 2f; }
+	public void unequip() { Settings.Scale *= 1 / 0.75f; }
 	
 	public void use()
 	{

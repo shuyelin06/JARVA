@@ -23,7 +23,7 @@ public class Eagle extends Unit{
 	private boolean firing;
 	private int attackMode;
 	
-	private static int TotalShots = 20;
+	private static int TotalShots = 15;
 	int shotCount;
 	
 	private float prevAddY;

@@ -19,10 +19,9 @@ public class Monkey extends Unit {
 	final static float Base_Speed = 10;
 	
 	public Monkey() {
-		super(Polygon.rectangle(7f, 7f));
+		super(Polygon.rectangle(6f, 6f));
 		
-		this.sprite = ImageManager.getImageCopy("monkey", 7, 7);
-		this.sprite.setImageColor(1f, 1f, 1f);
+		this.sprite = ImageManager.getImageCopy("monkey", 6, 6);
 		
 		this.baseDamage = 5;
 		
@@ -51,7 +50,7 @@ public class Monkey extends Unit {
 			timer++;
 			if (timer % 20 == 0 && timer != 0) {
 				new Banana(this, Game.Player)
-					.setPierce(3)
+					.setPierce(1)
 					.setKnockback(0)
 					.setDamageMultiplier(1)
 					.build();

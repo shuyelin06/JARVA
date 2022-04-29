@@ -1,5 +1,6 @@
 package maps;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -52,6 +53,7 @@ public class Arena {
 	public Polygon getProjectileBorder() { return projectileBorder; }
 	
 	public void draw(Graphics g) {
+		g.setColor(Color.red);
 		g.setLineWidth(10f);
 		border.draw(g, 0, 0);
 	}

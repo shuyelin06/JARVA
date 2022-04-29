@@ -22,7 +22,6 @@ public class Tumbleweed extends Unit {
 		super(Polygon.rectangle(7f, 7f));
 		
 		this.sprite = ImageManager.getImageCopy("tumbleweed", 7, 7);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
 		
 		this.maxHealth = 25f;
 		this.health = maxHealth;

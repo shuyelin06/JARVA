@@ -14,14 +14,14 @@ public class Banana extends Projectile {
 	private float theta;
 	
 	public Banana(GameObject origin, GameObject target) {
-		super(Polygon.rectangle(8f, 8f), origin);
+		super(Polygon.rectangle(6f, 6f), origin);
 		
 		this.pierce = 1;
 		
 		this.omega = (float) (2 * Math.PI);
 		this.knockback = 30f;
 		
-		this.sprite = ImageManager.getImageCopy("banana", 8, 8);
+		this.sprite = ImageManager.getImageCopy("banana", 6, 6);
 		
 		this.setX(origin.getX());
 		this.setY(origin.getY());
@@ -31,8 +31,8 @@ public class Banana extends Projectile {
 		this.sprite.setImageColor(1f, 1f, 1f);
 		
 		if (target != null) {
-			float targetXAdjusted = target.getX() + (float) (Math.random()*30 - 15);
-			float targetYAdjusted = target.getY() + (float) (Math.random()*30 - 15);
+			float targetXAdjusted = target.getX() + (float) (Math.random() * 30 - 15);
+			float targetYAdjusted = target.getY() + (float) (Math.random() * 30 - 15);
 			
 			theta = (float) Math.atan2(targetYAdjusted - origin.getY(), targetXAdjusted - origin.getX());
 

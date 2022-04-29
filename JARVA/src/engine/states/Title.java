@@ -55,12 +55,12 @@ public class Title extends BasicGameState {
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//		g.drawString("Title", Settings.Resolution_X / 2, Settings.Resolution_Y / 2);
-	
-		title.render(g);
-		//Draw All Buttons
-		startButton.render(g);
+		g.scale(1f, 1f);
+		g.resetTransform();
 		
+		// Draw All Buttons
+		title.render(g);
+		startButton.render(g);
 	}
 
 	@Override

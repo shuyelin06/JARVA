@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import engine.Main;
 import engine.Settings;
 import engine.states.levels.LevelManager;
 import maps.ArenaManager;
@@ -82,6 +83,7 @@ public class Game extends BasicGameState {
 		
 		// Initialize Timers
 		Ticks = 0f;
+		Difficulty = 1f;
 		
 		// Initialize GameObjects List
 		GameObjects = new ArrayList<>();
@@ -110,11 +112,19 @@ public class Game extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
-		Difficulty = 1;
+		// If player is dead, send to end game screen
+		if( Game.Player.getPercentHealth() <= 0f ) {
+			Settings.LastState = Main.GAME_ID;
+			sbg.enterState(Main.END_ID);
+			return;
+		}
 		
-		// Update Timers
+		// Game Timer
 		Ticks += Settings.Ticks_Per_Frame / Settings.Frames_Per_Second;
 		
+		// Difficulty Scaling
+		Difficulty = 1 + (float) Math.floor(Ticks / 30f) * 0.5f;
+				
 		// Input Manager
 		InputManager.update();
 		

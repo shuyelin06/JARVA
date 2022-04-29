@@ -46,8 +46,8 @@ public class BighornSheep extends Unit {
 		this.maxHealth = 1f;
 		this.health = maxHealth;
 		
-		this.baseDamage = 10;
-		this.contactDamage = 25;
+		this.baseDamage = 5;
+		this.contactDamage = 10;
 		
 		this.maxVelocity = BaseSpeed;
 		

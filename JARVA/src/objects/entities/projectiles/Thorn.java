@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 
 import components.conditions.Condition;
 import components.conditions.Confusion;
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Player;
@@ -24,7 +25,7 @@ public class Thorn extends Projectile {
 	private int maxTimer;
 	
 	public Thorn(GameObject origin, GameObject target) {
-		super(Polygon.rectangle(3f, 3f), origin);
+		super(Polygon.rectangle(2f, 2f), origin);
 		
 		this.origin = origin;
 		this.target = target;
@@ -34,17 +35,17 @@ public class Thorn extends Projectile {
 		
 		this.setTeam(origin.getTeam());
 		
-		this.sprite = ImageManager.getImageCopy("thorn", 3, 3);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite = ImageManager.getImageCopy("thorn", 2, 2);
+		this.omega = 0.025f;
 		
 		if (this.target != null) {
 			theta = Math.atan2(target.getY() - origin.getY(), target.getX() - origin.getX());
 
 			this.setXVelocity((float) Math.cos(theta) * baseSpeed);
 			this.setYVelocity((float) Math.sin(theta) * baseSpeed);
+			
+			this.rotate((float) (theta - Math.PI / 3));
 		}
-		
-		
 	}
 
 	

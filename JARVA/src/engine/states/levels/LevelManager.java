@@ -57,7 +57,7 @@ public class LevelManager
 		Monkey.SpawnTimer = 10f;
 		Monkey.SpawnCooldown = 0f;
 		
-		BananaTree.SpawnTimer = 35f; 
+		BananaTree.SpawnTimer = 25f; 
 		BananaTree.SpawnCooldown = 0f; 
 	}
 	
@@ -99,7 +99,7 @@ public class LevelManager
 				Tumbleweed.SpawnTimer = Tumbleweed.SpawnTimer - Tumbleweed.SpawnTimer / 250f;
 				Tumbleweed.SpawnCooldown = Tumbleweed.SpawnTimer;
 
-				for( int i = 0; i < 1 * ((int) Game.Difficulty); i++ ) {
+				for( int i = 0; i < 2 * ((int) Game.Difficulty); i++ ) {
 					float x = randomX();
 					float y = randomY();
 					while( Game.Player.getDistance(x, y) < SpawnRadius ) {
@@ -177,7 +177,7 @@ public class LevelManager
 			}
 		}
 		
-		
+		// Ram Rush
 		if( Ticks > 45f ) {
 			BighornSheep.SpawnCooldown -= Game.TicksPerFrame();
 			if( BighornSheep.SpawnCooldown < 0 ) {
@@ -185,17 +185,19 @@ public class LevelManager
 				BighornSheep.SpawnTimer = BighornSheep.SpawnTimer - BighornSheep.SpawnTimer / 250f;
 				BighornSheep.SpawnCooldown = BighornSheep.SpawnTimer;
 				
+				// General Spawn Area
+				float x = randomX();
+				float y = randomY();
+				while( Game.Player.getDistance(x, y) < SpawnRadius * 1.5f ) {
+					x = randomX();
+					y = randomY();
+				}
+				
 				for( int i = 0; i < 5 * BighornSheep.NumberMultiplier; i++ ) {
-					float x = randomX();
-					float y = randomY();
-					while( Game.Player.getDistance(x, y) < SpawnRadius * 1.5f ) {
-						x = randomX();
-						y = randomY();
-					}
-					
+					final float Spread = (float) (Math.random() * SpawnRadius * 0.25f) - SpawnRadius * 0.25f / 2f;
 					new BighornSheep()
-						.setX(x)
-						.setY(y)
+						.setX(x + Spread)
+						.setY(y + Spread)
 						.build();
 				}
 			}

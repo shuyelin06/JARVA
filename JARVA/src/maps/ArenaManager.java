@@ -8,6 +8,9 @@ import objects.entities.Projectile;
 import objects.entities.Unit;
 
 public class ArenaManager {
+	final public static float ArenaWidth = 250f;
+	final public static float ArenaHeight = 250f;
+	
 	private Game game;
 	
 	private Arena arena;
@@ -21,7 +24,7 @@ public class ArenaManager {
 	
 	// Initialize a random arena for the game
 	private void initialize() {
-		arena = new Arena(250f, 250f);
+		arena = new Arena(ArenaWidth, ArenaHeight);
 	}
 	
 	public void update() {

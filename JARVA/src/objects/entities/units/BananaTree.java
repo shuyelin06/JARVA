@@ -16,13 +16,15 @@ public class BananaTree extends Unit {
 	public static ArrayList<BananaTree> bananaTrees = new ArrayList<BananaTree>();
 	
 	public BananaTree() {
-		super(Polygon.rectangle(7f, 7f));
+		super(Polygon.rectangle(10, 10));
 		
-		this.sprite = ImageManager.getImageCopy("banana tree", 7, 7);
-		this.sprite.setImageColor(0.5f, 0.5f, 0.5f);
+		this.sprite = ImageManager.getImageCopy("banana tree", 10, 10);
 		
-		this.maxHealth = 300f;
+		this.maxHealth = 350f;
+		this.health = maxHealth;
+		
 		this.baseDamage = 0;
+		this.contactDamage = 0;
 		
 		this.knockbackBlock = 1;
 		
