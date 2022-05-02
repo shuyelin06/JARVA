@@ -3,6 +3,7 @@ package objects.entities.projectiles;
 import org.newdawn.slick.Graphics;
 
 import components.conditions.Condition;
+import engine.Utility;
 import objects.GameObject;
 import objects.entities.Projectile;
 import objects.entities.Unit;
@@ -14,7 +15,9 @@ public class Banana extends Projectile {
 	private float theta;
 	
 	public Banana(GameObject origin, GameObject target) {
-		super(Polygon.rectangle(6f, 6f), origin);
+		super( Polygon.semicircle( 3f , 5 )
+				.rotate( Utility.ConvertToRadians(45) )
+				.offset(0.9f, -1), origin);
 		
 		this.pierce = 1;
 		

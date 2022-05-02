@@ -36,6 +36,8 @@ public class Eagle extends Unit{
 		this.height = 12;
 		this.animation = new Animation("eagle", 32, 32);
 		
+		this.score = 15;
+		
 		this.baseDamage = 5;
 		
 		firing = false;

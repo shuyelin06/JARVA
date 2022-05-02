@@ -115,8 +115,30 @@ public class LevelManager
 			}
 		}
 		
-		// MONKE and TREE
 		if( Ticks > 15f ) {
+			Eagle.SpawnCooldown -= Game.TicksPerFrame();
+			if( Eagle.SpawnCooldown < 0 ) {
+				Eagle.SpawnTimer = Eagle.SpawnTimer - Eagle.SpawnTimer / 250f;
+				Eagle.SpawnCooldown = Eagle.SpawnTimer;
+
+				for( int i = 0; i < 1 * ((int) Game.Difficulty); i++ ) {
+					float x = randomX();
+					float y = randomY();
+					while( Game.Player.getDistance(x, y) < SpawnRadius ) {
+						x = randomX();
+						y = randomY();
+					}
+					
+					new Eagle()
+						.setX(x)
+						.setY(y)
+						.build();
+				}
+			}
+		}
+		
+		// MONKE and TREE
+		if( Ticks > 30f ) {
 			BananaTree.SpawnCooldown -= Game.TicksPerFrame();
 			Monkey.SpawnCooldown -= Game.TicksPerFrame();
 			
@@ -154,31 +176,8 @@ public class LevelManager
 			}
 		}
 		
-		
-		if( Ticks > 30f ) {
-			Eagle.SpawnCooldown -= Game.TicksPerFrame();
-			if( Eagle.SpawnCooldown < 0 ) {
-				Eagle.SpawnTimer = Eagle.SpawnTimer - Eagle.SpawnTimer / 250f;
-				Eagle.SpawnCooldown = Eagle.SpawnTimer;
-
-				for( int i = 0; i < 1 * ((int) Game.Difficulty); i++ ) {
-					float x = randomX();
-					float y = randomY();
-					while( Game.Player.getDistance(x, y) < SpawnRadius ) {
-						x = randomX();
-						y = randomY();
-					}
-					
-					new Eagle()
-						.setX(x)
-						.setY(y)
-						.build();
-				}
-			}
-		}
-		
 		// Ram Rush
-		if( Ticks > 45f ) {
+		if( Ticks > 90f ) {
 			BighornSheep.SpawnCooldown -= Game.TicksPerFrame();
 			if( BighornSheep.SpawnCooldown < 0 ) {
 				BighornSheep.NumberMultiplier++;

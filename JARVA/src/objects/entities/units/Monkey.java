@@ -23,6 +23,8 @@ public class Monkey extends Unit {
 		
 		this.sprite = ImageManager.getImageCopy("monkey", 6, 6);
 		
+		this.score = 15;
+		
 		this.baseDamage = 5;
 		
 		this.maxVelocity = Game.Player.getMaxVelocity();

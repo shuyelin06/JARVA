@@ -100,8 +100,11 @@ public class DisplayManager {
 		//health bar, item list, tutorial, etc.
 		
 		g.setColor(Color.white);
+		
 		g.drawString("Timer: " + ( (Integer) (int) Game.Ticks).toString(), 15f, 15f);
 		g.drawString("Difficulty: " + ( (Float) Game.Difficulty).toString(), 15f, 30f);
+		g.drawString("Score: " + ( (Integer) (int) Game.GameScore).toString(), 15f, 45f);
+		
 		crosshair.draw(g);
 		sprintbar.render(g);
 		playerHealthbar.render(g);
