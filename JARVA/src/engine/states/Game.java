@@ -21,6 +21,7 @@ import objects.entities.Player;
 import objects.entities.Projectile;
 import objects.entities.units.Eagle;
 import objects.entities.units.AngryBoulder;
+import objects.entities.units.BananaTree;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
@@ -101,6 +102,7 @@ public class Game extends BasicGameState {
 		Player = new Player();
 				
 		// Other Objects
+		BananaTree.bananaTrees.clear();
 	}
 
 	@Override // Input Determining
