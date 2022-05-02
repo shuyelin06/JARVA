@@ -49,6 +49,14 @@ public class Polygon {
 		}
 	}
 	
+	// Offset every point by some amount
+	public Polygon offset(float x, float y) {
+		for(Vector v: vertices) { 
+			v.x += x;
+			v.y += y; 
+		}
+		return this;
+	}
 	// Rotate every vertex by some radians counterclockwise
 	public Polygon rotate(float angle) { 
 		for(Vector v: vertices) { v.rotate(angle); }
@@ -71,6 +79,44 @@ public class Polygon {
 		
 		return edges;
 	}
+	public static Polygon semicircle(float radius, int precision) {
+		Vector[] edges = new Vector[precision + 1];
+		
+		final float Omega = Utility.ConvertToRadians( 180f / precision );
+		for( int i = 0; i <= precision; i++ ) {
+			int n = i % precision;
+			
+			final float Angle = Omega / 2f + Omega * n;
+			edges[i] = new Vector( Utility.cos( Angle ) * radius, Utility.sin( Angle ) * radius );
+		}
+		
+		return new Polygon(edges);
+		
+	}
+	public static Polygon regularPolygon(float length, int vertices) {
+		Vector[] edges = new Vector[vertices + 1];
+		
+		final float Omega = Utility.ConvertToRadians( 360f / vertices );
+		for( int i = 0; i <= vertices; i++ ) {
+			int n = i % vertices;
+			
+			final float Angle = Omega / 2f + Omega * n;
+			edges[i] = new Vector( Utility.cos( Angle ) * length, Utility.sin( Angle ) * length );
+		}
+		
+		return new Polygon(edges);
+	}
+	// Creates a new triangle
+	public static Polygon triangle(float length, float angle) {
+		Vector[] edges = new Vector[4];
+		
+		edges[0] = new Vector( - Utility.cos( Utility.ConvertToRadians(angle) ) * length, - Utility.sin(  Utility.ConvertToRadians(angle) ) * length );
+		edges[1] = new Vector( 0f, length);
+		edges[2] = new Vector( Utility.cos( Utility.ConvertToRadians(angle) ) * length, - Utility.sin(  Utility.ConvertToRadians(angle) ) * length );
+		edges[3] = new Vector( - Utility.cos(  Utility.ConvertToRadians(angle) ) * length, - Utility.sin( Utility.ConvertToRadians(angle) ) * length );
+		
+		return new Polygon(edges);
+	}
 	// Creates a new rectangle
 	public static Polygon rectangle(float width, float height) {
 		Vector[] edges = new Vector[5];
@@ -83,19 +129,6 @@ public class Polygon {
 		edges[2] = new Vector(x, y);
 		edges[3] = new Vector(x, -y);
 		edges[4] = new Vector(-x, -y);
-		
-		return new Polygon(edges);
-	}
-	// Creates a new __ shape
-	public static Polygon shape() {
-		Vector[] edges = new Vector[6];
-		
-		edges[0] = new Vector(0, -50f);
-		edges[1] = new Vector(-35f, -35f);
-		edges[2] = new Vector(-35f, 35f);
-		edges[3] = new Vector(0, 50f);
-		edges[4] = new Vector(35f, 35f);
-		edges[5] = new Vector(0, -50f);
 		
 		return new Polygon(edges);
 	}

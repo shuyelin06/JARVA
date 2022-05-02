@@ -30,6 +30,9 @@ import ui.input.InputManager;
 public class Game extends BasicGameState {
 	private int id; // GameState ID
 	
+	// Player Score
+	public static int GameScore;
+	
 	// Game Timer
 	public static float Ticks;
 	public static float Difficulty;
@@ -81,7 +84,10 @@ public class Game extends BasicGameState {
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.setMouseGrabbed(true);
 		
-		// Initialize Timers
+		// Reset Game Score
+		GameScore = 0;
+		
+		// Initialize Timer and Difficulty
 		Ticks = 0f;
 		Difficulty = 1f;
 		

@@ -46,6 +46,9 @@ public abstract class Unit extends GameObject {
 	// Effects
 	protected HashMap<Condition.Type, Condition> conditions;
 	
+	// Score
+	protected int score;
+	
 	// Stats
 	protected float health; // Current Health
 	protected float maxHealth; // Max Health
@@ -142,6 +145,7 @@ public abstract class Unit extends GameObject {
 		
 		// Entity Dying
 		if(health <= 0f) {
+			Game.GameScore += score;
 			remove();
 			return;
 		}

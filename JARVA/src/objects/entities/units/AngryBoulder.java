@@ -29,6 +29,8 @@ public class AngryBoulder extends Unit {
 		
 		this.maxVelocity = Player.Player_Max_Velocity * 0.3f;
 		
+		this.score = 10;
+		
 		this.maxHealth = 50f;
 		this.health = maxHealth;
 		this.damageBlock = 0.5f;

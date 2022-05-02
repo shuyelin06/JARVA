@@ -20,6 +20,8 @@ public class BananaTree extends Unit {
 		
 		this.sprite = ImageManager.getImageCopy("banana tree", 10, 10);
 		
+		this.score = 1;
+		
 		this.maxHealth = 350f;
 		this.health = maxHealth;
 		

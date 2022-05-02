@@ -7,6 +7,7 @@ import objects.entities.Projectile;
 import objects.entities.Unit;
 import objects.entities.projectiles.Dagger;
 import objects.entities.projectiles.Thorn;
+import objects.entities.projectiles.ThornBall;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 
@@ -19,9 +20,11 @@ public class Tumbleweed extends Unit {
 	private int timer;
 	
 	public Tumbleweed() {
-		super(Polygon.rectangle(7f, 7f));
+		super( Polygon.regularPolygon(2.5f, 8) );
 		
 		this.sprite = ImageManager.getImageCopy("tumbleweed", 7, 7);
+		
+		this.score = 1;
 		
 		this.maxHealth = 25f;
 		this.health = maxHealth;
@@ -43,11 +46,8 @@ public class Tumbleweed extends Unit {
 		if (timer % 200 == 0) {
 			theta = (float) (Math.random() * 2 * Math.PI);
 			
-			new Thorn(this, Game.Player)
+			new ThornBall(this, Game.Player)
 				.setMaxTimer(200)
-				.setPierce(1)
-				.setKnockback(0)
-				.setDamageMultiplier(1)
 				.build();
 		}
 		
