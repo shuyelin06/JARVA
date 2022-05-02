@@ -13,6 +13,7 @@ import engine.states.Game;
 import objects.GameObject;
 import objects.collisions.BoundMonitor;
 import objects.geometry.Polygon;
+import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 import components.Inventory;
@@ -56,7 +57,7 @@ public class Player extends Unit {
 		
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
-		this.sprite = ImageManager.getImageCopy("jarvis", 6, 6);
+		this.sprite = ImageManager.getImageCopy("ikeaMan", 8, 8); //6, 6
 		
 		// Contact Damage
 		this.baseDamage = 1f;

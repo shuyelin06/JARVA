@@ -21,6 +21,7 @@ import objects.entities.Player;
 import objects.entities.Projectile;
 import objects.entities.units.Eagle;
 import objects.entities.units.AngryBoulder;
+import objects.entities.units.BananaTree;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
@@ -88,6 +89,9 @@ public class Game extends BasicGameState {
 		GameScore = 0;
 		
 		// Initialize Timer and Difficulty
+		Settings.Scale = Settings.BaseScale;
+		
+		// Initialize Timers
 		Ticks = 0f;
 		Difficulty = 1f;
 		
@@ -105,6 +109,7 @@ public class Game extends BasicGameState {
 		Player = new Player();
 				
 		// Other Objects
+		BananaTree.bananaTrees.clear();
 	}
 
 	@Override // Input Determining
