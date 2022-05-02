@@ -36,7 +36,7 @@ public class End extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.setMouseGrabbed(false);
 		
-		timer = 120;
+		timer = 60;
 		restart = false;
 		
 		restartButton = new Button()
@@ -44,7 +44,7 @@ public class End extends BasicGameState {
 				.setCenterY(Settings.Resolution_Y / 2)
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
-				.setImage( "placeholder" );
+				.setImage( "restartButton" );
 	}
 	
 	@Override

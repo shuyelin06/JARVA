@@ -81,6 +81,8 @@ public class Game extends BasicGameState {
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.setMouseGrabbed(true);
 		
+		Settings.Scale = Settings.BaseScale;
+		
 		// Initialize Timers
 		Ticks = 0f;
 		Difficulty = 1f;
