@@ -39,6 +39,8 @@ public abstract class Unit extends GameObject {
 	
 	protected Animation animation;
 	protected Image shadow;
+	protected boolean hasShadow;
+	protected boolean shadowScaled;
 	
 	protected int width, height;
 	protected boolean attacking;
@@ -81,8 +83,9 @@ public abstract class Unit extends GameObject {
 		this.contactDamage = 1f; // Contact Damage
 		this.baseDamage = 1f; // Base Damage
 		
+		this.hasShadow = true;
+		this.shadowScaled = false;
 		this.shadow = ImageManager.getImageCopy("shadow");
-		this.shadow = shadow.getScaledCopy(width / shadow.getWidth());
 	}
 	
 	/* --- Inherited Methods --- */
@@ -116,18 +119,16 @@ public abstract class Unit extends GameObject {
 	
 	@Override
 	protected void drawSprite(Graphics g) {
+		sprite.setFilter(Image.FILTER_NEAREST);
+		
+		shadowShenanigans();
+		
 		if( animation != null ) {
 			if( attacking ) sprite = animation.getFrame(Attack_Frame);
 			else sprite = animation.getFrame(Default_Frame);
 			
 			sprite = sprite.getScaledCopy(width, height);
 			sprite.rotate( Utility.ConvertToDegrees(angle) );
-		}
-		
-		if(shadow.getAlpha() != 0)
-		{
-			shadow.setFilter(Image.FILTER_NEAREST);
-			shadow.drawCentered(x + sprite.getWidth() * 0.5f, y + sprite.getHeight() - shadow.getHeight() * 0.2f);
 		}
 		
 		if(angle == 0 && mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);
@@ -174,6 +175,26 @@ public abstract class Unit extends GameObject {
 		conditions.put(Condition.Type.Poison, new Poison(this));
 		conditions.put(Condition.Type.Stun, new Stun(this));
 	}
+	
+	public void shadowShenanigans()
+	{
+		if(!shadowScaled && this.sprite.getName() != "placeholder" && sprite.getWidth() < 80)
+		{
+			this.shadow = shadow.getScaledCopy((float)sprite.getWidth() / (float)shadow.getWidth());
+
+			shadowScaled = true;
+		}
+		
+		if(shadowScaled && shadow != null)
+		{
+			if(shadow.getAlpha() != 0)
+			{
+				shadow.setFilter(Image.FILTER_NEAREST);
+				shadow.drawCentered(x , y + sprite.getHeight() * 0.5f - shadow.getHeight() * 0.2f);	
+			}
+		}
+	}
+	
 	protected void mirroredCheck() {
 		if(velocity.x < 0) mirrored = true;
 		else mirrored = false;
