@@ -2,6 +2,9 @@ package objects.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import components.conditions.Invulnerable;
 import components.conditions.Stun;
 import engine.states.Game;
@@ -75,6 +78,11 @@ public abstract class Projectile extends GameObject {
 		}
 	}
 	
+	public void draw(Graphics g)
+	{
+		sprite.setFilter(Image.FILTER_NEAREST);
+		super.draw(g);
+	}
 	
 	
 	/* --- Mutator / Construtor Methods --- */

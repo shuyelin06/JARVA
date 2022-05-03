@@ -2,6 +2,9 @@ package objects.entities.units;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import engine.states.Game;
 import objects.GameObject;
 import objects.GameObject.ObjectTeam;
@@ -16,9 +19,9 @@ public class BananaTree extends Unit {
 	public static ArrayList<BananaTree> bananaTrees = new ArrayList<BananaTree>();
 	
 	public BananaTree() {
-		super(Polygon.rectangle(10, 10));
+		super(Polygon.rectangle(24, 24));
 		
-		this.sprite = ImageManager.getImageCopy("banana tree", 10, 10);
+		this.sprite = ImageManager.getImageCopy("banana tree", 24, 24);
 		
 		this.score = 1;
 		
@@ -32,7 +35,7 @@ public class BananaTree extends Unit {
 		
 		this.team = ObjectTeam.Enemy;
 	}
-
+	
 	@Override
 	protected void unitUpdate() {}
 	
