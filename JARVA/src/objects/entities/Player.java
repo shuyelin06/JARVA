@@ -16,6 +16,7 @@ import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
+import ui.sound.SoundManager;
 import components.Inventory;
 import components.conditions.Condition;
 import components.conditions.Invulnerable;
@@ -58,6 +59,9 @@ public class Player extends Unit {
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
 		this.sprite = ImageManager.getImageCopy("ikeaMan", 8, 8); //6, 6
+		
+		this.maxHealth = 150f;
+		this.health = maxHealth;
 		
 		// Contact Damage
 		this.baseDamage = 1f;
@@ -157,12 +161,11 @@ public class Player extends Unit {
 	
 	/* --- Overwritten Methods --- */
 	@Override
-
 	protected void mirroredCheck() {
 		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) // idk how to get mouse relative to the player
-		{ mirrored = true; }
+		{ mirrored = false; }
 		
-		else { mirrored = false; }
+		else { mirrored = true; }
 	}
 	
 	/* --- Helper Methods --- */
@@ -204,6 +207,8 @@ public class Player extends Unit {
 		lastDashed = Game.getTicks();
 		friction = false;
 		velocityMultipliers.add(Dash_Boost);
+		
+		SoundManager.playSoundEffect("dash", Settings.EffectsVolume);
 	}
 	private void stopDashing() 
 	{

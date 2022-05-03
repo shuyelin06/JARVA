@@ -1,10 +1,12 @@
 package components.weapons.guns;
 
+import engine.Settings;
 import objects.GameObject;
 import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
+import ui.sound.SoundManager;
 
 public class SubmachineGun extends Gun {
 
@@ -30,7 +32,9 @@ public class SubmachineGun extends Gun {
 	}
 
 	@Override
-	public void equip() {}
+	public void equip() {
+		SoundManager.playSoundEffect("smgcock", Settings.EffectsVolume);
+	}
 
 	@Override
 	public void unequip() {}
@@ -42,7 +46,6 @@ public class SubmachineGun extends Gun {
 	
 	public void fire()
 	{
-		
 		((Bullet) new Bullet(owner, 1, 1)
 				.build())
 				.Style("light")
@@ -53,6 +56,7 @@ public class SubmachineGun extends Gun {
 				.Pierce(1)
 				.Init()
 				.Recoil(currentRecoil);
+		SoundManager.playSoundEffect("smgshot", Settings.EffectsVolume);
 		
 		super.fire();
 	}

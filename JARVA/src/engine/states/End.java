@@ -12,6 +12,7 @@ import engine.Main;
 import engine.Settings;
 import ui.display.images.ImageManager;
 import ui.input.Button;
+import ui.sound.SoundManager;
 
 public class End extends BasicGameState {
 	private int id;
@@ -45,6 +46,13 @@ public class End extends BasicGameState {
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
 				.setImage( "restartButton" );
+		
+		SoundManager.playBackgroundMusic("funky blue monkey");
+	}
+	
+	@Override
+	public void leave(GameContainer gc, StateBasedGame sbg) {
+		SoundManager.stopBackgroundMusic();		
 	}
 	
 	@Override

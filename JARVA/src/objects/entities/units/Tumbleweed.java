@@ -1,5 +1,6 @@
 package objects.entities.units;
 
+import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import objects.entities.Player;
@@ -10,6 +11,7 @@ import objects.entities.projectiles.Thorn;
 import objects.entities.projectiles.ThornBall;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class Tumbleweed extends Unit {
 	public static float SpawnTimer;
@@ -46,6 +48,7 @@ public class Tumbleweed extends Unit {
 		if (timer % 200 == 0) {
 			theta = (float) (Math.random() * 2 * Math.PI);
 			
+			SoundManager.playSoundEffect("weedattack", Settings.EffectsVolume);
 			new ThornBall(this, Game.Player)
 				.setMaxTimer(200)
 				.build();

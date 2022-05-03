@@ -1,5 +1,6 @@
 package objects.entities.units;
 
+import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
@@ -9,11 +10,13 @@ import objects.entities.projectiles.Banana;
 import objects.entities.projectiles.Thorn;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class Monkey extends Unit {
 	public static float SpawnTimer;
 	public static float SpawnCooldown;
 	
+	private boolean lastActive; // For sounds
 	private boolean active;
 	private int timer;
 	final static float Base_Speed = 10;
@@ -49,6 +52,11 @@ public class Monkey extends Unit {
 		
 		moveTo(Base_Speed, nearest);
 		if (active) {
+			if( !lastActive ) {
+				lastActive = true;
+				SoundManager.playSoundEffect("monkeyattack", Settings.EffectsVolume);
+			}
+			
 			timer++;
 			if (timer % 20 == 0 && timer != 0) {
 				new Banana(this, Game.Player)
@@ -57,6 +65,8 @@ public class Monkey extends Unit {
 					.setDamageMultiplier(1)
 					.build();
 			}
+		} else {
+			lastActive = false;
 		}
 	}
 	

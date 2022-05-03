@@ -7,6 +7,7 @@ import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
+import ui.sound.SoundManager;
 
 public class HeavySniper extends Gun {
 	public HeavySniper(Unit owner) 
@@ -29,7 +30,10 @@ public class HeavySniper extends Gun {
 	}
 
 	@Override
-	public void equip() { Settings.Scale *= 0.75f; }
+	public void equip() { 
+		SoundManager.playSoundEffect("snipercock", Settings.EffectsVolume);
+		Settings.Scale *= 0.75f; 
+	}
 
 	@Override
 	public void unequip() { Settings.Scale *= 1 / 0.75f; }
@@ -51,6 +55,7 @@ public class HeavySniper extends Gun {
 				.Pierce(5)
 				.Init()
 				.Recoil(currentRecoil);
+		SoundManager.playSoundEffect("snipershot", Settings.EffectsVolume);
 		
 		super.fire();
 	}

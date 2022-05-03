@@ -36,9 +36,9 @@ public class SoundManager {
 	}
 	
 	// Play Sound Effect
-	public static void playSoundEffect(String s) {
+	public static void playSoundEffect(String s, float volume) {
 		try {
-			Sounds.get(s).play();
+			Sounds.get(s).play(1f, volume);
 		} catch (Exception e) {
 			System.out.println("Error playing sound effect");
 		}

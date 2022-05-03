@@ -25,6 +25,7 @@ import objects.entities.units.BananaTree;
 import objects.entities.units.Tumbleweed;
 import ui.display.DisplayManager;
 import ui.input.InputManager;
+import ui.sound.SoundManager;
 import objects.geometry.Polygon;
 import ui.input.InputManager;
 
@@ -110,7 +111,16 @@ public class Game extends BasicGameState {
 				
 		// Other Objects
 		BananaTree.bananaTrees.clear();
+		
+		// Background Music
+		SoundManager.playBackgroundMusic("angry desert monkey");
 	}
+	
+	@Override
+	public void leave(GameContainer gc, StateBasedGame sbg) {
+		SoundManager.stopBackgroundMusic();		
+	}
+
 
 	@Override // Input Determining
 	public void keyPressed(int key, char c) { InputManager.keyPressed(key); }
@@ -125,6 +135,7 @@ public class Game extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
 		// If player is dead, send to end game screen
 		if( Game.Player.getPercentHealth() <= 0f ) {
+			SoundManager.playSoundEffect("dead", 1f);
 			Settings.LastState = Main.GAME_ID;
 			sbg.enterState(Main.END_ID);
 			return;
@@ -134,7 +145,7 @@ public class Game extends BasicGameState {
 		Ticks += Settings.Ticks_Per_Frame / Settings.Frames_Per_Second;
 		
 		// Difficulty Scaling
-		Difficulty = 1 + (float) Math.floor(Ticks / 30f) * 0.5f;
+		Difficulty = 1 + (float) Math.floor(Ticks / 60f);
 				
 		// Input Manager
 		InputManager.update();

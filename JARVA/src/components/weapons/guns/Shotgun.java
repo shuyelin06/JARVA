@@ -3,6 +3,7 @@ package components.weapons.guns;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import engine.Settings;
 import objects.GameObject;
 import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
@@ -10,6 +11,7 @@ import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
+import ui.sound.SoundManager;
 
 public class Shotgun extends Gun {
 	public Shotgun(Unit owner)
@@ -36,7 +38,9 @@ public class Shotgun extends Gun {
 	}
 	
 	@Override
-	public void equip() {}
+	public void equip() {
+		SoundManager.playSoundEffect("shotguncock", Settings.EffectsVolume);
+	}
 
 	@Override
 	public void unequip() {}
@@ -61,6 +65,7 @@ public class Shotgun extends Gun {
 					.Init()
 					.Recoil(currentRecoil);
 		}
+		SoundManager.playSoundEffect("shotgunshot", Settings.EffectsVolume);
 		
 		super.fire();
 		

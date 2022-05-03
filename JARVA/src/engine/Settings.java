@@ -14,7 +14,9 @@ public class Settings {
 	public static int Resolution_Y;
 	
 	// Sound Settings
-	final public static float Volume = 0.5f;
+	final public static float BackgroundVolume = 0.75f;
+	final public static float SpawnVolume = 0.6f;
+	final public static float EffectsVolume = 0.25f;
 
 	// Scale Settings
 	final public static float Pixels_Per_Unit = 20f;

@@ -12,6 +12,7 @@ import engine.Settings;
 import engine.Main;
 import ui.display.images.ImageManager;
 import ui.input.Button;
+import ui.sound.SoundManager;
 
 public class Title extends BasicGameState {
 	private int id;
@@ -49,8 +50,14 @@ public class Title extends BasicGameState {
 				.setCenterY(Settings.Resolution_Y / 2)
 				.setW(3f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
-				.setImage("startButton")
-				;
+				.setImage("startButton");
+		
+		SoundManager.playBackgroundMusic("chill leafy monkey");
+	}
+	
+	@Override
+	public void leave(GameContainer gc, StateBasedGame sbg) {
+		SoundManager.stopBackgroundMusic();		
 	}
 	
 	@Override

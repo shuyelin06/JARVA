@@ -1,11 +1,13 @@
 package objects.entities.units;
 
+import engine.Settings;
 import engine.states.Game;
 import objects.entities.Unit;
 import objects.entities.projectiles.Dagger;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class Eagle extends Unit{
 	public static float SpawnTimer;
@@ -79,6 +81,8 @@ public class Eagle extends Unit{
 			// Shooting Cooldown
 			timer -= Game.TicksPerFrame();
 			if(timer < 0 && Math.random() < 0.01) {
+				SoundManager.playSoundEffect("eagleattack", Settings.EffectsVolume);
+				
 				firing = true;
 				shotCount = TotalShots;
 				firingTimer = rapidFireSpacing;

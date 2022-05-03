@@ -22,7 +22,7 @@ public class Button {
 		this.w = this.h = 0f;
 		this.image = ImageManager.getPlaceholder();
 		this.outline = false;
-;	}
+	}
 	
 	// Mutator Methods
 	public Button setCenterX(float newX) { this.centerX = newX; return this; }

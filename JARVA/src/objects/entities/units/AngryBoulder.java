@@ -1,5 +1,6 @@
 package objects.entities.units;
 
+import engine.Settings;
 import engine.Utility;
 import engine.states.Game;
 import objects.entities.Player;
@@ -9,6 +10,7 @@ import objects.entities.projectiles.Rock;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class AngryBoulder extends Unit {
 	public static float SpawnTimer;
@@ -51,6 +53,7 @@ public class AngryBoulder extends Unit {
 		
 		if(lastShot < 0) {
 			attacking = true;
+			SoundManager.playSoundEffect("rockattack", Settings.EffectsVolume);
 			
 			float angle = -ShotSpread / 2f;
 			for( int i = 0; i < NumberOfShots; i++ ) {
