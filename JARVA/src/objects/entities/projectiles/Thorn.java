@@ -98,9 +98,6 @@ public class Thorn extends Projectile {
 				this.remove();
 			}
 		}
-		
-		sprite.setCenterOfRotation(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
-		sprite.rotate((float) Math.toDegrees(theta));
 	}
 
 	@Override
