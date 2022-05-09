@@ -20,7 +20,7 @@ public class Thorn extends Projectile {
 	private GameObject origin;
 	
 	public Thorn(GameObject origin, float theta) {
-		super(Polygon.triangle(1.8f, 50f).rotate((float) Math.PI), origin);
+		super(Polygon.triangle(1.8f, 50f), origin);
 		
 		this.theta = theta;
 		this.origin = origin;
@@ -37,7 +37,7 @@ public class Thorn extends Projectile {
 		this.damageMultiplier = 1;
 		
 		// Rotate sprite correctly
-		this.rotate((float) this.theta + (float) Math.PI / 2f);
+		this.rotate((float) this.theta + 3 * (float) Math.PI / 2f);
 	}
 
 	

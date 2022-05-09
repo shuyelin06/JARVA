@@ -15,16 +15,16 @@ public class Banana extends Projectile {
 	private float theta;
 	
 	public Banana(GameObject origin, GameObject target) {
-		super( Polygon.semicircle( 3f , 5 )
+		super( Polygon.semicircle( 2f , 5 )
 				.rotate( Utility.ConvertToRadians(45) )
-				.offset(0.9f, -1), origin);
+				.offset(0.8f, -0.9f), origin);
 		
 		this.pierce = 1;
 		
 		this.omega = (float) (2 * Math.PI);
 		this.knockback = 30f;
 		
-		this.sprite = ImageManager.getImageCopy("banana", 6, 6);
+		this.sprite = ImageManager.getImageCopy("banana", 4, 4);
 		
 		this.setX(origin.getX());
 		this.setY(origin.getY());

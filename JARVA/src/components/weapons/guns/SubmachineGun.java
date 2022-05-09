@@ -17,22 +17,23 @@ public class SubmachineGun extends Gun {
 		this.h = 4;
 		
 		useTimer = 5; 
-		baseRecoil = 10;
-		maxRecoil = 40;
+		baseRecoil = 5;
+		maxRecoil = 10;
 		recoilRecovery = 1;
 		recoilThetaMult = 1;
 		recoilPosMult = 0.1f;
 		
 		this.sprite = ImageManager.getImageCopy("uzi");
-		
-		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.3f;
+		this.relativeBarrelX = w - w * 0.235f;
+		this.relativeBarrelY = h * 0.225f;
 		
 		heldUse = true;
 	}
 
 	@Override
 	public void equip() {
+		this.lastUsed = useTimer;
+		
 		SoundManager.playSoundEffect("smgcock", Settings.EffectsVolume);
 	}
 
@@ -51,11 +52,13 @@ public class SubmachineGun extends Gun {
 				.Style("light")
 				.BaseSpeed(175f)
 				.Angle(InputManager.getAngleToMouse(owner))
-				.Damage(8f)
+				.Damage(10f)
 				.Knockback(50f)
 				.Pierce(1)
 				.Init()
-				.Recoil(currentRecoil);
+				.Recoil(currentRecoil)
+				.setX(barrelX)
+				.setY(barrelY);
 		SoundManager.playSoundEffect("smgshot", Settings.EffectsVolume);
 		
 		super.fire();

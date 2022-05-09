@@ -1,9 +1,13 @@
 package components.weapons.guns;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Circle;
 
 import engine.Settings;
+import engine.Utility;
+import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
@@ -14,6 +18,7 @@ import ui.input.InputManager;
 import ui.sound.SoundManager;
 
 public class Shotgun extends Gun {
+	
 	public Shotgun(Unit owner)
 	{
 		super(owner);
@@ -32,13 +37,14 @@ public class Shotgun extends Gun {
 		animating = false;
 		
 		this.sprite = ImageManager.getImageCopy("shotgun");
-		
-		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.12f;
+		this.relativeBarrelX = w - w * 0.225f;
+		this.relativeBarrelY = h * 0.45f;
 	}
 	
 	@Override
 	public void equip() {
+		this.lastUsed = useTimer;
+		
 		SoundManager.playSoundEffect("shotguncock", Settings.EffectsVolume);
 	}
 
@@ -59,11 +65,13 @@ public class Shotgun extends Gun {
 					.Style("light")
 					.BaseSpeed(150f)
 					.Angle(InputManager.getAngleToMouse(owner) + (i - 6 - (float) Math.random()) * 3)
-					.Damage(4f)
-					.Knockback(50f)
+					.Damage(3f)
+					.Knockback(75f)
 					.Pierce(1)
 					.Init()
-					.Recoil(currentRecoil);
+					.Recoil(currentRecoil)
+					.setX(barrelX)
+					.setY(barrelY);
 		}
 		SoundManager.playSoundEffect("shotgunshot", Settings.EffectsVolume);
 		

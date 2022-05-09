@@ -32,6 +32,8 @@ public class Monkey extends Unit {
 		
 		this.maxVelocity = Game.Player.getMaxVelocity();
 		
+		this.damageBlock = 0.1f;
+		
 		timer = 0;
 		active = false;
 		this.team = ObjectTeam.Enemy;

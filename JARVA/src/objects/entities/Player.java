@@ -27,7 +27,7 @@ import components.weapons.guns.Shotgun;
 import components.weapons.guns.SubmachineGun;
 
 public class Player extends Unit {
-	public static float Player_Max_Velocity = 75f;
+	public static float Player_Max_Velocity = 70f;
 	
 	// Max Velocity Multipliers
 	private ArrayList<Float> velocityMultipliers;
@@ -35,14 +35,13 @@ public class Player extends Unit {
 	// Dashing
 	private static Float Dash_Boost = 2.5f;
 	private static float Dash_Timer = 0.15f;
-	private static float Dash_Threshold = 0.35f;
+	private static float Dash_Threshold = 0.5f;
 	private static float Dash_Cooldown = 0.5f;
 	
 	private float lastDashed;
 	private boolean dashing;
 	
-	// Sprinting
-	private static Float Sprint_Boost = 1.5f;
+	// Sprint Meter
 	private static int Max_Sprint_Stamina = 150;
 	
 	private int maxSprintStamina;
@@ -99,6 +98,8 @@ public class Player extends Unit {
 		}
 		return output;
 	}
+	public void addVelocityMultiplier(Float f) { velocityMultipliers.add(f); }
+	public void removeVelocityMultiplier(Float f) { velocityMultipliers.remove(f); }
 	
 	public Inventory getInventory()	{	return inventory;	}
 	
@@ -108,9 +109,7 @@ public class Player extends Unit {
 	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	/* --- Inherited Methods --- */
-	public void unitDraw(Graphics g) {
-		inventory.draw(g); //ill move this to the managers
-	}
+	public void unitDraw(Graphics g) {}
 	
 	public void unitUpdate() {
 		this.maxVelocity = Player_Max_Velocity;
@@ -120,6 +119,7 @@ public class Player extends Unit {
 		
 		// Dash Determining
 		if( dashing ) {
+			this.velocity.scalarMultiply( maxVelocity / velocity.magnitude() );
 			if ( Game.getTicks() - lastDashed > Dash_Timer ) stopDashing();
 		}
 		
@@ -127,8 +127,7 @@ public class Player extends Unit {
 		if( isSprinting ) {
 			sprintStamina--;
 			sprintCooldown = 120;
-		}
-		else if( sprintStamina < maxSprintStamina ) {
+		} else if( sprintStamina < maxSprintStamina ) {
 			sprintCooldown--;
 			if(sprintCooldown < 0)
 			{
@@ -182,7 +181,6 @@ public class Player extends Unit {
 	{
 		if( dashing ) return;
 		if( Game.getTicks() - lastDashed < Dash_Cooldown ) return;
-		
 		if( sprintStamina < 15) return;
 		
 		if( velocity.magnitude() > maxVelocity * Dash_Threshold ) {

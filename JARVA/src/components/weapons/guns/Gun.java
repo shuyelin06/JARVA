@@ -5,10 +5,13 @@ import objects.entities.Unit;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Circle;
 
 import components.weapons.Weapon;
+import engine.Utility;
 
 public class Gun extends Weapon
 {	
@@ -26,8 +29,16 @@ public class Gun extends Weapon
 	
 	protected Image muzzleFlash;
 	protected float flashTimer;	
+	
+	// Absolute Position of the Barrel
+	// For Muzzle Flash and Bullets
 	protected float barrelX; //for the muzzle flash, and maybe for the bullet
 	protected float barrelY;
+	
+	// Relative Barrel Positions on the Image
+	// For calculating BarrelX and Y
+	protected float relativeBarrelX;
+	protected float relativeBarrelY;
 	
 	public Gun(Unit owner) 
 	{
@@ -49,8 +60,12 @@ public class Gun extends Weapon
 		sprite = ImageManager.getImageCopy("revolver");
 		muzzleFlash = ImageManager.getImageCopy("muzzleFlash");
 		flashTimer = 0;
+		
 		barrelX = 0;
 		barrelY = 0;
+		
+		relativeBarrelX = 0;
+		relativeBarrelY = 0;
 	}
 
 	@Override
@@ -90,10 +105,23 @@ public class Gun extends Weapon
 	{
 		super.update();
 		
+		// Calculate Barrel Position
+		float angle = Utility.ConvertToDegrees( Utility.atan(InputManager.getMapMouseY() - owner.getY(), InputManager.getMapMouseX() - owner.getX()) );
+		while( angle < 0 ) { angle += 360; }
+		
+		float shift = (float) Math.PI / 2f;
+		if(angle > 90 && angle < 270 ) shift = -shift;
+		
+		final float ConvertedTheta = Utility.ConvertToRadians(theta);
+		barrelX = pivotX + relativeBarrelX * (float) Math.cos(ConvertedTheta) - relativeBarrelY * (float) Math.cos(ConvertedTheta + shift);
+		barrelY = pivotY + relativeBarrelX * (float) Math.sin(ConvertedTheta) - relativeBarrelY * (float) Math.sin(ConvertedTheta + shift);
+		
+		// Dampen Recoil
 		recoilX *= 0.95f;
 		recoilY *= 0.95f;
 		recoilTheta *= 0.9f;
-		//cleaning up numbers
+		
+		// Cleaning up numbers
 		if(Math.abs(recoilX) < 0.1f) recoilX = 0;
 		if(Math.abs(recoilY) < 0.1f) recoilY = 0;
 		if(Math.abs(recoilTheta) < 0.1f) recoilTheta = 0;
@@ -107,19 +135,16 @@ public class Gun extends Weapon
 	
 	public void draw(Graphics g)
 	{
-		g.rotate(pivotX, pivotY, theta);
+		super.draw(g);
+		
+		g.rotate(barrelX, barrelY, theta);
 		
 		if(flashTimer > 0)
 		{
-			float tempBarrelY = barrelY;
-			if(owner.isMirrored()) tempBarrelY *= 0; //huh?? where does the offset even go
-			
-			muzzleFlash.draw(x + barrelX, y + tempBarrelY, w * 0.8f, h * 1.8f);
+			muzzleFlash.draw(barrelX, barrelY - h * 0.9f, w * 0.8f, h * 1.8f);
 		}
 		
-		g.rotate(pivotX, pivotY, -theta);
-		
-		super.draw(g);
+		g.rotate(barrelX, barrelY, -theta);
 	}
 	
 	public void drawSprite(Image s)
