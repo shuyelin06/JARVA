@@ -39,6 +39,8 @@ public class Revolver extends Gun {
 
 	@Override
 	public void equip() { 
+		this.lastUsed = useTimer;
+		
 		SoundManager.playSoundEffect("revolvercock", Settings.EffectsVolume);
 		spinAnimTimer = 0; 
 	}

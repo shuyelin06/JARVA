@@ -1,5 +1,6 @@
 package components.weapons.guns;
 
+import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
@@ -8,6 +9,8 @@ import ui.input.InputManager;
 
 public class RealRailgun extends Gun
 {
+	private static Float RailgunSpeed = 10f;
+	
 	public RealRailgun(Unit owner) {
 		super(owner);
 		
@@ -30,10 +33,16 @@ public class RealRailgun extends Gun
 	}
 
 	@Override
-	public void equip() {}
+	public void equip() {
+		this.lastUsed = useTimer;
+		
+		Game.Player.addVelocityMultiplier(RailgunSpeed);
+	}
 
 	@Override
-	public void unequip() {}
+	public void unequip() {
+		Game.Player.removeVelocityMultiplier(RailgunSpeed);
+	}
 	
 	public void use()
 	{

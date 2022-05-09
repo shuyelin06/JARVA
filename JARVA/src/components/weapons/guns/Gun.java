@@ -29,6 +29,9 @@ public class Gun extends Weapon
 	protected float barrelX; //for the muzzle flash, and maybe for the bullet
 	protected float barrelY;
 	
+	protected float barrelWidth;
+	protected float barrelHeight;
+	
 	public Gun(Unit owner) 
 	{
 		super(owner);

@@ -203,6 +203,7 @@ public abstract class GameObject {
 	public GameObject setSprite(Image newImage) { sprite = newImage; return this; }
 	public GameObject setTeam(ObjectTeam newTeam) { team = newTeam; return this; }
 	
+	public GameObject offsetPosition(float offsetX, float offsetY) { x += offsetX; y += offsetY; return this; }
 	public GameObject setX(float newX) { x = newX; return this; }
 	public GameObject setY(float newY) { y = newY; return this; }
 	

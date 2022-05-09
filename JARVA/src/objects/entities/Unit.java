@@ -34,10 +34,14 @@ public abstract class Unit extends GameObject {
 	protected boolean mirrored; // Sprite Mirroring
 	
 	// Animations
+	private static final float DamageFlash = 0.15f;
 	private static final int Default_Frame = 0;
 	private static final int Attack_Frame = 1;
 	
 	protected Animation animation;
+	
+	protected float damageFlash;
+	
 	protected Image shadow;
 	protected boolean hasShadow;
 	protected boolean shadowScaled;
@@ -134,8 +138,23 @@ public abstract class Unit extends GameObject {
 			sprite.rotate( Utility.ConvertToDegrees(angle) );
 		}
 		
-		if(angle == 0 && mirrored) sprite.getFlippedCopy(true, false).drawCentered(x, y);
-		else sprite.drawCentered(x, y);
+		if(angle == 0 && mirrored) {
+			if( damageFlash > 0 ) {
+				damageFlash -= Game.TicksPerFrame(); 
+				sprite.drawFlash(x - sprite.getWidth() / 2, y - sprite.getHeight() / 2);
+			} else {
+				sprite.getFlippedCopy(true, false)
+					.drawCentered(x, y);
+			}
+		}
+		else {
+			if( damageFlash > 0 ) {
+				damageFlash -= Game.TicksPerFrame();
+				sprite.drawFlash(x - sprite.getWidth() / 2, y - sprite.getHeight() / 2);
+			} else {
+				sprite.drawCentered(x, y);
+			}
+		}
 	}
 	@Override
 	public void objectUpdate() {
@@ -235,6 +254,7 @@ public abstract class Unit extends GameObject {
 	
 	public void takeDamage(float damage) { // Overwritable
 		if( !invulnerable ) {
+			damageFlash = DamageFlash;
 			health -= damage - damage * damageBlock;
 			velocity.reduce(0.75f);
 		}

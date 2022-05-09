@@ -1,6 +1,7 @@
 package components.weapons.guns;
 
 import engine.Settings;
+import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Unit;
 import objects.entities.projectiles.Bullet;
@@ -10,6 +11,8 @@ import ui.input.InputManager;
 import ui.sound.SoundManager;
 
 public class HeavySniper extends Gun {
+	private static Float SniperSlow = 0.65f;
+	
 	public HeavySniper(Unit owner) 
 	{
 		super(owner);
@@ -30,13 +33,19 @@ public class HeavySniper extends Gun {
 	}
 
 	@Override
-	public void equip() { 
+	public void equip() {
+		this.lastUsed = useTimer;
+		
 		SoundManager.playSoundEffect("snipercock", Settings.EffectsVolume);
+		Game.Player.addVelocityMultiplier(SniperSlow);
 		Settings.Scale *= 0.75f; 
 	}
 
 	@Override
-	public void unequip() { Settings.Scale *= 1 / 0.75f; }
+	public void unequip() { 
+		Game.Player.removeVelocityMultiplier(SniperSlow);
+		Settings.Scale *= 1 / 0.75f; 
+	}
 	
 	public void use()
 	{
