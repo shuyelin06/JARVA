@@ -66,6 +66,9 @@ public abstract class Item
 	public boolean isWeapon() { return isWeapon; }
 	public boolean isHeldUse() { return heldUse; }
 	
+	public float getHeight() { return h; }
+	public Image getSprite() { return sprite; }
+	
 	abstract public void equip();
 	abstract public void unequip();
 	

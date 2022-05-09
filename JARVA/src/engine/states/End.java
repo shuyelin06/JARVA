@@ -74,7 +74,7 @@ public class End extends BasicGameState {
 		g.setColor(Color.red);
 		String endMessage = "Still a WIP! Press the placeholder image below to restart";
 		g.drawString(endMessage, Main.getScreenWidth() / 2f - g.getFont().getWidth(endMessage) / 2f, Main.getScreenHeight() / 2f - 90f);
-		String timeSurvived = "Time Survived (Score Feature to Come): " + Game.Ticks + " seconds";
+		String timeSurvived = "Your IQ: " + (int) Math.floor(Game.Ticks);
 		g.drawString(timeSurvived, Main.getScreenWidth() / 2f - g.getFont().getWidth(timeSurvived) / 2f, Main.getScreenHeight() / 2f - 75f);
 	}
 	

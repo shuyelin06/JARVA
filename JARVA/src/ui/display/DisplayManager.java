@@ -6,7 +6,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.Image;
 
+import components.Item;
 import engine.Main;
 import engine.Settings;
 import engine.states.Game;
@@ -109,6 +111,20 @@ public class DisplayManager {
 		crosshair.draw(g);
 		sprintbar.render(g);
 		playerHealthbar.render(g);
+		
+		ArrayList<Item> items = Game.Player.getInventory().getItems();
+
+		for (int i = 0; i < items.size(); i++) {
+			//make copy of image to fit height
+			Image copy = items.get(i).getSprite().getScaledCopy(50f / items.get(i).getSprite().getHeight());
+			copy.draw(Settings.Resolution_X, Settings.Resolution_Y - (50 * i * 1.2f) - 100, -copy.getWidth(), copy.getHeight());
+			
+			if (game.Player.getInventory().getEquippedItem() == items.get(i)) {
+				g.setColor(Color.cyan);
+				g.setLineWidth(2);
+				g.drawRect(Settings.Resolution_X, Settings.Resolution_Y - (50 * i * 1.2f) - 100 - 2, -copy.getWidth(), copy.getHeight() + 4);
+			}
+		}
 	}
 	
 
