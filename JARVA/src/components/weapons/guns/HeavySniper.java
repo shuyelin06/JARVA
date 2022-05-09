@@ -11,7 +11,7 @@ import ui.input.InputManager;
 import ui.sound.SoundManager;
 
 public class HeavySniper extends Gun {
-	private static Float SniperSlow = 0.65f;
+	private static Float SniperSlow = 0.75f;
 	
 	public HeavySniper(Unit owner) 
 	{
@@ -27,9 +27,8 @@ public class HeavySniper extends Gun {
 		recoilThetaMult = 3;
 		
 		this.sprite = ImageManager.getImageCopy("50cal");
-		
-		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.2f;
+		this.relativeBarrelX = w - w * 0.235f;
+		this.relativeBarrelY = h * 0.135f;
 	}
 
 	@Override
@@ -60,10 +59,12 @@ public class HeavySniper extends Gun {
 				.BaseSpeed(350f)
 				.Angle(InputManager.getAngleToMouse(owner))
 				.Damage(50f)
-				.Knockback(200f)
+				.Knockback(225f)
 				.Pierce(5)
 				.Init()
-				.Recoil(currentRecoil);
+				.Recoil(currentRecoil)
+				.setX(barrelX)
+				.setY(barrelY);
 		SoundManager.playSoundEffect("snipershot", Settings.EffectsVolume);
 		
 		super.fire();

@@ -85,6 +85,7 @@ public class DisplayManager {
 		renderBackground(g); // Render Background
 		renderArena(g); // Render Arena
 		renderObjects(g); // Render All Objects
+		renderGun(g); // Render Gun
 		
 		// Debug Mode
 		if ( Debug ) renderDebug(g);
@@ -111,6 +112,7 @@ public class DisplayManager {
 	}
 	
 
+	public void renderGun(Graphics g) { Game.Player.getInventory().draw(g); }
 	public void renderDebug(Graphics g) {
 		for( final GameObject object: game.getGameObjects() ) {
 			object.debug(g);

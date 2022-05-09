@@ -3,6 +3,7 @@ package components;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import engine.Settings;
 import objects.GameObject;
 import objects.entities.Player;
 import objects.entities.Unit;

@@ -32,9 +32,8 @@ public class Revolver extends Gun {
 		recoilThetaMult = 40;
 		
 		this.sprite = ImageManager.getImageCopy("revolver");
-		
-		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.7f;
+		this.relativeBarrelX = w - w * 0.245f;
+		this.relativeBarrelY = h * 0.325f;
 	}
 
 	@Override
@@ -60,11 +59,13 @@ public class Revolver extends Gun {
 				.Style("medium")
 				.BaseSpeed(200f)
 				.Angle(InputManager.getAngleToMouse(owner))
-				.Damage(20f)
+				.Damage(28.5f)
 				.Knockback(100f)
 				.Pierce(2)
 				.Init()
-				.Recoil(currentRecoil);
+				.Recoil(currentRecoil)
+				.setX(barrelX)
+				.setY(barrelY);
 		SoundManager.playSoundEffect("revolvershot", Settings.EffectsVolume);
 		
 		super.fire();

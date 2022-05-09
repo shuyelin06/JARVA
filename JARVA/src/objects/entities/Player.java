@@ -109,9 +109,7 @@ public class Player extends Unit {
 	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	/* --- Inherited Methods --- */
-	public void unitDraw(Graphics g) {
-		inventory.draw(g); //ill move this to the managers
-	}
+	public void unitDraw(Graphics g) {}
 	
 	public void unitUpdate() {
 		this.maxVelocity = Player_Max_Velocity;

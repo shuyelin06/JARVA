@@ -98,7 +98,7 @@ public abstract class GameObject {
 		
 	}
 	
-	private void updatePhysics() {
+	protected void updatePhysics() {
 		// Cap Velocity
 		final float magnitude = velocity.magnitude();
 		if(magnitude > maxVelocity) { velocity.scalarMultiply(maxVelocity / magnitude ); }
