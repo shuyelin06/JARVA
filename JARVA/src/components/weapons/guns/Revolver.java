@@ -34,7 +34,7 @@ public class Revolver extends Gun {
 		this.sprite = ImageManager.getImageCopy("revolver");
 		
 		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.7f;
+		barrelY = -this.w * 0.5f;
 	}
 
 	@Override

@@ -163,9 +163,9 @@ public class Player extends Unit {
 	@Override
 	protected void mirroredCheck() {
 		if(InputManager.getScreenMouseX() < Settings.Resolution_X * 0.5f) // idk how to get mouse relative to the player
-		{ mirrored = false; }
+		{ mirrored = true; }
 		
-		else { mirrored = true; }
+		else { mirrored = false; }
 	}
 	
 	/* --- Helper Methods --- */

@@ -26,7 +26,7 @@ public class HeavySniper extends Gun {
 		this.sprite = ImageManager.getImageCopy("50cal");
 		
 		barrelX = this.w * 0.95f;
-		barrelY = -this.w * 0.2f;
+		barrelY = -this.w * 0.1f;
 	}
 
 	@Override
