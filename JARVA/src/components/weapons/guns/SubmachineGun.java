@@ -25,8 +25,8 @@ public class SubmachineGun extends Gun {
 		
 		this.sprite = ImageManager.getImageCopy("uzi");
 		
-		barrelX = this.w * 0.8f;
-		barrelY = -this.w * 0.5f;
+		barrelX = this.w * 0.95f;
+		barrelY = -this.w * 0.3f;
 		
 		heldUse = true;
 	}
