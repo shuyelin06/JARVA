@@ -1,8 +1,10 @@
 package components.weapons.guns;
 
 import engine.Settings;
+import engine.Utility;
 import objects.GameObject;
 import objects.entities.Unit;
+import objects.entities.other.BulletCasing;
 import objects.entities.projectiles.Bullet;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
@@ -59,6 +61,11 @@ public class SubmachineGun extends Gun {
 				.Recoil(currentRecoil)
 				.setX(barrelX)
 				.setY(barrelY);
+		final float CasingAngle = (float) ( Utility.ConvertToRadians(InputManager.getAngleToMouse(owner)) + Math.PI);
+		new BulletCasing(75f, CasingAngle)
+			.setX(pivotX)
+			.setY(pivotY)
+			.build();
 		SoundManager.playSoundEffect("smgshot", Settings.EffectsVolume);
 		
 		super.fire();

@@ -55,6 +55,8 @@ public class DisplayManager {
 		this.background = new Background();
 	}
 	
+	public Background getBackground() { return background; }
+	
 	private void cameraPosition() {
 		float mouseX = InputManager.getMapMouseX();
 		float mouseY = InputManager.getMapMouseY();

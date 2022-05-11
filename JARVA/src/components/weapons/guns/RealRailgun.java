@@ -1,8 +1,10 @@
 package components.weapons.guns;
 
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Unit;
+import objects.entities.other.BulletCasing;
 import objects.entities.projectiles.Bullet;
 import ui.display.images.ImageManager;
 import ui.input.InputManager;
@@ -53,15 +55,15 @@ public class RealRailgun extends Gun
 	{
 		//new Bullet(owner, 10, 1, "light", 20, InputManager.getAngleToMouse(owner), currentRecoil, 10f, 1f, 50f).build();
 		((Bullet) new Bullet(owner, 10, 1)
-		.build())
-		.Style("light")
-		.BaseSpeed(450f)
-		.Angle(InputManager.getAngleToMouse(owner))
-		.Damage(50)
-		.Knockback(0)
-		.Pierce(10)
-		.Init()
-		.Recoil(currentRecoil);
+			.build())
+			.Style("light")
+			.BaseSpeed(450f)
+			.Angle(InputManager.getAngleToMouse(owner))
+			.Damage(50)
+			.Knockback(0)
+			.Pierce(10)
+			.Init()
+			.Recoil(currentRecoil);
 		
 		super.fire();
 	}

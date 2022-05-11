@@ -1,24 +1,32 @@
 package ui.display.background;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import ui.display.background.objects.Casing;
 import ui.display.images.ImageManager;
 
 public class Background {
 	private Color color;
+	
 	private ArrayList<BackgroundObject> objects;
+	private LinkedList<Casing> casings;
 	
 	public Background() {
+		casings = new LinkedList<>();
 		objects = new ArrayList<>();
 		color = new Color(205, 170, 109);
 		
 		initialize();
 	}
+	
+	public void addBulletCasing(Casing c) { casings.add(c); }
 	
 	public void initialize() {
 		for( int i = 0; i < 8; i++ ) {
@@ -45,6 +53,7 @@ public class Background {
 				new BackgroundObject("skull")
 				);
 	}
+	
 	public void render(Graphics g) {
 		// Set Background Color
 		g.setBackground(color);
@@ -52,6 +61,11 @@ public class Background {
 		// Render Background Objects
 		for(BackgroundObject o: objects) {
 			o.render(g);
+		}
+		
+		while( casings.size() > 35 ) { casings.pop(); }
+		for(Casing c: casings) {
+			c.render(g);
 		}
 	}
 }

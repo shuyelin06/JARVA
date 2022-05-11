@@ -10,6 +10,7 @@ import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Unit;
+import objects.entities.other.BulletCasing;
 import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
@@ -60,8 +61,7 @@ public class Shotgun extends Gun {
 	{
 		for(int i = 0; i < 12; i++)
 		{
-			((Bullet) new Bullet(owner, 1, 1)
-					.build())
+			new Bullet(owner, 1, 1)
 					.Style("light")
 					.BaseSpeed(150f)
 					.Angle(InputManager.getAngleToMouse(owner) + (i - 6 - (float) Math.random()) * 3)
@@ -71,8 +71,15 @@ public class Shotgun extends Gun {
 					.Init()
 					.Recoil(currentRecoil)
 					.setX(barrelX)
-					.setY(barrelY);
+					.setY(barrelY)
+					.build();
 		}
+		final float CasingAngle = (float) ( Utility.ConvertToRadians(InputManager.getAngleToMouse(owner)) + Math.PI);
+		new BulletCasing(50f, CasingAngle)
+			.setX(pivotX)
+			.setY(pivotY)
+			.build();
+		
 		SoundManager.playSoundEffect("shotgunshot", Settings.EffectsVolume);
 		
 		super.fire();

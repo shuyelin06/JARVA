@@ -1,9 +1,11 @@
 package components.weapons.guns;
 
 import engine.Settings;
+import engine.Utility;
 import engine.states.Game;
 import objects.GameObject;
 import objects.entities.Unit;
+import objects.entities.other.BulletCasing;
 import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
@@ -53,8 +55,7 @@ public class HeavySniper extends Gun {
 	
 	public void fire()
 	{	
-		((Bullet) new Bullet(owner, 4, 1)
-				.build())
+		new Bullet(owner, 4, 1)
 				.Style("heavy")
 				.BaseSpeed(350f)
 				.Angle(InputManager.getAngleToMouse(owner))
@@ -64,7 +65,14 @@ public class HeavySniper extends Gun {
 				.Init()
 				.Recoil(currentRecoil)
 				.setX(barrelX)
-				.setY(barrelY);
+				.setY(barrelY)
+				.build();
+		final float CasingAngle = (float) ( Utility.ConvertToRadians(InputManager.getAngleToMouse(owner)) + Math.PI);
+		new BulletCasing(100f, CasingAngle)
+			.setX(pivotX)
+			.setY(pivotY)
+			.build();
+		
 		SoundManager.playSoundEffect("snipershot", Settings.EffectsVolume);
 		
 		super.fire();
