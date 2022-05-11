@@ -10,6 +10,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import engine.Main;
 import engine.Settings;
+import ui.display.hud.panels.MessagePanel;
+import ui.display.hud.panels.Panel;
 import ui.display.images.ImageManager;
 import ui.input.Button;
 import ui.sound.SoundManager;
@@ -19,8 +21,11 @@ public class End extends BasicGameState {
 	
 	private int timer;
 	private boolean restart;
+	private boolean swapped;
 	
+	private MessagePanel messagePanel;
 	private Button restartButton;
+	
 	
 	// Constructor
 	public End(int id) { 
@@ -37,7 +42,16 @@ public class End extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.setMouseGrabbed(false);
 		
-		timer = 60;
+		this.messagePanel = (MessagePanel) (new MessagePanel()
+				.setTextHeight( 50 )
+				.setCentered(true)
+				.setX( Settings.Resolution_X / 2 )
+				.setY( Settings.Resolution_Y / 2)
+				.setWidth( (int) (Settings.Resolution_X * 0.65f) )
+				.setHeight( (int) (Settings.Resolution_Y * 0.45f) ));
+		
+		timer = 120;
+		swapped = false;
 		restart = false;
 		
 		restartButton = new Button()
@@ -69,13 +83,15 @@ public class End extends BasicGameState {
 		g.scale(1f, 1f);
 		g.resetTransform();
 		
-		if( timer < 0 ) restartButton.render(g);
-		
 		g.setColor(Color.red);
-		String endMessage = "Still a WIP! Press the placeholder image below to restart";
-		g.drawString(endMessage, Main.getScreenWidth() / 2f - g.getFont().getWidth(endMessage) / 2f, Main.getScreenHeight() / 2f - 90f);
-		String timeSurvived = "Your IQ: " + (int) Math.floor(Game.Ticks);
-		g.drawString(timeSurvived, Main.getScreenWidth() / 2f - g.getFont().getWidth(timeSurvived) / 2f, Main.getScreenHeight() / 2f - 75f);
+		
+		messagePanel.setMessage(
+				"Still a WIP! Press the placeholder image below to restart" + "\n" + 
+				"Your IQ:" + (int) Math.floor(Game.Ticks)
+				);
+		messagePanel.render(g);
+		
+		if( timer < 0 ) restartButton.render(g);
 	}
 	
 	public void mousePressed(int button, int x, int y) {
