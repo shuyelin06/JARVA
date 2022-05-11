@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import engine.states.Game;
 import objects.GameObject;
@@ -43,6 +44,11 @@ public class Player extends Unit {
 	
 	// Sprint Meter
 	private static int Max_Sprint_Stamina = 150;
+	private Animation animation;
+	private Image cowboyHat;
+	private int animationTick;
+	private int animationFrame;
+	private boolean animating;
 	
 	private int maxSprintStamina;
 	private int sprintStamina;
@@ -57,7 +63,11 @@ public class Player extends Unit {
 		
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
+		
 		this.sprite = ImageManager.getImageCopy("ikeaMan", 8, 8); //6, 6
+		this.cowboyHat = ImageManager.getImageCopy("cowboyHat", 7, 3);
+		
+		this.cowboyHat.setFilter(Image.FILTER_NEAREST);
 		
 		this.maxHealth = 150f;
 		this.health = maxHealth;
@@ -69,6 +79,11 @@ public class Player extends Unit {
 		// Velocity Determinants
 		this.maxVelocity = Player_Max_Velocity;
 		this.velocityMultipliers = new ArrayList<>();
+		
+		animation = new Animation("ikeaSheet", 32, 32);
+		animationTick = 0;
+		animationFrame = 0;
+		animating = false;
 		
 		// Dashing
 		this.lastDashed = Game.getTicks();
@@ -109,12 +124,66 @@ public class Player extends Unit {
 	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	/* --- Inherited Methods --- */
-	public void unitDraw(Graphics g) {}
+	public void unitDraw(Graphics g) {
+		if(animation != null)
+		{
+			if(animating && animationTick % 2 == 0) animationFrame++; animationTick++;
+			if(animationFrame > animation.animationSize() - 1)
+			{
+				 animationFrame %= animation.animationSize(); 
+			}
+		}
+		
+		sprite = animation.getFrame(animationFrame).getScaledCopy(8, 8);
+	
+		Image tempHat = cowboyHat;
+		tempHat.setRotation(0);
+		float offsetX = 0f;
+		float offsetY = 0f;
+		
+		
+		if(this.isMirrored())
+		{
+			 offsetX -= 1.2f; 
+			 tempHat = tempHat.getFlippedCopy(true, false);
+		}
+		
+		if(dashing) 
+		{
+			sprite = ImageManager.getImageCopy("ikeaDash", 8, 8);
+			offsetY = 0.2f;
+			
+			if(this.isMirrored()) //i am so bad at coding
+			{
+				tempHat.setRotation(30);
+				offsetX += 3f;
+			}
+			else
+			{
+				tempHat.setRotation(-30);
+				offsetX -= 3f;
+			}
+			
+			
+		}
+		
+		tempHat.drawCentered(this.x + offsetX, this.y - 5.2f + offsetY);
+	}
 	
 	public void unitUpdate() {
 		this.maxVelocity = Player_Max_Velocity;
 		for(Float f: velocityMultipliers) {
 			maxVelocity *= f;
+		}
+		
+		if(velocity.magnitude() > 1.5f)
+		{
+			animating = true;
+		}
+		else
+		{
+			animating = false;
+			animationFrame = 0;
 		}
 		
 		// Dash Determining
