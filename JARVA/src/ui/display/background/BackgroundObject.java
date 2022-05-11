@@ -11,21 +11,25 @@ public class BackgroundObject {
 	protected static float X_Extent = 500f;
 	protected static float Y_Extent = 300f;
 	
-	private SpriteSheet spritesheet;
-	private Image sprite;
-	private Image shadow;
+	protected SpriteSheet spritesheet;
+	protected Image sprite;
+	protected Image shadow;
 	
-	private float x;
-	private float y;
+	protected float x;
+	protected float y;
 	
-	private float xScale;
-	private float yScale;
+	protected float xScale;
+	protected float yScale;
+	
+	public BackgroundObject setSprite( Image sprite ) {this.sprite = sprite; return this; }
+	public BackgroundObject setX( float newX) {this.x = newX; return this; }
+	public BackgroundObject setY( float newY) {this.y = newY; return this; }
 	
 	public BackgroundObject(String name) {
 		shadow = ImageManager.getImageCopy("shadow");
 		
 		switch(name)
-		{
+		{		
 		case("shrub"): 
 			
 			this.spritesheet = new SpriteSheet(ImageManager.getImage("shrub"), 16, 16);
@@ -100,6 +104,8 @@ public class BackgroundObject {
 			
 			break;
 		default:
+			this.sprite = ImageManager.getPlaceholder();
+			break;
 		}
 		
 		this.x = Utility.random() * (250 - sprite.getWidth()) - 125;

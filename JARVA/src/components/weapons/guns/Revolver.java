@@ -2,6 +2,7 @@ package components.weapons.guns;
 
 import objects.GameObject;
 import objects.entities.Unit;
+import objects.entities.other.BulletCasing;
 import objects.entities.projectiles.Bullet;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
@@ -13,6 +14,7 @@ import org.newdawn.slick.Image;
 
 import components.weapons.Weapon;
 import engine.Settings;
+import engine.Utility;
 
 public class Revolver extends Gun {	
 	private int spinAnimTimer;
@@ -66,6 +68,12 @@ public class Revolver extends Gun {
 				.Recoil(currentRecoil)
 				.setX(barrelX)
 				.setY(barrelY);
+		final float CasingAngle = (float) ( Utility.ConvertToRadians(InputManager.getAngleToMouse(owner)) + Math.PI);
+		new BulletCasing(100f, CasingAngle)
+			.setX(pivotX)
+			.setY(pivotY)
+			.build();
+		
 		SoundManager.playSoundEffect("revolvershot", Settings.EffectsVolume);
 		
 		super.fire();
