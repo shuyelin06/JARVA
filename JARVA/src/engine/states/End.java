@@ -71,11 +71,16 @@ public class End extends BasicGameState {
 		
 		if( timer < 0 ) restartButton.render(g);
 		
+		g.scale(2f, 2f);
+		
 		g.setColor(Color.red);
-		String endMessage = "Still a WIP! Press the placeholder image below to restart";
-		g.drawString(endMessage, Main.getScreenWidth() / 2f - g.getFont().getWidth(endMessage) / 2f, Main.getScreenHeight() / 2f - 90f);
+//		String endMessage = "Still a WIP! Press the placeholder image below to restart";
+//		g.drawString(endMessage, Main.getScreenWidth() / 2f - g.getFont().getWidth(endMessage) / 2f, Main.getScreenHeight() / 2f - 90f);
 		String timeSurvived = "Your IQ: " + (int) Math.floor(Game.Ticks);
-		g.drawString(timeSurvived, Main.getScreenWidth() / 2f - g.getFont().getWidth(timeSurvived) / 2f, Main.getScreenHeight() / 2f - 75f);
+		//g.drawString(timeSurvived, Main.getScreenWidth() / 2f - g.getFont().getWidth(timeSurvived) / 2f, Main.getScreenHeight() / 2f - 75f);
+		g.drawString(timeSurvived, Main.getScreenWidth() / 4f - g.getFont().getWidth(timeSurvived) / 2f, Main.getScreenHeight() / 4f - 75f);
+
+		g.scale(1f, 1f);
 	}
 	
 	public void mousePressed(int button, int x, int y) {
