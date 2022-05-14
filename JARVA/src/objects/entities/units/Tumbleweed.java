@@ -40,6 +40,10 @@ public class Tumbleweed extends Unit {
 		this.team = ObjectTeam.Enemy;
 	}
 	
+	protected void onDeath() {
+		SoundManager.playSoundEffect("weeddeath", Settings.EffectsVolume);
+	}
+	
 	protected void unitUpdate() {
 		this.addXVelocity(5f * Utility.cos(theta));
 		this.addYVelocity(5f * Utility.sin(theta));

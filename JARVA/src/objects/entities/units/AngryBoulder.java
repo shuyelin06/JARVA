@@ -65,7 +65,11 @@ public class AngryBoulder extends Unit {
 			lastShot = ShotCooldown;
 		}
 	}
-		
+	
+	protected void onDeath() {
+		SoundManager.playSoundEffect("rockdeath", Settings.EffectsVolume);
+	}
+	
 	@Override
 	protected void unitUpdate() {
 		final float Angle = Utility.atan(player.getY() - y, player.getX() - x);

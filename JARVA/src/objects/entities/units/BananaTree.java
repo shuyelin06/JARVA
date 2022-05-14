@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import engine.Settings;
 import engine.states.Game;
 import objects.GameObject;
 import objects.GameObject.ObjectTeam;
 import objects.entities.Unit;
 import objects.geometry.Polygon;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class BananaTree extends Unit {
 	public static float SpawnTimer;
@@ -39,9 +41,7 @@ public class BananaTree extends Unit {
 	@Override
 	protected void unitUpdate() {}
 	
-	@Override
-	public void remove() {
-		super.remove();
+	protected void onDeath() {
 		bananaTrees.remove(this);
 	}
 	

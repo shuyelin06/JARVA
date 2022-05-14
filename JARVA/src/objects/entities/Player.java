@@ -124,6 +124,8 @@ public class Player extends Unit {
 	public float getSprintStaminaPercent() { return (float)sprintStamina / (float)maxSprintStamina; }
 	
 	/* --- Inherited Methods --- */
+	protected void onDeath() {}
+	
 	public void unitDraw(Graphics g) {
 		if(animation != null)
 		{
