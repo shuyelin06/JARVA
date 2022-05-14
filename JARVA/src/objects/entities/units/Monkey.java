@@ -47,6 +47,9 @@ public class Monkey extends Unit {
 			active = true;
 		}
 	}
+	protected void onDeath() {
+		SoundManager.playSoundEffect("monkeydeath", Settings.EffectsVolume);
+	}
 	
 	protected void unitUpdate() {
 		BananaTree nearest = nearestBananaTree();

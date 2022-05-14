@@ -16,6 +16,7 @@ import objects.entities.projectiles.Rock;
 import objects.geometry.Polygon;
 import ui.display.animation.Animation;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class BighornSheep extends Unit {
 	public static float SpawnTimer;
@@ -71,6 +72,12 @@ public class BighornSheep extends Unit {
 				(x - player.getX()) * (x - player.getX())
 				);
 	}
+
+	
+	protected void onDeath() {
+		SoundManager.playSoundEffect("ramdeath", Settings.EffectsVolume);
+	}
+	
 	@Override
 	protected void unitUpdate() {
 		this.mirrored = false;

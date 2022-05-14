@@ -97,6 +97,7 @@ public abstract class Unit extends GameObject {
 	
 	/* --- Inherited Methods --- */
 	protected abstract void unitUpdate();
+	protected abstract void onDeath();
 	protected void unitDraw(Graphics g) {}
 	
 	/* --- Implemented Methods --- */
@@ -166,6 +167,7 @@ public abstract class Unit extends GameObject {
 		// Entity Dying
 		if(health <= 0f) {
 			Game.GameScore += score;
+			onDeath();
 			remove();
 			return;
 		}
