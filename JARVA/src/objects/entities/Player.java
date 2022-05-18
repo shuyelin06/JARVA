@@ -59,7 +59,7 @@ public class Player extends Unit {
 	private Inventory inventory;
 	
 	public Player() {
-		super(Polygon.rectangle(6f, 6f));
+		super(Polygon.rectangle(4f, 8f));
 		
 		// Team and Sprite
 		this.team = ObjectTeam.Ally;
