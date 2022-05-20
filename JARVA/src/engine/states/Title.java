@@ -1,5 +1,6 @@
 package engine.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,12 +11,16 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import engine.Settings;
 import engine.Main;
+import ui.display.hud.panels.MessagePanel;
 import ui.display.images.ImageManager;
 import ui.input.Button;
 import ui.sound.SoundManager;
 
 public class Title extends BasicGameState {
 	private int id;
+	
+	public static String identifier;
+	private MessagePanel idPanel;
 	
 	private Button startButton;
 	private Button title;
@@ -27,6 +32,8 @@ public class Title extends BasicGameState {
 		this.id = id;
 	}
 	
+	public String getIdentifier() { return identifier; }
+	
 	@Override
 	public int getID() { return id; }
 	
@@ -36,6 +43,19 @@ public class Title extends BasicGameState {
 	@Override
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		canStart = false;
+		
+		idPanel = new MessagePanel();
+		idPanel
+			.setCentered(true)
+			.setTextColor(Color.red)
+			.setTextHeight(25);
+		idPanel
+			.setX(Settings.Resolution_X - Settings.Resolution_X / 14)
+			.setY((int) (Settings.Resolution_Y - 0.027f * Settings.Resolution_Y))
+			.setWidth(Settings.Resolution_X / 7)
+			.setHeight((int) (0.054f * Settings.Resolution_Y));
+		
+		identifier = "Player_" + (int) Math.floor(Math.random() * 1000000);
 		
 		title = new Button()
 				.setCenterX(Settings.Resolution_X / 2)
@@ -68,6 +88,9 @@ public class Title extends BasicGameState {
 		// Draw All Buttons
 		title.render(g);
 		startButton.render(g);
+		
+		idPanel.setMessage(identifier);
+		idPanel.render(g);
 	}
 
 	@Override

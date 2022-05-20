@@ -13,6 +13,8 @@ import ui.display.background.objects.Casing;
 import ui.display.images.ImageManager;
 
 public class Background {
+	public static final Color BackgroundColor = new Color(205, 170, 109);
+	
 	private Color color;
 	
 	private ArrayList<BackgroundObject> objects;
@@ -21,7 +23,7 @@ public class Background {
 	public Background() {
 		casings = new LinkedList<>();
 		objects = new ArrayList<>();
-		color = new Color(205, 170, 109);
+		color = BackgroundColor;
 		
 		initialize();
 	}
