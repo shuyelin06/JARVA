@@ -82,14 +82,14 @@ public class End extends BasicGameState {
 				.setCenterY( Settings.Resolution_Y - 1.5f * (0.09259259259f * Settings.Resolution_Y) )
 				.setW(1f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
-				.setImage( "refresh" );
+				.setImage( "closeButton" );
 		
 		refreshButton = new Button()
 				.setCenterX( Settings.Resolution_X / 2 + Settings.Resolution_X * 0.65f * 0.65f / 2 + 1f * (0.05208333333f * Settings.Resolution_X) )
 				.setCenterY( Settings.Resolution_Y / 2 + (int) (Settings.Resolution_Y * 0.1f) - (Settings.Resolution_Y * 0.75f) / 2 - 1f * (0.09259259259f * Settings.Resolution_Y) )
 				.setW(1f * (0.05208333333f * Settings.Resolution_X))
 				.setH(1f * (0.09259259259f * Settings.Resolution_Y))
-				.setImage( "refresh" );
+				.setImage( "refreshButton" );
 		
 		restartButton = new Button()
 				.setCenterX( 1.5f * (0.05208333333f * Settings.Resolution_X) )
