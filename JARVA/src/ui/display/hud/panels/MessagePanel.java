@@ -112,7 +112,7 @@ public class MessagePanel extends Panel {
 			else {
 				drawnText += lines.get(i);
 				if(centered) {
-					final float Width = g.getFont().getWidth(lines.get(i)) / Scale;
+					final float Width = g.getFont().getWidth(lines.get(i)) * Scale;
 					g.drawString(lines.get(i), (x - Width / 2) / Scale, (TopLeftY + textHeight * 0.85f * i) / Scale );
 				} else {
 					g.drawString(lines.get(i), TopLeftX / Scale, (TopLeftY + textHeight * 0.85f * i) / Scale );
