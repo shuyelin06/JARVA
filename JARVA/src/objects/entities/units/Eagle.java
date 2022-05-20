@@ -55,6 +55,9 @@ public class Eagle extends Unit{
 		this.team = ObjectTeam.Enemy;
 	}
 	
+	protected void onDeath() {
+		SoundManager.playSoundEffect("eagledeath", Settings.EffectsVolume);
+	}
 	
 	protected void unitUpdate() {
 		attacking = firing;
