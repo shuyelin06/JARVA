@@ -33,14 +33,19 @@ public class Panel {
 	
 	public void render(Graphics g) {
 		// Draw Panel Background
-		g.setColor(background);
-		g.fillRect(x - (w / 2), y - (h / 2), w, h);
+		if( background != null ) {
+			g.setColor(background);
+			g.fillRect(x - (w / 2), y - (h / 2), w, h);
+		}
+	
 		
 		// Draw Outline
-		g.setLineWidth(outlineWidth);
-		g.setColor(outline);
-		g.drawRect(x - (w / 2), y - (h / 2), w, h);
-		g.resetLineWidth();
+		if( outline != null ) {
+			g.setLineWidth(outlineWidth);
+			g.setColor(outline);
+			g.drawRect(x - (w / 2), y - (h / 2), w, h);
+			g.resetLineWidth();
+		}
 		
 		// Extra Rendering
 		panelRender(g);

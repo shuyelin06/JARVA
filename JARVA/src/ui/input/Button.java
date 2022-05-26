@@ -5,7 +5,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import engine.Settings;
 import ui.display.images.ImageManager;
+import ui.sound.SoundManager;
 
 public class Button {
 	
@@ -15,6 +17,8 @@ public class Button {
 	private Image image;
 	private boolean outline;
 	
+	private boolean hovered;
+	
 	// Constructor
 	public Button() {
 		// Default Variables
@@ -22,6 +26,18 @@ public class Button {
 		this.w = this.h = 0f;
 		this.image = ImageManager.getPlaceholder();
 		this.outline = false;
+	}
+	
+	// Helper Methods
+	public void update(float x, float y) {
+		if( isWithin(x,y) ) {
+			if( !hovered ) {
+				hovered = true;
+				SoundManager.playSoundEffect("buttonclick", Settings.EffectsVolume);
+			}
+		} else {
+			hovered = false;
+		}
 	}
 	
 	// Mutator Methods
@@ -36,8 +52,13 @@ public class Button {
 	// Render Image
 	public void render(Graphics g) {
 		if (this.image != null) {
-			image.draw(centerX - (w / 2), centerY - (h / 2), w, h);
+			Image render = image.getScaledCopy(1f);
 			
+			if( hovered ) {
+				render.setImageColor(0.7f, 0.7f, 0.7f);
+			} 
+			
+			render.draw(centerX - (w / 2), centerY - (h / 2), w, h);
 		}
 		if (outline) {
 			g.setColor(Color.white);

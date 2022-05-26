@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.state.BasicGameState;
@@ -27,8 +28,10 @@ public class End extends BasicGameState {
 	
 	private int id;
 	
+	private int refreshTimer;
 	private int timer;
 
+	private boolean refresh;
 	private boolean restart;
 	private boolean exit;
 	
@@ -55,7 +58,7 @@ public class End extends BasicGameState {
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		gc.setMouseGrabbed(false);
 		
-		timer = 60;
+		timer = 30;
 		restart = false;
 		
 		this.leaderBoard = new LeaderBoard();
@@ -108,6 +111,11 @@ public class End extends BasicGameState {
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int n) throws SlickException {
+		Input input = gc.getInput();
+		refreshButton.update( input.getMouseX(), input.getMouseY() );
+		restartButton.update( input.getMouseX(), input.getMouseY() );
+		exitButton.update( input.getMouseX(), input.getMouseY() );
+		
 		timer--;
 		if(timer == 0) {
 			PlayerData data = new PlayerData()
@@ -118,6 +126,13 @@ public class End extends BasicGameState {
 		}
 		
 		if( exit ) { gc.exit(); return; }
+		if( refresh ) {
+			refreshTimer--;
+			if(refreshTimer < 0) {
+				leaderBoard.refresh();
+				refresh = false;
+			}
+		}
 		if( restart ) {
 			Settings.LastState = Main.END_ID;
 			sbg.enterState(Main.TITLE_ID);
@@ -143,7 +158,11 @@ public class End extends BasicGameState {
 	public void mousePressed(int button, int x, int y) {
 		Point mouse = new Point(x, y);
 		if(exitButton.isWithin(mouse)) { exit = true; }
-		if(refreshButton.isWithin(mouse)) { leaderBoard.refresh(); }
+		if(refreshButton.isWithin(mouse)) { 
+			System.out.println("Clear");
+			refresh = true; 
+			refreshTimer = 30;
+			leaderBoard.clear(); }
 		if (restartButton.isWithin(mouse)) { restart = true; }
 	}
 	

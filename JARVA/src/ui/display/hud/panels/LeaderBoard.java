@@ -33,6 +33,19 @@ public class LeaderBoard extends Panel {
 		for(MessagePanel p: userDisplays) { p.render(g); }
 	}
 	
+	// Clear the content on the leaderboard
+	public void clear() {
+		final String Separator = "     ---     ";
+		
+		playerScore.setMessage("Your IQ (Score): " + Game.Ticks);
+		userDisplays[0].setMessage("Username" + Separator + "Score");
+		
+		for(int i = 1; i < userDisplays.length; i++ ) {
+			userDisplays[i]
+					.setMessage("");
+		}
+	}
+	
 	public void refresh() {
 		final String Separator = "     ---     ";
 		
